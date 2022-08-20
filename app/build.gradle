@@ -41,8 +41,8 @@ android {
 
 dependencies {
 
-    implementation "com.github.sarang628:TorangCore:623ea55be6"
-    implementation "com.github.sarang628:TorangRepository:ace8ebf6a5"
+    implementation "com.github.sarang628:TorangCore:$coreVersion"
+    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
     implementation project(path: ':library')
 
     implementation 'androidx.core:core-ktx:1.6.0'
