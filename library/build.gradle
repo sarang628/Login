@@ -35,8 +35,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
-    implementation 'com.github.sarang628:TorangRepository:5cdb45b76e'
+    implementation "com.github.sarang628:TorangCore:$coreVersion"
+    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
