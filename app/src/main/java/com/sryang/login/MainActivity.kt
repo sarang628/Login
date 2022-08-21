@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.torang_core.login.FacebookLoginProvider
 import com.example.torang_core.login.OnLoginResultListener
 import com.example.torang_core.login.OnResultLogoutListener
-import com.sarang.toringlogin.LoginManager
 import com.sarang.toringlogin.login.LoginActivity
 import com.sryang.login.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint

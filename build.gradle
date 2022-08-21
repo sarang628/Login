@@ -41,7 +41,7 @@ ext {
     facebookLibraryVersion = '8.1.0'
 
     torangRepositoryVersion = '623ea55be6'
-    coreVersion = '5dd8950a5a'
+    coreVersion = '1a0e406fa3'
 }
 
 buildscript {

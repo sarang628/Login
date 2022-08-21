@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.torang_core.login.OnLoginResultListener
-import com.example.torang_core.util.Logger
-import com.sarang.toringlogin.LoginManager
 import com.sarang.toringlogin.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

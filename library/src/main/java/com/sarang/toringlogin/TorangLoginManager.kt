@@ -12,6 +12,7 @@ import com.example.torang_core.login.FacebookLoginProvider
 import com.example.torang_core.login.OnLoginResultListener
 import com.example.torang_core.login.OnResultLoginListener
 import com.example.torang_core.login.OnResultLogoutListener
+import com.example.torang_core.login.LoginManager
 import com.example.torang_core.util.Logger
 import com.example.torangrepository.*
 import com.example.torangrepository.repository.preference.TorangPreference
