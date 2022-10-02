@@ -1,7 +1,7 @@
 package com.sryang.login
 
 import android.app.Application
-import com.example.torang_core.login.FacebookLoginProvider
+import com.sryang.torang_core.login.FacebookLoginProvider
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

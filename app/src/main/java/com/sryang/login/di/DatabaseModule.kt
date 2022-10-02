@@ -1,7 +1,7 @@
 package com.sryang.login.di
 
 import android.content.Context
-import com.example.torang_core.data.AppDatabase
+import com.sryang.torang_repository.data.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

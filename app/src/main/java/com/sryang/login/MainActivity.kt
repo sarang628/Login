@@ -6,12 +6,12 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.torang_core.login.FacebookLoginProvider
-import com.example.torang_core.login.LoginManager
-import com.example.torang_core.login.OnLoginResultListener
-import com.example.torang_core.login.OnResultLogoutListener
 import com.sarang.toringlogin.login.LoginActivity
 import com.sryang.login.databinding.ActivityMainBinding
+import com.sryang.torang_core.login.FacebookLoginProvider
+import com.sryang.torang_core.login.LoginManager
+import com.sryang.torang_core.login.OnLoginResultListener
+import com.sryang.torang_core.login.OnResultLogoutListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

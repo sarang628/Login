@@ -1,6 +1,7 @@
 package com.sarang.toringlogin
 
-import com.example.torang_core.data.model.*
+import com.sryang.torang_core.data.entity.User
+import com.sryang.torang_repository.data.remote.response.Response
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

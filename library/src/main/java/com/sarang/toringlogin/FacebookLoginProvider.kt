@@ -3,16 +3,18 @@ package com.sarang.toringlogin
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.example.torang_core.data.model.User
-import com.example.torang_core.login.*
-import com.example.torang_core.util.Logger
+import android.util.Log.d
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.sryang.torang_core.data.entity.User
+import com.sryang.torang_core.data.util.FeedUtil.createEmptyValue
+import com.sryang.torang_core.data.util.UserUtil.createEmptyValue
+import com.sryang.torang_core.login.FacebookLoginProvider
+import com.sryang.torang_core.login.OnReceiveUserListener
+import com.sryang.torang_core.login.OnResultLoginListener
+import com.sryang.torang_core.login.OnResultLogoutListener
+import com.sryang.torang_core.util.Logger
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
@@ -38,15 +40,17 @@ class FacebookLoginProviderImpl @Inject constructor() :
                 override fun onSuccess(loginResult: LoginResult) {
                     Logger.d("onSuccess")
                     if (onResultLoginListener != null) {
-                        val user = User()
-                        user.access_token = loginResult.accessToken.token
-                        onResultLoginListener!!.onResult(0, user)
+                        onResultLoginListener!!.onResult(0,
+                            User.createEmptyValue()
+                                .copy(accessToken = loginResult.accessToken.token)
+                        )
                     }
                 }
 
                 override fun onCancel() {
                     Logger.e("onCancel")
                 }
+
                 override fun onError(error: FacebookException) {
                     Logger.e("onError$error")
                     LoginManager.getInstance().logOut()
@@ -60,7 +64,7 @@ class FacebookLoginProviderImpl @Inject constructor() :
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         Logger.d("onActivityResult")
-        if(callbackManager == null){
+        if (callbackManager == null) {
             Logger.d("callbackManager is null")
         }
         callbackManager?.onActivityResult(requestCode, resultCode, data)

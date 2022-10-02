@@ -6,16 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
-import com.example.torang_core.data.AppDatabase
-import com.example.torang_core.data.model.User
-import com.example.torang_core.login.FacebookLoginProvider
-import com.example.torang_core.login.OnLoginResultListener
-import com.example.torang_core.login.OnResultLoginListener
-import com.example.torang_core.login.OnResultLogoutListener
-import com.example.torang_core.login.LoginManager
-import com.example.torang_core.util.Logger
 import com.example.torangrepository.*
-import com.example.torangrepository.repository.preference.TorangPreference
+import com.sryang.torang_core.data.entity.User
+import com.sryang.torang_core.login.*
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.AppDatabase
+import com.sryang.torang_repository.repository.preference.TorangPreference
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
@@ -44,7 +40,7 @@ class TorangLoginManager
     private val loggedInUserDao = database.LoggedInUserDao()
 
     private val isLogin: LiveData<Boolean> =
-        loggedInUserDao.getLoggedInUserData().switchMap {
+        loggedInUserDao.getLoggedInUserEntity().switchMap {
             if (it != null) {
                 Logger.v("login check $it")
                 MutableLiveData(it.userId != 0)
@@ -54,7 +50,7 @@ class TorangLoginManager
         }
 
     override fun loadUser(contxt: Context): User {
-        return User()
+        return User.createEmptyValue()
     }
 
     override fun requestFacebookLogin(
@@ -64,7 +60,7 @@ class TorangLoginManager
         //페이스북 로그인 요청
         facebookLoginProvider.login(activity, object : OnResultLoginListener {
             override fun onResult(result: Int, user: User) {
-                user.access_token?.let {
+                user.accessToken?.let {
                     onLoginResultListener.onResult(result, it)
                     return;
                 }

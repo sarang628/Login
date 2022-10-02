@@ -3,8 +3,8 @@ package com.sarang.toringlogin.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.torang_core.util.Logger
 import com.sarang.toringlogin.R
+import com.sryang.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

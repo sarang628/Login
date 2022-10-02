@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.sryang.login"
@@ -37,6 +37,7 @@ android {
         viewBinding true
         dataBinding true
     }
+    namespace 'com.sryang.login'
 }
 
 dependencies {

@@ -1,7 +1,7 @@
 package com.sryang.login.di
 
-import com.example.torang_core.repository.LoginRepository
-import com.example.torangrepository.repository.impl.LoginRepositoryImpl
+import com.sryang.torang_repository.repository.LoginRepository
+import com.sryang.torang_repository.repository.impl.LoginRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

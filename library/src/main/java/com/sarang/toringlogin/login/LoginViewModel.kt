@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.torang_core.data.model.LoggedInUserData
-import com.example.torang_core.data.model.User
-import com.example.torang_core.repository.LoginRepository
-import com.example.torang_core.util.Logger
+import com.sryang.torang_repository.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
