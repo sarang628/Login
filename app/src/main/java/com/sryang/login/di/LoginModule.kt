@@ -1,14 +1,6 @@
 package com.sryang.login.di
 
-import android.content.Context
-import android.content.Intent
-import androidx.fragment.app.FragmentManager
 import com.sarang.toringlogin.FacebookLoginProviderImpl
-import com.sarang.toringlogin.TorangLoginManager
-import com.sarang.toringlogin.login.LoginActivity
-import com.sryang.torang_core.login.FacebookLoginProvider
-import com.sryang.torang_core.login.LoginManager
-import com.sryang.torang_core.navigation.LoginNavigation
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,8 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class LoginModule {
-    @Binds
-    abstract fun provideLoginMudule(torangLoginManager: TorangLoginManager): LoginManager
 }
 
 @InstallIn(SingletonComponent::class)
@@ -43,29 +33,13 @@ object CoroutinesScopesModule {
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class FacebookLoginProviderModule {
-@Binds
-abstract fun provideFacebookLoginProvider(facebookLoginProviderImpl: FacebookLoginProviderImpl): FacebookLoginProvider
-/*
-@Binds
-abstract fun provideFacebookLoginProviderForView(faceBookLoginProviderForViewImpl: FacebookLoginProviderImpl) : FaceBookLoginProviderForView
 
-@Binds
-abstract fun provideFacebookLoginProviderForRepository(FacebookLoginProviderImpl: FacebookLoginProviderImpl) : FaceBookLoginProviderForRepository*/
 }
 
 @Module
 @InstallIn(ActivityComponent::class)
 abstract class LoginNavigationModule {
-    @Binds
-    abstract fun provideLoginNavigation(loginNavigationImpl: LoginNavigationImpl): LoginNavigation
 }
 
-class LoginNavigationImpl @Inject constructor() : LoginNavigation {
-    override fun goLogin(fragmentManager: FragmentManager?) {
-
-    }
-
-    override fun goLogin(context: Context) {
-        context.startActivity(Intent(context, LoginActivity::class.java))
-    }
+class LoginNavigationImpl @Inject constructor() {
 }
