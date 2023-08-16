@@ -22,42 +22,7 @@ class LoginLogicImpl : LoginLogic {
     @Preview
     @Composable
     override fun LoginScreen() {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 100.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(text = "TORANG", fontSize = 25.sp)
-            }
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 80.dp), horizontalArrangement = Arrangement.Center
-            ) {
-                Text(text = "Hit the spot")
-            }
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 150.dp), horizontalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = { }) {
-                    Text(text = "LOG IN WITH FACEBOOK")
-                }
-            }
-
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp), horizontalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = { }) {
-                    Text(text = "LOG IN WITH EMAIL")
-                }
-            }
-        }
+        LoginScreen()
     }
 
     override suspend fun requestLogin(email: String, password: String, loginResult: LoginResult) {
