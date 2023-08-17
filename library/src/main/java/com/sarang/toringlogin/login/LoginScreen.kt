@@ -1,6 +1,5 @@
 package com.sarang.toringlogin.login
 
-import android.provider.ContactsContract.CommonDataKinds.Email
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-internal fun LoginScreen(
+internal fun LoginScreen1(
     onClickFacebookLogin: (Int) -> Unit,
     onClickEmail: (Int) -> Unit
 ) {
@@ -67,24 +66,29 @@ internal fun LoginScreen(
     }
 }
 
-@Preview
 @Composable
-fun PreviewLoginScreen() {
-
+fun LoginScreen() {
     val navController = rememberNavController()
     val context = LocalContext.current
 
-
     NavHost(navController = navController, startDestination = "login") {
         composable("login") {
-            LoginScreen(onClickFacebookLogin = {
+            LoginScreen1(onClickFacebookLogin = {
                 Toast.makeText(context, "facebook login", Toast.LENGTH_SHORT).show()
             }, onClickEmail = {
                 navController.navigate("emailLogin")
             })
         }
         composable("emailLogin") {
-            EmailLoginScreen()
+            EmailLoginScreen {
+                Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewLoginScreen() {
+    LoginScreen()
 }
