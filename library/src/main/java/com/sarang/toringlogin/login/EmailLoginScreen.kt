@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun EmailLoginScreen(
     onLogin: (EmailLogin) -> Unit,
-    //loginService: LoginService
+    loginService: LoginService
 ) {
 
     var email by remember { mutableStateOf("") }
@@ -76,7 +76,7 @@ fun EmailLoginScreen(
                 coroutine.launch {
                     progress = true
                     try {
-                        //result = loginService.emailLogin(email, password).toString()
+                        result = loginService.emailLogin(email, password).toString()
 
                     } catch (e: Exception) {
                         result = e.toString()
@@ -109,6 +109,6 @@ fun PreviewEmailLoginScreen() {
         onLogin = {
             Log.d("__sryang", it.toString())
         }
-        //, loginService = loginService
+        , loginService = loginService
     )
 }
