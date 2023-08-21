@@ -83,8 +83,9 @@ fun LoginScreen() {
             })
         }
         composable("emailLogin") {
-            EmailLoginScreen(loginService = getLoginService(LocalContext.current), onLogin = {
-                Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
+            EmailLoginScreen(
+                onLogin = { Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
+                //, loginService = getLoginService(LocalContext.current)
             })
         }
     }

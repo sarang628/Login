@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,10 +24,11 @@ import com.sryang.torang_repository.services.LoginService
 import com.sryang.torang_repository.services.impl.getLoginService
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailLoginScreen(
     onLogin: (EmailLogin) -> Unit,
-    loginService: LoginService
+    //loginService: LoginService
 ) {
 
     var email by remember { mutableStateOf("") }
@@ -74,7 +76,7 @@ fun EmailLoginScreen(
                 coroutine.launch {
                     progress = true
                     try {
-                        result = loginService.emailLogin(email, password).toString()
+                        //result = loginService.emailLogin(email, password).toString()
 
                     } catch (e: Exception) {
                         result = e.toString()
@@ -106,7 +108,7 @@ fun PreviewEmailLoginScreen() {
     EmailLoginScreen(
         onLogin = {
             Log.d("__sryang", it.toString())
-        },
-        loginService = loginService
+        }
+        //, loginService = loginService
     )
 }
