@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sryang.torang_repository.services.impl.LoginServiceTest
+import com.sryang.torang_repository.services.impl.getLoginService
 
 @Composable
 internal fun LoginScreen1(
@@ -71,6 +73,7 @@ fun LoginScreen() {
     val navController = rememberNavController()
     val context = LocalContext.current
 
+
     NavHost(navController = navController, startDestination = "login") {
         composable("login") {
             LoginScreen1(onClickFacebookLogin = {
@@ -80,9 +83,9 @@ fun LoginScreen() {
             })
         }
         composable("emailLogin") {
-            EmailLoginScreen {
+            EmailLoginScreen(loginService = getLoginService(LocalContext.current), onLogin = {
                 Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
-            }
+            })
         }
     }
 }
@@ -91,4 +94,10 @@ fun LoginScreen() {
 @Composable
 fun PreviewLoginScreen() {
     LoginScreen()
+}
+
+@Preview
+@Composable
+fun test1() {
+    LoginServiceTest()
 }
