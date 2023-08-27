@@ -1,10 +1,14 @@
 package com.sarang.toringlogin.login
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,12 +23,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.sarang.toringlogin.R
 import com.sryang.torang_repository.services.LoginService
 import com.sryang.torang_repository.services.impl.getLoginService
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailLoginScreen(
     onLogin: (EmailLogin) -> Unit,
@@ -37,7 +45,34 @@ fun EmailLoginScreen(
     var progress by remember { mutableStateOf(false) }
     var result by remember { mutableStateOf("") }
 
-    Box() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = com.sarang.theme.R.color.colorSecondaryLight))
+    ) {
+        Spacer(modifier = Modifier.height(100.dp))
+        Column(
+            Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "T O R A N G",
+                color = colorResource(id = com.sarang.theme.R.color.colorSecondary),
+                fontSize = 45.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Column(
+            Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Hit the spot",
+                color = colorResource(id = com.sarang.theme.R.color.colorSecondary),
+                fontSize = 20.sp
+            )
+        }
         if (progress)
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -46,9 +81,11 @@ fun EmailLoginScreen(
             ) {
                 CircularProgressIndicator()
             }
-
+        Spacer(modifier = Modifier.height(100.dp))
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .height(300.dp)
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -108,7 +145,6 @@ fun PreviewEmailLoginScreen() {
     EmailLoginScreen(
         onLogin = {
             Log.d("__sryang", it.toString())
-        }
-        , loginService = loginService
+        }, loginService = loginService
     )
 }
