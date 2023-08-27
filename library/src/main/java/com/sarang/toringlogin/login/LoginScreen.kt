@@ -106,7 +106,10 @@ fun LoginScreen() {
         composable("emailLogin") {
             EmailLoginScreen(
                 onLogin = { },
-                loginService = getLoginService(LocalContext.current)
+                loginService = getLoginService(LocalContext.current),
+                onSuccessLogin = {
+
+                }
             )
         }
     }

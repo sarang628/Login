@@ -68,7 +68,7 @@ dependencies {
     def nav_version = "2.5.3"
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
-    implementation 'com.github.sarang628:Theme:7c191eb4e6'
-    implementation 'com.github.sarang628:Design:df442fbb8c'
-    implementation 'com.github.sarang628:TorangRepository:d93c02af37'
+    implementation "com.github.sarang628:Theme:$themeVersion"
+    implementation "com.github.sarang628:Design:$designVersion"
+    implementation "com.github.sarang628:TorangRepository:$repositoryVersion"
 }
