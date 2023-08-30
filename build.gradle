@@ -19,7 +19,7 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    repositoryVersion = '34a9c4e11f'
+    repositoryVersion = '51ff82f4b2'
     designVersion = 'df442fbb8c'
     themeVersion = '7c191eb4e6'
 }

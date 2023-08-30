@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,9 +25,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.theme.R
+import com.sarang.toringlogin.login.email.EmailLoginScreen
 import com.sryang.torang_repository.services.impl.LoginServiceTest
-import com.sryang.torang_repository.services.impl.getLoginService
-import kotlinx.coroutines.delay
 
 @Composable
 internal fun LoginScreen1(
@@ -105,8 +103,6 @@ fun LoginScreen() {
         }
         composable("emailLogin") {
             EmailLoginScreen(
-                onLogin = { },
-                loginService = getLoginService(LocalContext.current),
                 onSuccessLogin = {
 
                 }
