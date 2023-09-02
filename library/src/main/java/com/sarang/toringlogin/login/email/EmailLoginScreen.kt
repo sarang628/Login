@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sarang.toringlogin.login.EmailLogin
+import com.sryang.torang_repository.services.impl.LoginService
 import com.sryang.torang_repository.services.impl.getLoginService
 import com.sryang.torang_repository.session.SessionService
 import com.sryang.torang_repository.session.TestSessionService
@@ -58,9 +59,9 @@ internal fun InternalEmailLoginScreen(
 @Composable
 fun EmailLoginScreen(
     onSuccessLogin: (String) -> Unit,
+    loginService : LoginService
 ) {
     val coroutine = rememberCoroutineScope()
-    val loginService = getLoginService(context = LocalContext.current)
     var progress by remember { mutableStateOf(false) }
     var isFailedLogin by remember { mutableStateOf(false) }
     val sessionService = SessionService(LocalContext.current)
@@ -98,9 +99,10 @@ fun EmailLoginScreen(
 @Preview
 @Composable
 fun PreviewEmailLoginScreen() {
-    EmailLoginScreen(onSuccessLogin = {
-
-    })
+    EmailLoginScreen(
+        onSuccessLogin = {}
+        , getLoginService(LocalContext.current)
+    )
 }
 
 
