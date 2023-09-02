@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
@@ -37,8 +36,8 @@ import com.sarang.toringlogin.login.EmailLogin
 @Composable
 fun PreviewEmailLoginForm() {
     Column {
-        EmailLoginForm(onLogin = {}, progress = true, isSuccessLogin = false)
-        EmailLoginForm(onLogin = {}, progress = true, isSuccessLogin = true)
+        EmailLoginForm(onLogin = {}, progress = true, isFailedLogin = false)
+        EmailLoginForm(onLogin = {}, progress = true, isFailedLogin = true)
     }
 }
 
@@ -47,7 +46,7 @@ fun PreviewEmailLoginForm() {
 fun EmailLoginForm(
     onLogin: (EmailLogin) -> Unit,
     progress: Boolean,
-    isSuccessLogin: Boolean
+    isFailedLogin: Boolean
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -122,7 +121,7 @@ fun EmailLoginForm(
             }) {
                 Text(text = "Login")
             }
-            if (isSuccessLogin)
+            if (isFailedLogin)
                 Text(text = "로그인에 실패하였습니다.")
         }
     }
