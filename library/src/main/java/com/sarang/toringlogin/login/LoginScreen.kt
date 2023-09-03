@@ -91,7 +91,8 @@ internal fun LoginScreen1(
 
 @Composable
 fun LoginScreen(
-    loginService : LoginService
+    loginService: LoginService,
+    onSuccessLogin: (Void?) -> Unit
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
@@ -108,7 +109,7 @@ fun LoginScreen(
         composable("emailLogin") {
             EmailLoginScreen(
                 onSuccessLogin = {
-
+                    onSuccessLogin.invoke(null)
                 },
                 loginService = loginService
             )
@@ -120,7 +121,8 @@ fun LoginScreen(
 @Composable
 fun PreviewLoginScreen() {
     LoginScreen(
-        loginService = getLoginService(LocalContext.current)
+        loginService = getLoginService(LocalContext.current),
+        onSuccessLogin = {}
     )
 }
 
