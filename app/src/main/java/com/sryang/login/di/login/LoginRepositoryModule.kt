@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Singleton
 
 @Module
@@ -19,11 +20,25 @@ import javax.inject.Singleton
 object LoginRepositoryModule {
     @Singleton
     @Provides
-    fun emailLoginService(loginService: LoginService): EmailLoginService {
+    fun emailLoginService(
+        loginService: LoginService,
+        sessionService: SessionService
+    ): EmailLoginService {
         return object : EmailLoginService {
             override suspend fun emailLogin(id: String, email: String): String {
                 return loginService.emailLogin(id, email).token
             }
+
+            override suspend fun saveToken(token: String) {
+                return sessionService.saveToken(token = token)
+            }
+
+            override suspend fun logout() {
+                sessionService.removeToken()
+            }
+
+            override val isLogin: MutableStateFlow<Boolean>
+                get() = sessionService.isLogin
         }
     }
 
@@ -35,7 +50,7 @@ object LoginRepositoryModule {
 
     @Singleton
     @Provides
-    fun sessionService(@ApplicationContext context: Context) : SessionService{
+    fun sessionService(@ApplicationContext context: Context): SessionService {
         return SessionService(context)
     }
 }

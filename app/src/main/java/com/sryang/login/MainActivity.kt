@@ -23,12 +23,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val uiState = loginViewModel.uiState.collectAsState()
-            LoginScreen(isLogin = false, onLogin = {
+            LoginScreen(isLogin = uiState.value.isLogin, onLogin = {
                 loginViewModel.login(
                     emailLogin = it
                 )
             }, onLogout = {
-
+                loginViewModel.logout()
             })
         }
     }
