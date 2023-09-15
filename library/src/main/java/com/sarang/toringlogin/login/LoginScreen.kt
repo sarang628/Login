@@ -26,9 +26,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.theme.R
 import com.sarang.toringlogin.login.email.EmailLoginScreen
-import com.sryang.torang_repository.services.impl.LoginService
-import com.sryang.torang_repository.services.impl.LoginServiceTest
-import com.sryang.torang_repository.services.impl.getLoginService
 
 @Composable
 internal fun LoginScreen1(
@@ -91,8 +88,9 @@ internal fun LoginScreen1(
 
 @Composable
 fun LoginScreen(
-    loginService: LoginService,
-    onSuccessLogin: (Void?) -> Unit
+    isLogin: Boolean,
+    onLogin: (EmailLogin) -> Unit,
+    onLogout: () -> Unit
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
@@ -108,10 +106,9 @@ fun LoginScreen(
         }
         composable("emailLogin") {
             EmailLoginScreen(
-                onSuccessLogin = {
-                    onSuccessLogin.invoke(null)
-                },
-                loginService = loginService
+                isLogin = isLogin,
+                onLogin = onLogin,
+                onLogout = onLogout
             )
         }
     }
@@ -121,13 +118,8 @@ fun LoginScreen(
 @Composable
 fun PreviewLoginScreen() {
     LoginScreen(
-        loginService = getLoginService(LocalContext.current),
-        onSuccessLogin = {}
+        isLogin = true,
+        onLogin = {},
+        onLogout = {}
     )
-}
-
-@Preview
-@Composable
-fun test1() {
-    LoginServiceTest()
 }

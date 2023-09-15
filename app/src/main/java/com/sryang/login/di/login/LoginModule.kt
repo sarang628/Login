@@ -1,7 +1,6 @@
-package com.sryang.login.di
+package com.sryang.login.di.login
 
-import com.sarang.toringlogin.FacebookLoginProviderImpl
-import dagger.Binds
+import com.sarang.toringlogin.login.EmailLoginService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,7 +9,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
@@ -22,24 +20,10 @@ abstract class LoginModule {
 @Module
 object CoroutinesScopesModule {
 
-    @Singleton // Provide always the same instance
+    @Singleton
     @Provides
     fun providesCoroutineScope(): CoroutineScope {
         // Run this code when providing an instance of CoroutineScope
         return CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FacebookLoginProviderModule {
-
-}
-
-@Module
-@InstallIn(ActivityComponent::class)
-abstract class LoginNavigationModule {
-}
-
-class LoginNavigationImpl @Inject constructor() {
 }
