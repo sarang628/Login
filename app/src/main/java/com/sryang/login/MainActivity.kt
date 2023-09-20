@@ -15,8 +15,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
 
-    @Inject
-    lateinit var sessionString: SessionService
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

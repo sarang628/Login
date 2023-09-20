@@ -13,13 +13,16 @@ ext {
     targetSdk = 30
     buildToolsVersion = '30.0.3'
 
+
+    room_version = "2.5.1"
+
     //hilt
     hiltVersion = '2.46'
 
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    repositoryVersion = 'b9731af80c'
-    designVersion = 'df442fbb8c'
+    repositoryVersion = 'ab4217e851'
+    designVersion = 'a7236c358c'
     themeVersion = '7c191eb4e6'
 }
