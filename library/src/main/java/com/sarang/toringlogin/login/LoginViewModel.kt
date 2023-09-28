@@ -1,5 +1,6 @@
 package com.sarang.toringlogin.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,11 +18,13 @@ class LoginViewModel @Inject constructor(
 
     fun login(emailLogin: EmailLogin) {
         viewModelScope.launch {
-
-            val result = emailLoginService.emailLogin(emailLogin.email, emailLogin.password)
-            emailLoginService.saveToken(result)
-
-            uiState.emit(uiState.value.copy(isLogin = true))
+            try {
+                val result = emailLoginService.emailLogin(emailLogin.email, emailLogin.password)
+                emailLoginService.saveToken(result)
+                uiState.emit(uiState.value.copy(isLogin = true))
+            } catch (e: Exception) {
+                Log.e("LoginViewModel", e.toString())
+            }
         }
     }
 

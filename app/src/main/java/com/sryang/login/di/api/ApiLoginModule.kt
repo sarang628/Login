@@ -1,6 +1,7 @@
 package com.sryang.torang_repository.di.api
 
 import android.content.Context
+import android.util.Log
 import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.api.ApiLogin
 import com.sryang.torang_repository.data.Filter
@@ -9,6 +10,8 @@ import com.sryang.torang_repository.di.RetrofitModule
 import com.sryang.torang_repository.di.TorangOkHttpClientImpl
 import com.sryang.torang_repository.di.TorangOkhttpClient
 import com.sryang.torang_repository.repository.LoginService
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,13 +33,20 @@ class ApiLoginModule @Inject constructor(
         val loginServiceForRetrofit = createLoginRetrofitService(url)
         return object : LoginService {
             override suspend fun emailLogin(email: String, password: String): LoginResult {
-                val response = loginServiceForRetrofit.emailLogin(email, password)
-
-                if (response.body() == null)
-                    throw Exception("")
-                else
-                    return response.body()!!
-
+                try {
+                    val response = loginServiceForRetrofit.emailLogin(email, password)
+                    if (response.body() == null)
+                        throw Exception("")
+                    else
+                        return response.body()!!
+                } catch (e: SocketTimeoutException) {
+                    Log.e("ApiLoginModule", e.toString())
+                } catch (e: ConnectException) {
+                    Log.e("ApiLoginModule", e.toString())
+                } catch (e: Exception) {
+                    Log.e("ApiLoginModule", e.toString())
+                }
+                throw Exception("")
             }
 
             override suspend fun join(filter: Filter): ArrayList<Restaurant> {
