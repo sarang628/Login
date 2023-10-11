@@ -33,20 +33,9 @@ class ApiLoginModule @Inject constructor(
         val loginServiceForRetrofit = createLoginRetrofitService(url)
         return object : LoginService {
             override suspend fun emailLogin(email: String, password: String): LoginResult {
-                try {
-                    val response = loginServiceForRetrofit.emailLogin(email, password)
-                    if (response.body() == null)
-                        throw Exception("")
-                    else
-                        return response.body()!!
-                } catch (e: SocketTimeoutException) {
-                    Log.e("ApiLoginModule", e.toString())
-                } catch (e: ConnectException) {
-                    Log.e("ApiLoginModule", e.toString())
-                } catch (e: Exception) {
-                    Log.e("ApiLoginModule", e.toString())
-                }
-                throw Exception("")
+                val response = loginServiceForRetrofit.emailLogin(email, password)
+
+                return response.body()!!
             }
 
             override suspend fun join(filter: Filter): ArrayList<Restaurant> {
