@@ -16,20 +16,27 @@ class LoginViewModel @Inject constructor(
 
     val uiState = MutableStateFlow(LoginUiState(isLogin = false))
 
-    fun login(emailLogin: EmailLogin) {
+    fun login(emailLogin: EmailLogin, onLogin: () -> Unit) {
         viewModelScope.launch {
             try {
                 showProgress(true)
                 val result = emailLoginService.emailLogin(emailLogin.email, emailLogin.password)
                 emailLoginService.saveToken(result)
-                uiState.emit(uiState.value.copy(isLogin = true, isProgressLogin = false, error = null))
+                uiState.emit(
+                    uiState.value.copy(
+                        isLogin = true,
+                        isProgressLogin = false,
+                        error = null
+                    )
+                )
+                onLogin.invoke()
             } catch (e: java.net.UnknownHostException) {
                 showError(e.toString())
                 Log.e("LoginViewModel", e.toString())
             } catch (e: Exception) {
                 showError(e.toString())
                 Log.e("LoginViewModel", e.toString())
-            }finally {
+            } finally {
                 showProgress(false)
             }
         }
@@ -51,10 +58,11 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    fun logout() {
+    fun logout(onLogout: () -> Unit) {
         viewModelScope.launch {
             emailLoginService.logout()
             uiState.emit(uiState.value.copy(isLogin = false))
+            onLogout.invoke()
         }
     }
 }

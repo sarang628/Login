@@ -90,6 +90,8 @@ internal fun LoginScreen1(
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel,
+    onLogin: () -> Unit,
+    onLogout: () -> Unit
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
@@ -107,12 +109,10 @@ fun LoginScreen(
             EmailLoginScreen(
                 isLogin = uiState.isLogin,
                 onLogin = {
-                    loginViewModel.login(
-                        emailLogin = it
-                    )
+                    loginViewModel.login(emailLogin = it, onLogin = onLogin)
                 },
                 onLogout = {
-                    loginViewModel.logout()
+                    loginViewModel.logout(onLogout = onLogout)
                 },
                 progress = uiState.isProgressLogin,
                 error = uiState.error

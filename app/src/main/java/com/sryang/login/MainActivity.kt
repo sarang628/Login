@@ -21,7 +21,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LoginScreen(
-                loginViewModel = loginViewModel
+                loginViewModel = loginViewModel,
+                onLogin = {},
+                onLogout = {}
             )
         }
     }
