@@ -2,9 +2,9 @@ package com.sryang.torang_repository.di.api
 
 import android.content.Context
 import android.util.Log
-import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.api.ApiLogin
 import com.sryang.torang_repository.data.Filter
+import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.remote.response.LoginResult
 import com.sryang.torang_repository.di.RetrofitModule
 import com.sryang.torang_repository.di.TorangOkHttpClientImpl

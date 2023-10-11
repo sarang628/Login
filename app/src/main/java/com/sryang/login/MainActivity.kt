@@ -15,20 +15,14 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
 
-    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val uiState = loginViewModel.uiState.collectAsState()
-            LoginScreen(isLogin = uiState.value.isLogin, onLogin = {
-                loginViewModel.login(
-                    emailLogin = it
-                )
-            }, onLogout = {
-                loginViewModel.logout()
-            })
+            LoginScreen(
+                loginViewModel = loginViewModel
+            )
         }
     }
 }

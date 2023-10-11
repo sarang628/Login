@@ -19,13 +19,32 @@ class LoginViewModel @Inject constructor(
     fun login(emailLogin: EmailLogin) {
         viewModelScope.launch {
             try {
+                showProgress(true)
                 val result = emailLoginService.emailLogin(emailLogin.email, emailLogin.password)
                 emailLoginService.saveToken(result)
-                uiState.emit(uiState.value.copy(isLogin = true))
+                uiState.emit(uiState.value.copy(isLogin = true, isProgressLogin = false))
             } catch (e: Exception) {
+                showProgress(false)
+                showError(e.toString())
                 Log.e("LoginViewModel", e.toString())
             }
         }
+    }
+
+    suspend fun showError(error: String) {
+        uiState.emit(
+            uiState.value.copy(
+                error = error
+            )
+        )
+    }
+
+    private suspend fun showProgress(b: Boolean) {
+        uiState.emit(
+            uiState.value.copy(
+                isProgressLogin = b
+            )
+        )
     }
 
     fun logout() {

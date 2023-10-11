@@ -53,7 +53,7 @@ fun EmailLoginForm(
     val focusManager = LocalFocusManager.current
 
     Box(Modifier.height(250.dp)) {
-        if (progress)
+        if (progress) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -61,68 +61,70 @@ fun EmailLoginForm(
             ) {
                 CircularProgressIndicator()
             }
-        Spacer(modifier = Modifier.height(100.dp))
-        Column(
-            modifier = Modifier
-                .height(250.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Email") },
-                singleLine = true,
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        } else {
+            Spacer(modifier = Modifier.height(100.dp))
+            Column(
                 modifier = Modifier
-                    .onPreviewKeyEvent {
-                        Log.d("__sryang", it.key.toString())
-                        if (it.key == Key.Tab && it.nativeKeyEvent.action == ACTION_DOWN
-                            || it.key == Key.NavigateNext && it.nativeKeyEvent.action == ACTION_DOWN
-                        ) {
-                            focusManager.moveFocus(FocusDirection.Down)
-                            true
-                        } else {
-                            false
+                    .height(250.dp)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    singleLine = true,
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    modifier = Modifier
+                        .onPreviewKeyEvent {
+                            Log.d("__sryang", it.key.toString())
+                            if (it.key == Key.Tab && it.nativeKeyEvent.action == ACTION_DOWN
+                                || it.key == Key.NavigateNext && it.nativeKeyEvent.action == ACTION_DOWN
+                            ) {
+                                focusManager.moveFocus(FocusDirection.Down)
+                                true
+                            } else {
+                                false
+                            }
                         }
-                    }
-            )
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                singleLine = true,
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                modifier = Modifier
-                    .onPreviewKeyEvent {
-                        if (
-                            it.key == Key.Tab && it.nativeKeyEvent.action == ACTION_DOWN
-                            || it.key == Key.NavigateNext && it.nativeKeyEvent.action == ACTION_DOWN
-                        ) {
-                            focusManager.moveFocus(FocusDirection.Down)
-                            true
-                        } else {
-                            false
-                        }
-                    }
-
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Button(onClick = {
-                onLogin.invoke(
-                    EmailLogin(
-                        email = email,
-                        password = password
-                    )
                 )
-            }) {
-                Text(text = "Login")
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Password") },
+                    singleLine = true,
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    modifier = Modifier
+                        .onPreviewKeyEvent {
+                            if (
+                                it.key == Key.Tab && it.nativeKeyEvent.action == ACTION_DOWN
+                                || it.key == Key.NavigateNext && it.nativeKeyEvent.action == ACTION_DOWN
+                            ) {
+                                focusManager.moveFocus(FocusDirection.Down)
+                                true
+                            } else {
+                                false
+                            }
+                        }
+
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {
+                    onLogin.invoke(
+                        EmailLogin(
+                            email = email,
+                            password = password
+                        )
+                    )
+                }) {
+                    Text(text = "Login")
+                }
+                if (isFailedLogin)
+                    Text(text = "로그인에 실패하였습니다.")
             }
-            if (isFailedLogin)
-                Text(text = "로그인에 실패하였습니다.")
         }
     }
 }

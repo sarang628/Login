@@ -10,8 +10,7 @@ internal fun TestEmailLoginScreen() {
         onLogin = {},
         onLogout = {},
         isLogin = true,
-        isProgress = false,
-        isFailedLogin = false
+        isProgress = false
     )
 }
 
@@ -22,7 +21,6 @@ internal fun TestEmailLoginScreen1() {
         onLogin = {},
         onLogout = {},
         isLogin = false,
-        isProgress = false,
-        isFailedLogin = true
+        isProgress = false
     )
 }
