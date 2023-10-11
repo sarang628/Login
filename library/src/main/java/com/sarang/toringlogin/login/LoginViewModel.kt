@@ -23,10 +23,14 @@ class LoginViewModel @Inject constructor(
                 val result = emailLoginService.emailLogin(emailLogin.email, emailLogin.password)
                 emailLoginService.saveToken(result)
                 uiState.emit(uiState.value.copy(isLogin = true, isProgressLogin = false))
-            } catch (e: Exception) {
-                showProgress(false)
+            } catch (e: java.net.UnknownHostException) {
                 showError(e.toString())
                 Log.e("LoginViewModel", e.toString())
+            } catch (e: Exception) {
+                showError(e.toString())
+                Log.e("LoginViewModel", e.toString())
+            }finally {
+                showProgress(false)
             }
         }
     }

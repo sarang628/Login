@@ -62,14 +62,16 @@ fun EmailLoginScreen(
     isLogin: Boolean,
     onLogin: (EmailLogin) -> Unit,
     onLogout: () -> Unit,
-    progress: Boolean
+    progress: Boolean,
+    error: String?
 ) {
     Column {
         InternalEmailLoginScreen(
             onLogin = onLogin,
             isLogin = isLogin,
             isProgress = progress,
-            onLogout = onLogout
+            onLogout = onLogout,
+            error = error
         )
     }
 }

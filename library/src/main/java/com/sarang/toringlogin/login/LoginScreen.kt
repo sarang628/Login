@@ -114,7 +114,8 @@ fun LoginScreen(
                 onLogout = {
                     loginViewModel.logout()
                 },
-                progress = uiState.isProgressLogin
+                progress = uiState.isProgressLogin,
+                error = uiState.error
             )
         }
     }
