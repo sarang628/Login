@@ -1,8 +1,6 @@
-package com.sryang.torang_repository.di.api
+package com.sryang.torang_repository.di.repository.api
 
-import com.sryang.torang_repository.api.ApiFeed
-import com.sryang.torang_repository.di.RetrofitModule
-import com.sryang.torang_repository.di.TorangOkhttpClient
+import com.sryang.torang_repository.api.ApiComment
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,13 +11,14 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class ApiFeedModule {
+class ApiCommentModule {
     @Singleton
     @Provides
     fun provideRemoteFeedService(
-        apiFeed: ProductApiFeed
-    ): ApiFeed {
-        return apiFeed.create()
+        apiComment: ProductApiComment,
+//        apiFeed: LocalApiComment
+    ): ApiComment {
+        return apiComment.create()
     }
 }
 
@@ -27,16 +26,16 @@ class ApiFeedModule {
  * 피드 서비스 Product
  */
 @Singleton
-class ProductApiFeed @Inject constructor(
+class ProductApiComment @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
     private var url = "http://sarang628.iptime.org:8081/"
-    fun create(): ApiFeed {
+    fun create(): ApiComment {
         return retrofitModule
 //            .getRetrofit(torangOkHttpClientImpl.getUnsafeOkHttpClient(), url)
             .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
-            .create(ApiFeed::class.java)
+            .create(ApiComment::class.java)
     }
 }
 
@@ -44,14 +43,15 @@ class ProductApiFeed @Inject constructor(
  * 로컬 서버 피드 서비스
  */
 @Singleton
-class LocalApiFeed @Inject constructor(
+class LocalApiComment @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    private var url = "http://10.0.2.2:8080/"
-    fun create(): ApiFeed {
+    private var url = "http://192.168.0.14:8081/"
+    fun create(): ApiComment {
         return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
-            ApiFeed::class.java
+            ApiComment::class.java
         )
     }
 }
+

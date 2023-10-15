@@ -1,16 +1,13 @@
-package com.sryang.torang_repository.di
+package com.sryang.torang_repository.di.repository.api
 
 import android.content.Context
-import com.sryang.torang_repository.repository.preference.TorangPreference
+import com.sryang.torang_repository.preference.TorangPreference
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import java.security.SecureRandom
 import java.security.cert.CertificateException

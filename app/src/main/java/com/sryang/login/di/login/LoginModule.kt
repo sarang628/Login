@@ -2,15 +2,14 @@ package com.sryang.login.di.login
 
 import android.content.Context
 import com.sarang.toringlogin.login.EmailLoginService
-import com.sryang.torang_repository.di.api.getLoginService
-import com.sryang.torang_repository.repository.LoginService
+import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Singleton
 
 @Module
@@ -19,12 +18,12 @@ object LoginServiceModule {
     @Singleton
     @Provides
     fun emailLoginService(
-        loginService: LoginService,
+        loginRepository: LoginRepository,
         sessionService: SessionService
     ): EmailLoginService {
         return object : EmailLoginService {
             override suspend fun emailLogin(id: String, email: String): String {
-                return loginService.emailLogin(id, email).token
+                return loginRepository.emailLogin(id, email)
             }
 
             override suspend fun saveToken(token: String) {
@@ -35,15 +34,9 @@ object LoginServiceModule {
                 sessionService.removeToken()
             }
 
-            override val isLogin: MutableStateFlow<Boolean>
-                get() = sessionService.isLogin
+            override val isLogin: StateFlow<Boolean>
+                get() = loginRepository.isLogin
         }
-    }
-
-    @Singleton
-    @Provides
-    fun loginService(@ApplicationContext context: Context): LoginService {
-        return getLoginService(context)
     }
 
     @Singleton
