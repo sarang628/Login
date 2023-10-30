@@ -1,4 +1,4 @@
-package com.sarang.toringlogin.login.email
+package com.sarang.toringlogin.login.compose.email
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

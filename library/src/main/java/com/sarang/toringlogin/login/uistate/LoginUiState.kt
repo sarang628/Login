@@ -1,4 +1,4 @@
-package com.sarang.toringlogin.login
+package com.sarang.toringlogin.login.uistate
 
 data class LoginUiState(
     val isLogin: Boolean,

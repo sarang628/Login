@@ -1,7 +1,7 @@
 package com.sryang.login.di.login
 
 import android.content.Context
-import com.sarang.toringlogin.login.EmailLoginService
+import com.sarang.toringlogin.login.usecase.EmailLoginService
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
 import dagger.Module

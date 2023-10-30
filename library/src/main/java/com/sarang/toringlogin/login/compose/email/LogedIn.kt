@@ -1,4 +1,4 @@
-package com.sarang.toringlogin.login.email
+package com.sarang.toringlogin.login.compose.email
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement

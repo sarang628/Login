@@ -1,4 +1,4 @@
-package com.sarang.toringlogin.login
+package com.sarang.toringlogin.login.compose
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -27,10 +27,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.theme.R
-import com.sarang.toringlogin.login.email.EmailLoginScreen
+import com.sarang.toringlogin.login.viewmodels.LoginViewModel
+import com.sarang.toringlogin.login.compose.email.EmailLoginScreen
 
 @Composable
-internal fun LoginScreen1(
+internal fun LoginScreen(
     onClickFacebookLogin: (Int) -> Unit,
     onClickEmail: (Int) -> Unit
 ) {
@@ -89,7 +90,7 @@ internal fun LoginScreen1(
 }
 
 @Composable
-fun LoginScreen(
+fun LoginNavHost(
     loginViewModel: LoginViewModel = hiltViewModel(),
     onLogin: () -> Unit,
     onLogout: () -> Unit
@@ -100,7 +101,7 @@ fun LoginScreen(
 
     NavHost(navController = navController, startDestination = "login") {
         composable("login") {
-            LoginScreen1(onClickFacebookLogin = {
+            LoginScreen(onClickFacebookLogin = {
                 Toast.makeText(context, "facebook login", Toast.LENGTH_SHORT).show()
             }, onClickEmail = {
                 navController.navigate("emailLogin")
@@ -109,13 +110,13 @@ fun LoginScreen(
         composable("emailLogin") {
             EmailLoginScreen(
                 isLogin = uiState.isLogin,
-                onLogin = {
-                    loginViewModel.login(emailLogin = it, onLogin = onLogin)
+                onLogin = { id, password ->
+                    loginViewModel.login(id = id, password = password, onLogin = onLogin)
                 },
                 onLogout = {
                     loginViewModel.logout(onLogout = onLogout)
                 },
-                progress = uiState.isProgressLogin,
+                isProgress = uiState.isProgressLogin,
                 error = uiState.error
             )
         }

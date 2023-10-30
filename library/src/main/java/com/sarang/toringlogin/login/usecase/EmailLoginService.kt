@@ -1,4 +1,4 @@
-package com.sarang.toringlogin.login
+package com.sarang.toringlogin.login.usecase
 
 import kotlinx.coroutines.flow.StateFlow
 
