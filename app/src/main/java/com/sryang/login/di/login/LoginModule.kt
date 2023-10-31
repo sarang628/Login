@@ -22,8 +22,9 @@ object LoginServiceModule {
         sessionService: SessionService
     ): EmailLoginService {
         return object : EmailLoginService {
-            override suspend fun emailLogin(id: String, email: String): String {
-                return loginRepository.emailLogin(id, email)
+            override suspend fun emailLogin(id: String, email: String) {
+                val result = loginRepository.emailLogin(id, email)
+                sessionService.saveToken(result)
             }
 
             override suspend fun saveToken(token: String) {

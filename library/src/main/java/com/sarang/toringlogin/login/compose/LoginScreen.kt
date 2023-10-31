@@ -91,13 +91,9 @@ internal fun LoginScreen(
 
 @Composable
 fun LoginNavHost(
-    loginViewModel: LoginViewModel = hiltViewModel(),
-    onLogin: () -> Unit,
-    onLogout: () -> Unit
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
-    val uiState by loginViewModel.uiState.collectAsState()
 
     NavHost(navController = navController, startDestination = "login") {
         composable("login") {
@@ -108,17 +104,7 @@ fun LoginNavHost(
             })
         }
         composable("emailLogin") {
-            EmailLoginScreen(
-                isLogin = uiState.isLogin,
-                onLogin = { id, password ->
-                    loginViewModel.login(id = id, password = password, onLogin = onLogin)
-                },
-                onLogout = {
-                    loginViewModel.logout(onLogout = onLogout)
-                },
-                isProgress = uiState.isProgressLogin,
-                error = uiState.error
-            )
+            EmailLoginScreen()
         }
     }
 }
