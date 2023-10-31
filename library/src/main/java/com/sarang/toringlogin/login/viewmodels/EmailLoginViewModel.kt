@@ -22,7 +22,7 @@ class EmailLoginViewModel @Inject constructor(
 
     val isLogin = emailLoginService.isLogin
 
-    fun login(id: String, password: String) {
+    fun login(id: String, password: String, onLogin: () -> Unit) {
 
         var isValidate = true
 
@@ -50,6 +50,7 @@ class EmailLoginViewModel @Inject constructor(
                 _uiState.emit(
                     uiState.value.copy(error = null)
                 )
+                onLogin.invoke()
             } catch (e: java.net.UnknownHostException) {
                 showError(e.toString())
                 Log.e("LoginViewModel", e.toString())

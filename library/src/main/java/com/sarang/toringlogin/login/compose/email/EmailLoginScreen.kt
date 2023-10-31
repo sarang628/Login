@@ -27,11 +27,12 @@ import com.sarang.toringlogin.login.viewmodels.EmailLoginViewModel
 @Composable
 internal fun EmailLoginScreen(
     viewModel: EmailLoginViewModel = hiltViewModel(),
+    onLogin: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState()
     _EmailLoginScreen(
-        uiState, isLogin, onLogin = { id, password -> viewModel.login(id, password) },
+        uiState, isLogin, onLogin = { id, password -> viewModel.login(id, password, onLogin) },
         onChangeEmail = { viewModel.onChangeEmail(it) },
         onChangePassword = { viewModel.onChangePassword(it) },
         onClearEmail = { viewModel.clearEmail() },
