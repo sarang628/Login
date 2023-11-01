@@ -55,7 +55,6 @@ internal fun _EmailLoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = com.sarang.theme.R.color.colorSecondaryLight))
             .padding(start = 16.dp, end = 16.dp)
             .verticalScroll(state = rememberScrollState())
     ) {

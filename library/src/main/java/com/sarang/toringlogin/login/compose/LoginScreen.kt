@@ -1,6 +1,5 @@
 package com.sarang.toringlogin.login.compose
 
-import android.graphics.Paint.Join
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,8 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,12 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.theme.R
-import com.sarang.toringlogin.login.viewmodels.LoginViewModel
 import com.sarang.toringlogin.login.compose.email.EmailLoginScreen
 import com.sarang.toringlogin.login.compose.join.JoinName
 
@@ -47,7 +41,6 @@ internal fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.colorSecondaryLight))
     ) {
         Spacer(modifier = Modifier.height(100.dp))
         Column(
@@ -56,7 +49,6 @@ internal fun LoginScreen(
         ) {
             Text(
                 text = "T O R A N G",
-                color = colorResource(id = R.color.colorSecondary),
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -68,7 +60,6 @@ internal fun LoginScreen(
         ) {
             Text(
                 text = "Hit the spot",
-                color = colorResource(id = R.color.colorSecondary),
                 fontSize = 20.sp
             )
         }
