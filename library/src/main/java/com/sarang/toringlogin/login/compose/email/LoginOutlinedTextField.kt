@@ -34,8 +34,8 @@ fun LoginOutlinedTextField(
     onValueChange: (String) -> Unit,
     errorMessage: String? = null,
     placeHolder: String,
-    onKeyTabOrDown: () -> Unit,
-    onNext: () -> Unit,
+    onKeyTabOrDown: (() -> Unit)? = null,
+    onNext: (() -> Unit)? = null,
     onClear: () -> Unit
 ) {
     //에러 메시지를 필드 하단에 표시
@@ -81,7 +81,7 @@ fun LoginOutlinedTextField(
             shape = RoundedCornerShape(14.dp),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), // 키보드 엔터 부분 Next로 바꾸기
             keyboardActions = KeyboardActions(onNext = { // Next를 눌렀을 경우
-                onNext.invoke()
+                onNext?.invoke()
             }),
             modifier = Modifier
                 .onPreviewKeyEvent { // 키보드 탭 또는 방향키 아래를 눌렀을 경우
@@ -89,7 +89,7 @@ fun LoginOutlinedTextField(
                         || it.key == Key.NavigateNext && it.nativeKeyEvent.action == KeyEvent.ACTION_DOWN
                     ) {
                         Log.d("LoginOutlinedTextField", "onDown")
-                        onKeyTabOrDown.invoke()
+                        onKeyTabOrDown?.invoke()
                         true
                     } else {
                         false
