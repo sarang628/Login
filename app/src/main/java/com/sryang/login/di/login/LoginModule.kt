@@ -1,7 +1,8 @@
 package com.sryang.login.di.login
 
 import android.content.Context
-import com.sarang.toringlogin.login.usecase.EmailLoginService
+import com.sarang.toringlogin.login.usecase.EmailLoginUseCase
+import com.sarang.toringlogin.login.usecase.SignUpUseCase
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
 import dagger.Module
@@ -20,8 +21,8 @@ object LoginServiceModule {
     fun emailLoginService(
         loginRepository: LoginRepository,
         sessionService: SessionService
-    ): EmailLoginService {
-        return object : EmailLoginService {
+    ): EmailLoginUseCase {
+        return object : EmailLoginUseCase {
             override suspend fun emailLogin(id: String, email: String) {
                 val result = loginRepository.emailLogin(id, email)
                 sessionService.saveToken(result)
@@ -44,5 +45,15 @@ object LoginServiceModule {
     @Provides
     fun sessionService(@ApplicationContext context: Context): SessionService {
         return SessionService(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSignUpUseCase(): SignUpUseCase {
+        return object : SignUpUseCase {
+            override suspend fun confirmCode(confirmCode: String) {
+
+            }
+        }
     }
 }

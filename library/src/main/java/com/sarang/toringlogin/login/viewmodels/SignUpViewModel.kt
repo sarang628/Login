@@ -3,9 +3,9 @@ package com.sarang.toringlogin.login.viewmodels
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavBackStackEntry
-import com.sarang.toringlogin.login.usecase.EmailLoginService
+import com.sarang.toringlogin.login.usecase.EmailLoginUseCase
 import com.sarang.toringlogin.login.uistate.SignUpUiState
+import com.sarang.toringlogin.login.usecase.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @SuppressWarnings("unchecked")
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val emailLoginService: EmailLoginService,
+    val signUpUseCase: SignUpUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SignUpUiState())
@@ -65,6 +65,38 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = uiState.value.copy(confirmCode = "")
         }
+    }
+
+    fun onChangePassword(it: String) {
+        viewModelScope.launch {
+            _uiState.value = uiState.value.copy(password = it)
+        }
+    }
+
+    fun clearPassword() {
+        viewModelScope.launch {
+            _uiState.value = uiState.value.copy(password = "")
+        }
+    }
+
+    suspend fun validPassword(): Boolean {
+        if (uiState.value.password.length < 5) {
+            _uiState.value = uiState.value.copy(passwordErrorMessage = "5자 이상 입력해 주세요")
+            return false
+        } else {
+            _uiState.value = uiState.value.copy(passwordErrorMessage = null)
+            return true
+        }
+    }
+
+    suspend fun confirmCode(): Boolean {
+        try {
+            //signUpUseCase.confirmCode(uiState.value.confirmCode)
+            return true
+        } catch (e: Exception) {
+
+        }
+        return false
     }
 
 }

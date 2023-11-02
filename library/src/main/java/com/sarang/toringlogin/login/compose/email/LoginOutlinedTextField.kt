@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,8 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sarang.toringlogin.R
@@ -36,7 +39,9 @@ fun LoginOutlinedTextField(
     placeHolder: String,
     onKeyTabOrDown: (() -> Unit)? = null,
     onNext: (() -> Unit)? = null,
-    onClear: () -> Unit
+    onClear: () -> Unit,
+    isPassword: Boolean = false,
+    isPasswordVisual: Boolean = false
 ) {
     //에러 메시지를 필드 하단에 표시
     val compose = @Composable {
@@ -54,6 +59,18 @@ fun LoginOutlinedTextField(
                 if (errorMessage != null) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_warning),
+                        contentDescription = "",
+                        modifier = Modifier.clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            onClear.invoke()
+                        }
+                    )
+                } else if (isPassword) {
+                    Image(
+                        painter = if (!isPasswordVisual) painterResource(id = R.drawable.ic_password_off)
+                        else painterResource(id = R.drawable.ic_password_on),
                         contentDescription = "",
                         modifier = Modifier.clickable(
                             indication = null,
@@ -83,6 +100,7 @@ fun LoginOutlinedTextField(
             keyboardActions = KeyboardActions(onNext = { // Next를 눌렀을 경우
                 onNext?.invoke()
             }),
+            visualTransformation = if (isPassword && !isPasswordVisual) PasswordVisualTransformation() else VisualTransformation.None,
             modifier = Modifier
                 .onPreviewKeyEvent { // 키보드 탭 또는 방향키 아래를 눌렀을 경우
                     if (it.key == Key.Tab && it.nativeKeyEvent.action == KeyEvent.ACTION_DOWN

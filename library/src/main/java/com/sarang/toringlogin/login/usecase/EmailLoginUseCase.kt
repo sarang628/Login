@@ -2,7 +2,7 @@ package com.sarang.toringlogin.login.usecase
 
 import kotlinx.coroutines.flow.StateFlow
 
-interface EmailLoginService {
+interface EmailLoginUseCase {
     suspend fun emailLogin(id: String, email: String)
     suspend fun saveToken(token: String)
     suspend fun logout()

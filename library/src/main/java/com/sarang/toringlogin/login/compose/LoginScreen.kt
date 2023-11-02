@@ -123,8 +123,11 @@ fun LoginNavHost(
         composable("signUp") {
             SignUpScreen(onBack = {
                 navController.popBackStack()
+            }, signUpSuccess = {
+                navController.popBackStack()
             })
         }
+
     }
 }
 

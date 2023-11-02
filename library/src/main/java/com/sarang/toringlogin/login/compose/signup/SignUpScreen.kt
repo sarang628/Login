@@ -30,6 +30,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.toringlogin.login.compose.email.LoginOutlinedTextField
 import com.sarang.toringlogin.login.viewmodels.SignUpViewModel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -37,6 +38,7 @@ import kotlinx.coroutines.launch
 fun SignUpScreen(
     signUpViewModel: SignUpViewModel = hiltViewModel(),
     onBack: () -> Unit,
+    signUpSuccess: () -> Unit
 ) {
     val uiState by signUpViewModel.uiState.collectAsState()
     val navController = rememberNavController()
@@ -48,7 +50,7 @@ fun SignUpScreen(
                 onValueChange = { signUpViewModel.onChangeName(it) },
                 onBack = onBack,
                 onClear = { signUpViewModel.clearName() },
-                onNext = { navController.navigate("JoinEmail") })
+                onNext = { navController.navigate("SignUpPassword") })
         }
         composable("JoinEmail") {
             SignUpEmail(
@@ -70,11 +72,36 @@ fun SignUpScreen(
             SignUpConfirmationScreen(
                 email = uiState.email,
                 confirmCode = uiState.confirmCode,
-                onValueChange = {signUpViewModel.onChangeConfirmationCode(it)},
+                onValueChange = { signUpViewModel.onChangeConfirmationCode(it) },
                 onBack = { navController.popBackStack() },
-                onClear = { signUpViewModel.clearConfirmationCode()}) {
-
-            }
+                onClear = { signUpViewModel.clearConfirmationCode() },
+                onNext = {
+                    coroutine.launch {
+                        if (signUpViewModel.confirmCode()) {
+                            navController.navigate("SuccessSignUp") {
+                                popUpTo(0)
+                            }
+                        }
+                    }
+                })
+        }
+        composable("SignUpPassword") {
+            SignUpPassword(
+                password = uiState.password,
+                onValueChange = { signUpViewModel.onChangePassword(it) },
+                onBack = { navController.popBackStack() },
+                onClear = { signUpViewModel.clearPassword() },
+                onNext = {
+                    coroutine.launch {
+                        if (signUpViewModel.validPassword())
+                            navController.navigate("JoinEmail")
+                    }
+                },
+                errorMessage = uiState.passwordErrorMessage
+            )
+        }
+        composable("SuccessSignUp") {
+            SignUpSuccess(onNext = signUpSuccess)
         }
     }
 }

@@ -5,7 +5,7 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.toringlogin.login.uistate.EmailLoginUiState
-import com.sarang.toringlogin.login.usecase.EmailLoginService
+import com.sarang.toringlogin.login.usecase.EmailLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EmailLoginViewModel @Inject constructor(
-    private val emailLoginService: EmailLoginService,
+    private val emailLoginService: EmailLoginUseCase,
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow(EmailLoginUiState())
