@@ -3,7 +3,6 @@ package com.sarang.toringlogin.login.viewmodels
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.toringlogin.login.usecase.EmailLoginUseCase
 import com.sarang.toringlogin.login.uistate.SignUpUiState
 import com.sarang.toringlogin.login.usecase.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +19,7 @@ class SignUpViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState = _uiState.asStateFlow()
+    var token = "";
 
     fun onChangeName(name: String) {
         viewModelScope.launch {
@@ -50,8 +50,16 @@ class SignUpViewModel @Inject constructor(
             _uiState.value = uiState.value.copy(emailErrorMessage = "이메일 형식이 아닙니다.")
             return false
         } else {
-            _uiState.value = uiState.value.copy(emailErrorMessage = null)
-            return true
+            _uiState.value = uiState.value.copy(emailErrorMessage = null, isProgress = true)
+            try {
+                token = signUpUseCase.checkEmail(uiState.value.email, uiState.value.password)
+                return true
+            } catch (e: Exception) {
+                _uiState.value = uiState.value.copy(emailErrorMessage = e.message)
+            } finally {
+                _uiState.value = uiState.value.copy(isProgress = false)
+            }
+            return false
         }
     }
 
@@ -91,10 +99,18 @@ class SignUpViewModel @Inject constructor(
 
     suspend fun confirmCode(): Boolean {
         try {
-            //signUpUseCase.confirmCode(uiState.value.confirmCode)
-            return true
+            _uiState.value = uiState.value.copy(confirmCodeErrorMessage = null, isProgress = true)
+            return signUpUseCase.confirmCode(
+                token = token,
+                confirmCode = uiState.value.confirmCode,
+                name = uiState.value.name,
+                email = uiState.value.email,
+                password = uiState.value.password
+            )
         } catch (e: Exception) {
-
+            _uiState.value = uiState.value.copy(confirmCodeErrorMessage = e.toString())
+        } finally {
+            _uiState.value = uiState.value.copy(isProgress = false)
         }
         return false
     }

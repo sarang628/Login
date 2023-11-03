@@ -15,8 +15,8 @@ class ApiFeedModule {
     @Singleton
     @Provides
     fun provideRemoteFeedService(
-//        apiFeed: ProductApiFeed,
-        apiFeed: LocalApiFeed
+        apiFeed: ProductApiFeed,
+//        apiFeed: LocalApiFeed
     ): ApiFeed {
         return apiFeed.create()
     }

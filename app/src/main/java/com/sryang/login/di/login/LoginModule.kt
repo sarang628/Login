@@ -24,7 +24,7 @@ object LoginServiceModule {
     ): EmailLoginUseCase {
         return object : EmailLoginUseCase {
             override suspend fun emailLogin(id: String, email: String) {
-                val result = loginRepository.emailLogin(id, email)
+                val result = loginRepository.emailLogin(id, email).token
                 sessionService.saveToken(result)
             }
 
@@ -49,10 +49,28 @@ object LoginServiceModule {
 
     @Singleton
     @Provides
-    fun provideSignUpUseCase(): SignUpUseCase {
+    fun provideSignUpUseCase(
+        loginRepository: LoginRepository
+    ): SignUpUseCase {
         return object : SignUpUseCase {
-            override suspend fun confirmCode(confirmCode: String) {
+            override suspend fun confirmCode(
+                token: String,
+                confirmCode: String,
+                name: String,
+                email: String,
+                password: String
+            ): Boolean {
+                return loginRepository.confirmCode(
+                    token = token,
+                    confirmCode = confirmCode,
+                    name = name,
+                    email = email,
+                    password = password
+                )
+            }
 
+            override suspend fun checkEmail(email: String, password: String): String {
+                return loginRepository.checkEmail(email, password)
             }
         }
     }
