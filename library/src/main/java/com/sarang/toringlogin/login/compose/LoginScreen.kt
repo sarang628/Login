@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,7 +36,8 @@ import com.sarang.toringlogin.login.compose.signup.SignUpScreen
 internal fun LoginScreen(
     onClickFacebookLogin: (Int) -> Unit,
     onClickEmail: (Int) -> Unit,
-    onSignUp: (() -> Unit)
+    onSignUp: () -> Unit,
+    onLookAround: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -96,6 +98,17 @@ internal fun LoginScreen(
                     onSignUp.invoke()
                 })
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Text(
+                text = "Look Around",
+                color = Color.Blue,
+                modifier = Modifier.clickable(interactionSource = remember {
+                    MutableInteractionSource()
+                }, indication = null) {
+                    onLookAround.invoke()
+                })
+        }
 
     }
 }
@@ -115,6 +128,8 @@ fun LoginNavHost(
                 navController.navigate("emailLogin")
             }, onSignUp = {
                 navController.navigate("signUp")
+            }, onLookAround = {
+
             })
         }
         composable("emailLogin") {
@@ -134,5 +149,5 @@ fun LoginNavHost(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(onClickEmail = {}, onClickFacebookLogin = {}, onSignUp = {})
+    LoginScreen(onClickEmail = {}, onClickFacebookLogin = {}, onSignUp = {}, onLookAround = {})
 }
