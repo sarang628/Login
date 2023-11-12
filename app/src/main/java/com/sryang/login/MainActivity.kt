@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     LoginNavHost(onLogin = {
                         Log.d("MainActivity", "onLogin")
-                    })
+                    }, onLookAround = {})
                 }
             }
         }

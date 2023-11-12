@@ -115,7 +115,8 @@ internal fun LoginScreen(
 
 @Composable
 fun LoginNavHost(
-    onLogin: () -> Unit
+    onLogin: () -> Unit,
+    onLookAround: () -> Unit
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
@@ -128,9 +129,7 @@ fun LoginNavHost(
                 navController.navigate("emailLogin")
             }, onSignUp = {
                 navController.navigate("signUp")
-            }, onLookAround = {
-
-            })
+            }, onLookAround = onLookAround)
         }
         composable("emailLogin") {
             EmailLoginScreen(onLogin = onLogin)
