@@ -28,7 +28,7 @@ internal fun EmailLoginScreen(
     onLogin: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val isLogin by viewModel.isLogin.collectAsState()
+    val isLogin by viewModel.isLogin.collectAsState(false)
     _EmailLoginScreen(
         uiState, isLogin, onLogin = { id, password -> viewModel.login(id, password, onLogin) },
         onChangeEmail = { viewModel.onChangeEmail(it) },

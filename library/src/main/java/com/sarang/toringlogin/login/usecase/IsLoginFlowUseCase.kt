@@ -1,7 +1,7 @@
 package com.sarang.toringlogin.login.usecase
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface IsLoginFlowUseCase {
-    val isLogin: StateFlow<Boolean>
+    val isLogin: Flow<Boolean>
 }

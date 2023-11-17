@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Singleton
 
@@ -37,8 +38,7 @@ object LoginServiceModule {
         loginRepository: LoginRepository,
     ): IsLoginFlowUseCase {
         return object : IsLoginFlowUseCase {
-            override val isLogin: StateFlow<Boolean>
-                get() = loginRepository.isLogin
+            override val isLogin: Flow<Boolean> get() = loginRepository.isLogin
 
         }
     }
