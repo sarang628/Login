@@ -12,6 +12,7 @@ ext {
     minSdk = 24
     targetSdk = 34
     buildToolsVersion = '30.0.3'
+    compose_version = '1.6.0'
 
 
     room_version = "2.5.1"
@@ -23,7 +24,7 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    repositoryVersion = '33077855df'
+    repositoryVersion = '4b9739f1ed'
     designVersion = 'a7236c358c'
     themeVersion = '28a1702347'
 }

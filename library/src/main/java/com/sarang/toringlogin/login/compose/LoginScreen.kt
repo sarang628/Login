@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,61 +27,34 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.toringlogin.login.compose.email.EmailLoginScreen
-import com.sarang.toringlogin.login.compose.signup.JoinName
 import com.sarang.toringlogin.login.compose.signup.SignUpScreen
 
 @Composable
 internal fun LoginScreen(
-    onClickFacebookLogin: (Int) -> Unit,
-    onClickEmail: (Int) -> Unit,
-    onSignUp: () -> Unit,
-    onLookAround: () -> Unit
+    onClickFacebookLogin: () -> Unit,   // 페이스북 로그인 클릭
+    onClickEmail: () -> Unit,           // 이메일 로그인 클릭
+    onSignUp: () -> Unit,               // 회원가입 클릭
+    onLookAround: () -> Unit            // 둘러보기 클릭
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
+    Column(modifier = Modifier.fillMaxSize())
+    {
         Spacer(modifier = Modifier.height(100.dp))
-        Column(
-            Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "T O R A N G",
-                fontSize = 45.sp,
-                fontWeight = FontWeight.Bold
-            )
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "T O R A N G", fontSize = 45.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(modifier = Modifier.height(30.dp))
-        Column(
-            Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Hit the spot",
-                fontSize = 20.sp
-            )
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Hit the spot", fontSize = 20.sp)
         }
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(top = 150.dp), horizontalArrangement = Arrangement.Center
-        ) {
-            Button(onClick = {
-                onClickFacebookLogin.invoke(0)
-            }) {
+        Spacer(modifier = Modifier.height(150.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(onClick = { onClickFacebookLogin.invoke() }) {
                 Text(text = "LOG IN WITH FACEBOOK")
             }
         }
-
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp), horizontalArrangement = Arrangement.Center
-        ) {
-            Button(onClick = {
-                onClickEmail.invoke(0)
-            }) {
+        Spacer(modifier = Modifier.height(10.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(onClick = { onClickEmail.invoke() }) {
                 Text(text = "LOG IN WITH EMAIL")
             }
         }
@@ -92,24 +63,19 @@ internal fun LoginScreen(
             Text(text = "Don't have an account?")
             Spacer(modifier = Modifier.width(3.dp))
             Text(text = "Sign up.", color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable(interactionSource = remember {
-                    MutableInteractionSource()
-                }, indication = null) {
-                    onSignUp.invoke()
-                })
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) { onSignUp.invoke() })
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(
-                text = "Look Around",
-                color = Color.Blue,
-                modifier = Modifier.clickable(interactionSource = remember {
-                    MutableInteractionSource()
-                }, indication = null) {
-                    onLookAround.invoke()
-                })
+            Text(text = "Look Around", color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) { onLookAround.invoke() })
         }
-
     }
 }
 
@@ -141,7 +107,6 @@ fun LoginNavHost(
                 navController.popBackStack()
             })
         }
-
     }
 }
 

@@ -1,25 +1,23 @@
 package com.sarang.toringlogin.login.compose.email
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.toringlogin.login.uistate.EmailLoginUiState
 import com.sarang.toringlogin.login.viewmodels.EmailLoginViewModel
@@ -37,7 +35,8 @@ internal fun EmailLoginScreen(
         onChangePassword = { viewModel.onChangePassword(it) },
         onClearEmail = { viewModel.clearEmail() },
         onClearPassword = { viewModel.clearPassword() },
-        onLogout = { viewModel.logout({ }) }
+        onLogout = { viewModel.logout({ }) },
+        onClearErrorMsg = { viewModel.clearErrorMsg() }
     )
 }
 
@@ -50,7 +49,8 @@ internal fun _EmailLoginScreen(
     onChangePassword: (String) -> Unit,
     onClearEmail: () -> Unit,
     onClearPassword: () -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onClearErrorMsg: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -82,7 +82,15 @@ internal fun _EmailLoginScreen(
                 }
             }
             uiState.error?.let {
-                Text(text = "로그인에 실패하였습니다.\n$it", color = Color.Red)
+                AlertDialog(onDismissRequest = { },
+                    confirmButton = {
+                        Button(onClick = { onClearErrorMsg.invoke() }) {
+                            Text(text = "확인")
+                        }
+                    },
+                    title = {
+                        Text(text = it, fontSize = 16.sp)
+                    })
             }
         }
     }
@@ -92,13 +100,14 @@ internal fun _EmailLoginScreen(
 @Composable
 fun PreviewEmailLoginScreen() {
     _EmailLoginScreen(
-        uiState = EmailLoginUiState(),
-        isLogin = true,
+        uiState = EmailLoginUiState(error = "로그인에 실패하였습니다."),
+        isLogin = false,
         onLogin = { id, password -> },
         onClearPassword = {},
         onClearEmail = {},
         onChangePassword = {},
         onChangeEmail = {},
-        onLogout = {}
+        onLogout = {},
+        onClearErrorMsg = {}
     )
 }

@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -17,17 +21,18 @@ import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
 fun EmailLoginInput(
-    onLogin: (id: String, password: String) -> Unit,
-    progress: Boolean,
-    emailErrorMessage: String? = null,
-    passwordErrorMessage: String? = null,
-    email: String,
-    password: String,
-    onChangeEmail: (String) -> Unit,
-    onChangePassword: (String) -> Unit,
-    onClearEmail: () -> Unit,
-    onClearPassword: () -> Unit
+    onLogin: (id: String, password: String) -> Unit,    // 로그인 클릭
+    progress: Boolean,                                  // 로그인 프로그레스
+    emailErrorMessage: String? = null,                  // 이메일 입력 에러 메세지
+    passwordErrorMessage: String? = null,               // 비밀번호 입력 에러 메세지
+    email: String,                                      // 이메일
+    password: String,                                   // 비밀번호
+    onChangeEmail: (String) -> Unit,                    // 이메일 입력
+    onChangePassword: (String) -> Unit,                 // 비밀번호 임력
+    onClearEmail: () -> Unit,                           // 이메일 초기화
+    onClearPassword: () -> Unit                         // 비밀번호 초기화
 ) {
+    var isPasswordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     Box(Modifier.height(250.dp)) {
         ConstraintLayout {
@@ -58,8 +63,9 @@ fun EmailLoginInput(
                     onKeyTabOrDown = { focusManager.clearFocus(true) },
                     placeHolder = "비밀번호를 입력해주세요.",
                     errorMessage = passwordErrorMessage,
-                    onClear = { onClearPassword.invoke() }
-
+                    onClear = { isPasswordVisible = !isPasswordVisible },
+                    isPassword = true,
+                    isPasswordVisual = isPasswordVisible
                 )
                 Spacer(modifier = Modifier.height(15.dp))
                 LoginButton(
