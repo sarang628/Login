@@ -26,18 +26,7 @@ object LoginServiceModule {
     ): EmailLoginUseCase {
         return object : EmailLoginUseCase {
             override suspend fun emailLogin(id: String, email: String) {
-                try {
-                    val result = loginRepository.emailLogin(id, email).token
-                    sessionService.saveToken(result)
-                } catch (e: HttpException) {
-                    if (e.code() == 500) {
-                        throw Exception(e.response()?.errorBody()?.string().toString())
-                    }
-                } catch (e: ConnectException) {
-                    throw Exception("네트워크 상태를 확인해주세요.")
-                } catch (e: Exception) {
-                    throw Exception("알 수 없는 오류가 발생했습니다.")
-                }
+                loginRepository.emailLogin(id, email)
             }
 
             override suspend fun saveToken(token: String) {
