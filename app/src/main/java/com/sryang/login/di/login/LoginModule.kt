@@ -2,6 +2,8 @@ package com.sryang.login.di.login
 
 import android.content.Context
 import com.sarang.toringlogin.login.usecase.EmailLoginUseCase
+import com.sarang.toringlogin.login.usecase.IsLoginFlowUseCase
+import com.sarang.toringlogin.login.usecase.LogoutUseCase
 import com.sarang.toringlogin.login.usecase.SignUpUseCase
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
@@ -11,8 +13,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.StateFlow
-import retrofit2.HttpException
-import java.net.ConnectException
 import javax.inject.Singleton
 
 @Module
@@ -25,20 +25,31 @@ object LoginServiceModule {
         sessionService: SessionService
     ): EmailLoginUseCase {
         return object : EmailLoginUseCase {
-            override suspend fun emailLogin(id: String, email: String) {
+            override suspend fun invoke(id: String, email: String) {
                 loginRepository.emailLogin(id, email)
             }
+        }
+    }
 
-            override suspend fun saveToken(token: String) {
-                return sessionService.saveToken(token = token)
-            }
-
-            override suspend fun logout() {
-                sessionService.removeToken()
-            }
-
+    @Singleton
+    @Provides
+    fun ProvideIsLoginFlowUseCase(
+        loginRepository: LoginRepository,
+    ): IsLoginFlowUseCase {
+        return object : IsLoginFlowUseCase {
             override val isLogin: StateFlow<Boolean>
                 get() = loginRepository.isLogin
+
+        }
+    }
+
+    @Singleton
+    @Provides
+    fun ProvideLogoutUseCase(sessionService: SessionService): LogoutUseCase {
+        return object : LogoutUseCase {
+            override suspend fun invoke() {
+                sessionService.removeToken()
+            }
         }
     }
 

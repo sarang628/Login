@@ -1,11 +1,13 @@
 package com.sarang.toringlogin.login.viewmodels
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.toringlogin.login.uistate.EmailLoginUiState
 import com.sarang.toringlogin.login.usecase.EmailLoginUseCase
+import com.sarang.toringlogin.login.usecase.IsLoginFlowUseCase
+import com.sarang.toringlogin.login.usecase.LogoutUseCase
+import com.sarang.toringlogin.login.usecase.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,12 +18,14 @@ import javax.inject.Inject
 @HiltViewModel
 class EmailLoginViewModel @Inject constructor(
     private val emailLoginService: EmailLoginUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val isLoginFlowUseCase: IsLoginFlowUseCase
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow(EmailLoginUiState())
     var uiState = _uiState.asStateFlow()
 
-    val isLogin = emailLoginService.isLogin
+    val isLogin = isLoginFlowUseCase.isLogin
 
     fun login(id: String, password: String, onLogin: () -> Unit) {
         // ID 패스워드 둘 다 검사를 우선 해야 해서 변수로 결괏값 입력 받아 처리
@@ -34,7 +38,7 @@ class EmailLoginViewModel @Inject constructor(
             try {
                 showProgress(true)
                 clearErrorMsg()
-                emailLoginService.emailLogin(id, password) // 이메일 로그인 API 호출
+                emailLoginService.invoke(id, password) // 이메일 로그인 API 호출
                 onLogin.invoke()
             } catch (e: Exception) {
                 showError(e.message!!)
@@ -46,7 +50,7 @@ class EmailLoginViewModel @Inject constructor(
 
     fun logout(onLogout: () -> Unit) {
         viewModelScope.launch {
-            emailLoginService.logout()
+            logoutUseCase.invoke()
             onLogout.invoke()
         }
     }
