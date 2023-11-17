@@ -39,8 +39,11 @@ class LoginTest {
                 onClickEmail = {}
             )
         }
-//        composeTestRule.onNodeWithText("Continue").performClick()
-//        composeTestRule.onNodeWithText("Welcome").assertIsDisplayed()
+        composeTestRule.onNodeWithText("LOG IN WITH FACEBOOK").performClick()
+        composeTestRule.onNodeWithText("LOG IN WITH EMAIL").performClick()
+        composeTestRule.onNodeWithText("Hit the spot").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Sign up.").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Look Around").assertIsDisplayed()
 
         //Select a single node
 //        composeTestRule.onNode(<<SemanticsMatcher>>, useUnmergedTree = false): SemanticsNodeInteraction
@@ -69,14 +72,11 @@ class LoginTest {
         //composeTestRule.onNode(matcher).assert(hasText("Button") or hasText("Button2"))
 
         // Check number of matched nodes
-        composeTestRule
-            .onAllNodesWithContentDescription("Beatle").assertCountEquals(4)
+        //composeTestRule.onAllNodesWithContentDescription("Beatle").assertCountEquals(4)
         // At least one matches
-        composeTestRule
-            .onAllNodesWithContentDescription("Beatle").assertAny(hasTestTag("Drummer"))
+        //composeTestRule.onAllNodesWithContentDescription("Beatle").assertAny(hasTestTag("Drummer"))
         // All of them match
-        composeTestRule
-            .onAllNodesWithContentDescription("Beatle").assertAll(hasClickAction())
+        //composeTestRule.onAllNodesWithContentDescription("Beatle").assertAll(hasClickAction())
 
     }
 
