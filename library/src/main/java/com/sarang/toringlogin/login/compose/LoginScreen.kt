@@ -47,12 +47,12 @@ internal fun LoginScreen(
             Text(text = "Hit the spot", fontSize = 20.sp)
         }
         Spacer(modifier = Modifier.height(150.dp))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        /*Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(onClick = { onClickFacebookLogin.invoke() }) {
                 Text(text = "LOG IN WITH FACEBOOK")
             }
         }
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(10.dp))*/
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(onClick = { onClickEmail.invoke() }) {
                 Text(text = "LOG IN WITH EMAIL")
