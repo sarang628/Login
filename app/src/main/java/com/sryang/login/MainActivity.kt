@@ -11,7 +11,7 @@ import androidx.compose.material3.Surface
 
 import androidx.compose.ui.Modifier
 import com.google.samples.apps.sunflower.ui.TorangTheme
-import com.sarang.toringlogin.login.compose.LoginNavHost
+import com.sryang.torang.compose.LoginNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

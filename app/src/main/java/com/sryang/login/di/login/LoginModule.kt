@@ -1,10 +1,10 @@
 package com.sryang.login.di.login
 
 import android.content.Context
-import com.sarang.toringlogin.login.usecase.EmailLoginUseCase
-import com.sarang.toringlogin.login.usecase.IsLoginFlowUseCase
-import com.sarang.toringlogin.login.usecase.LogoutUseCase
-import com.sarang.toringlogin.login.usecase.SignUpUseCase
+import com.sryang.torang.usecase.EmailLoginUseCase
+import com.sryang.torang.usecase.IsLoginFlowUseCase
+import com.sryang.torang.usecase.LogoutUseCase
+import com.sryang.torang.usecase.SignUpUseCase
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
 import dagger.Module
@@ -13,7 +13,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Singleton
 
 @Module
