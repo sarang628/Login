@@ -33,8 +33,17 @@ UI elements such as activities and fragments that display the data
   - keyboardOptions : 키보드 엔터 자리 다른 버튼으로 변경 가능
   - keyboardActions : 탭키나 엔터 키 눌렀을 때 다음 필드로 입력 가능하게 설정 가능
 #### UI state
-The UI state is what the app says they should see.
+- The UI state is what the app says they should see.
+- UI can be encapsulated in a UiState data class
 ```
+data class EmailLoginUiState(
+    val email: String = "",
+    val password: String = "",
+    val isProgress: Boolean = false,
+    val error: String? = null,
+    val emailErrorMessage: String? = null,
+    val passwordErrorMessage: String? = null
+)
 ```
 #### State holder(ViewModel)
 Responsible for the production of UI state and contain the necessary logic for that task
