@@ -1,6 +1,6 @@
 # Login Module
 
-<img src="screenshots/screen.png"/>
+<img src="screenshots/screen.jpg"/>
 
 ## Convention
 ### package
