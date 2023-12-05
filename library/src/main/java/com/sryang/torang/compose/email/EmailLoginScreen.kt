@@ -29,7 +29,7 @@ internal fun EmailLoginScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState(false)
-    _EmailLoginScreen(
+    EmailLoginScreen(
         uiState, isLogin, onLogin = { id, password -> viewModel.login(id, password, onLogin) },
         onChangeEmail = { viewModel.onChangeEmail(it) },
         onChangePassword = { viewModel.onChangePassword(it) },
@@ -41,7 +41,7 @@ internal fun EmailLoginScreen(
 }
 
 @Composable
-internal fun _EmailLoginScreen(
+internal fun EmailLoginScreen(
     uiState: EmailLoginUiState,
     isLogin: Boolean,
     onLogin: (id: String, password: String) -> Unit,
@@ -82,7 +82,7 @@ internal fun _EmailLoginScreen(
                 }
             }
             uiState.error?.let {
-                AlertDialog(onDismissRequest = { },
+                AlertDialog(onDismissRequest = { onClearErrorMsg.invoke() },
                     confirmButton = {
                         Button(onClick = { onClearErrorMsg.invoke() }) {
                             Text(text = "확인")
@@ -99,7 +99,7 @@ internal fun _EmailLoginScreen(
 @Preview
 @Composable
 fun PreviewEmailLoginScreen() {
-    _EmailLoginScreen(
+    EmailLoginScreen(
         uiState = EmailLoginUiState(error = "로그인에 실패하였습니다."),
         isLogin = false,
         onLogin = { id, password -> },

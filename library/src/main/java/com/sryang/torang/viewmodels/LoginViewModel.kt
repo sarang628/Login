@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
-    val uiStete = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     val delay = 50L
     init {

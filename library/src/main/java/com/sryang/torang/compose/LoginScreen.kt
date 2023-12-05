@@ -41,7 +41,7 @@ internal fun LoginScreen(
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit            // 둘러보기 클릭
 ) {
-    val uiState by loginViewModel.uiStete.collectAsState()
+    val uiState by loginViewModel.uiState.collectAsState()
     Column(modifier = Modifier.fillMaxSize())
     {
         Spacer(modifier = Modifier.height(100.dp))

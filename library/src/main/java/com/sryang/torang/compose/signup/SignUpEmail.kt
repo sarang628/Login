@@ -36,12 +36,7 @@ fun SignUpEmail(
     Scaffold(
         topBar = {
             TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-
-                ),
-                title = {
-                    Text("")
-                },
+                title = {},
                 navigationIcon = {
                     IconButton(onClick = { onBack.invoke() }) {
                         Icon(

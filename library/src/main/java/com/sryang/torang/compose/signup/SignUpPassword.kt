@@ -40,9 +40,7 @@ fun SignUpPassword(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text("")
-                },
+                title = {},
                 navigationIcon = {
                     IconButton(onClick = { onBack.invoke() }) {
                         Icon(

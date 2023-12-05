@@ -21,9 +21,8 @@ class EmailLoginViewModel @Inject constructor(
     private val isLoginFlowUseCase: IsLoginFlowUseCase
 ) : ViewModel() {
 
-    private var _uiState = MutableStateFlow(EmailLoginUiState())
+    private val _uiState = MutableStateFlow(EmailLoginUiState())
     var uiState = _uiState.asStateFlow()
-
     val isLogin = isLoginFlowUseCase.isLogin
 
     fun login(id: String, password: String, onLogin: () -> Unit) {
@@ -54,7 +53,7 @@ class EmailLoginViewModel @Inject constructor(
         }
     }
 
-    fun validateEmail(email: String): Boolean {
+    private fun validateEmail(email: String): Boolean {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _uiState.value = uiState.value.copy(emailErrorMessage = "이메일 형식이 올바르지 않습니다.")
             return false
@@ -64,7 +63,7 @@ class EmailLoginViewModel @Inject constructor(
         return true
     }
 
-    fun validatePassword(password: String): Boolean {
+    private fun validatePassword(password: String): Boolean {
         if (password.length < 5) {
             _uiState.value = uiState.value.copy(passwordErrorMessage = "비밀번호는 최소 5자리 이상입니다.")
             return false
@@ -78,29 +77,27 @@ class EmailLoginViewModel @Inject constructor(
         _uiState.update { it.copy(isProgress = b) }
     }
 
-    fun showError(error: String) {
+    private fun showError(error: String) {
         _uiState.update { it.copy(error = error) }
     }
 
-    fun onChangeEmail(it: String) {
-        _uiState.value = uiState.value.copy(email = it)
+    fun onChangeEmail(email: String) {
+        _uiState.update { it.copy(email = email) }
     }
 
-    fun onChangePassword(it: String) {
-        _uiState.value = uiState.value.copy(password = it)
+    fun onChangePassword(password: String) {
+        _uiState.update { it.copy(password = password) }
     }
 
     fun clearEmail() {
-        _uiState.value = uiState.value.copy(email = "")
+        _uiState.update { it.copy(email = "") }
     }
 
     fun clearPassword() {
-        _uiState.value = uiState.value.copy(password = "")
+        _uiState.update { it.copy(password = "") }
     }
 
     fun clearErrorMsg() {
-        _uiState.value = uiState.value.copy(error = null)
+        _uiState.update { it.copy(error = null) }
     }
-
-
 }
