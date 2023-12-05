@@ -1,0 +1,55 @@
+# Login Module
+
+<img src="screenshots/screen.png"/>
+
+## Convention
+### package
+<img src="screenshots/package.png" width="40%" height="40%"/>
+
+### Function
+- Login + Screen
+- SignUp + Screen
+- EmailLogin + Screen
+
+- EmailLogin + UseCase
+- IsLoginFlow + UseCase
+- Logout + UseCase
+- SignUp + UseCase
+
+- EmailLogin + ViewModel
+- Login + ViewModel
+- SignUp + ViewModel
+
+## Case
+
+
+## Architecture
+### UI Layer
+#### UI element
+UI elements such as activities and fragments that display the data
+- OutlinedTextField
+  - supportingText : 입력 필드 하단에 작은 글씨로 정보 제공
+  - trailingIcon : 입력 필드 끝에 아이콘 배치
+  - keyboardOptions : 키보드 엔터 자리 다른 버튼으로 변경 가능
+  - keyboardActions : 탭키나 엔터 키 눌렀을 때 다음 필드로 입력 가능하게 설정 가능
+#### UI state
+The UI state is what the app says they should see.
+```
+```
+#### State holder(ViewModel)
+Responsible for the production of UI state and contain the necessary logic for that task
+```
+```
+
+## Illustrating cycle of event
+
+
+## UnitTest
+
+
+
+## What was difficult
+
+
+## Preview
+<img src="screenshots/preview.gif" />
