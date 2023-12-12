@@ -19,22 +19,6 @@ class SignUpViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
     private var token = "";
 
-    fun onChangeName(name: String) {
-        _uiState.update { it.copy(name = name) }
-    }
-
-    fun clearName() {
-        _uiState.update { it.copy(name = "") }
-    }
-
-    fun onChangeEmail(email: String) {
-        _uiState.update { it.copy(email = email) }
-    }
-
-    fun clearEmail() {
-        _uiState.update { it.copy(email = "") }
-    }
-
     suspend fun registerEmail(): Boolean {
         if (!Patterns.EMAIL_ADDRESS.matcher(uiState.value.email).matches()) {
             _uiState.update { it.copy(emailErrorMessage = "이메일 형식이 아닙니다.") }
@@ -51,22 +35,6 @@ class SignUpViewModel @Inject constructor(
             }
             return false
         }
-    }
-
-    fun onChangeConfirmationCode(code: String) {
-        _uiState.update { it.copy(confirmCode = code) }
-    }
-
-    fun clearConfirmationCode() {
-        _uiState.update { it.copy(confirmCode = "") }
-    }
-
-    fun onChangePassword(password: String) {
-        _uiState.update { it.copy(password = password) }
-    }
-
-    fun clearPassword() {
-        _uiState.update { it.copy(password = "") }
     }
 
     fun validPassword(): Boolean {
@@ -97,4 +65,35 @@ class SignUpViewModel @Inject constructor(
         return false
     }
 
+    fun onChangeName(name: String) {
+        _uiState.update { it.copy(name = name) }
+    }
+
+    fun clearName() {
+        _uiState.update { it.copy(name = "") }
+    }
+
+    fun onChangeEmail(email: String) {
+        _uiState.update { it.copy(email = email) }
+    }
+
+    fun clearEmail() {
+        _uiState.update { it.copy(email = "") }
+    }
+
+    fun clearConfirmationCode() {
+        _uiState.update { it.copy(confirmCode = "") }
+    }
+
+    fun onChangePassword(password: String) {
+        _uiState.update { it.copy(password = password) }
+    }
+
+    fun clearPassword() {
+        _uiState.update { it.copy(password = "") }
+    }
+
+    fun onChangeConfirmationCode(code: String) {
+        _uiState.update { it.copy(confirmCode = code) }
+    }
 }

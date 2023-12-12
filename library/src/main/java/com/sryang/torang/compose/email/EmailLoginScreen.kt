@@ -1,9 +1,8 @@
 package com.sryang.torang.compose.email
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,18 +18,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sryang.torang.compose.TorangLogo
 import com.sryang.torang.uistate.EmailLoginUiState
+import com.sryang.torang.uistate.LoginUiState
 import com.sryang.torang.viewmodels.EmailLoginViewModel
 
 @Composable
 internal fun EmailLoginScreen(
     viewModel: EmailLoginViewModel = hiltViewModel(),
+    loginUiState: LoginUiState,
     onLogin: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState(false)
     EmailLoginScreen(
-        uiState, isLogin, onLogin = { id, password -> viewModel.login(id, password, onLogin) },
+        loginUiState = loginUiState,
+        uiState = uiState,
+        isLogin = isLogin,
+        onLogin = { id, password -> viewModel.login(id, password, onLogin) },
         onChangeEmail = { viewModel.onChangeEmail(it) },
         onChangePassword = { viewModel.onChangePassword(it) },
         onClearEmail = { viewModel.clearEmail() },
@@ -42,6 +47,7 @@ internal fun EmailLoginScreen(
 
 @Composable
 internal fun EmailLoginScreen(
+    loginUiState: LoginUiState,
     uiState: EmailLoginUiState,
     isLogin: Boolean,
     onLogin: (id: String, password: String) -> Unit,
@@ -52,15 +58,11 @@ internal fun EmailLoginScreen(
     onLogout: () -> Unit,
     onClearErrorMsg: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp)
-            .verticalScroll(state = rememberScrollState())
+    Box(
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
     ) {
-        TorangLogo()
-        Spacer(modifier = Modifier.height(60.dp))
         Column(
+            Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (!isLogin) {
@@ -100,6 +102,7 @@ internal fun EmailLoginScreen(
 @Composable
 fun PreviewEmailLoginScreen() {
     EmailLoginScreen(
+        loginUiState = LoginUiState(),
         uiState = EmailLoginUiState(error = "로그인에 실패하였습니다."),
         isLogin = false,
         onLogin = { id, password -> },

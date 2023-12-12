@@ -34,44 +34,40 @@ fun EmailLoginInput(
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    Box(Modifier.height(250.dp)) {
-        ConstraintLayout {
-            Spacer(modifier = Modifier.height(100.dp))
-            Column(
-                modifier = Modifier
-                    .height(250.dp)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                LoginOutlinedTextField(
-                    value = email,
-                    onValueChange = onChangeEmail,
-                    label = "Email",
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) },
-                    onKeyTabOrDown = { focusManager.moveFocus(FocusDirection.Down) },
-                    placeHolder = "이메일을 입력해주세요.",
-                    errorMessage = emailErrorMessage,
-                    onClear = { onClearEmail.invoke() }
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                LoginOutlinedTextField(
-                    value = password,
-                    onValueChange = onChangePassword,
-                    label = "Password",
-                    onNext = { focusManager.clearFocus(true) },
-                    onKeyTabOrDown = { focusManager.clearFocus(true) },
-                    placeHolder = "비밀번호를 입력해주세요.",
-                    errorMessage = passwordErrorMessage,
-                    onClear = { isPasswordVisible = !isPasswordVisible },
-                    isPassword = true,
-                    isPasswordVisual = isPasswordVisible
-                )
-                Spacer(modifier = Modifier.height(15.dp))
-                LoginButton(
-                    onClick = { onLogin.invoke(email, password) }, progress = progress
-                )
-            }
+    Box {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            LoginOutlinedTextField(
+                value = email,
+                onValueChange = onChangeEmail,
+                label = "Email",
+                onNext = { focusManager.moveFocus(FocusDirection.Down) },
+                onKeyTabOrDown = { focusManager.moveFocus(FocusDirection.Down) },
+                placeHolder = "이메일을 입력해주세요.",
+                errorMessage = emailErrorMessage,
+                onClear = { onClearEmail.invoke() }
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            LoginOutlinedTextField(
+                value = password,
+                onValueChange = onChangePassword,
+                label = "Password",
+                onNext = { focusManager.clearFocus(true) },
+                onKeyTabOrDown = { focusManager.clearFocus(true) },
+                placeHolder = "비밀번호를 입력해주세요.",
+                errorMessage = passwordErrorMessage,
+                onClear = { isPasswordVisible = !isPasswordVisible },
+                isPassword = true,
+                isPasswordVisual = isPasswordVisible
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            LoginButton(
+                onClick = { onLogin.invoke(email, password) }, progress = progress
+            )
         }
     }
 }

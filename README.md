@@ -1,10 +1,10 @@
 # Login Module
 
-<img src="screenshots/screen.jpg"/>
+<img src="screenshots/screen.jpg" alt=""/>
 
 ## Convention
 ### package
-<img src="screenshots/package.png" width="40%" height="40%"/>
+<img src="screenshots/package.png" width="40%" height="40%" alt=""/>
 
 ### Function
 - Login + Screen
@@ -15,7 +15,7 @@
 - IsLoginFlow + UseCase
 - Logout + UseCase
 - SignUp + UseCase
-
+    
 - EmailLogin + ViewModel
 - Login + ViewModel
 - SignUp + ViewModel
@@ -45,12 +45,25 @@ data class EmailLoginUiState(
     val passwordErrorMessage: String? = null
 )
 ```
+```
+data class SignUpUiState(
+    val name: String = "",
+    val email: String = "",
+    val confirmCode: String = "",
+    val password: String = "",
+    val isProgress: Boolean = false,
+    val emailErrorMessage: String? = null,
+    val passwordErrorMessage: String? = null,
+    val confirmCodeErrorMessage: String? = null
+)
+```
 #### State holder(ViewModel)
 Responsible for the production of UI state and contain the necessary logic for that task
 ```
 ```
 
 ## Illustrating cycle of event
+<img src="screenshots/event.png" alt=""/>
 
 
 ## UnitTest
@@ -61,4 +74,4 @@ Responsible for the production of UI state and contain the necessary logic for t
 
 
 ## Preview
-<img src="screenshots/preview.gif" />
+<img src="screenshots/preview.gif" alt=""/>
