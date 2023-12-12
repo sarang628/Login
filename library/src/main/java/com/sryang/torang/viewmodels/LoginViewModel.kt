@@ -3,6 +3,8 @@ package com.sryang.torang.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sryang.torang.uistate.LoginUiState
+import com.sryang.torang.usecase.IsLoginFlowUseCase
+import com.sryang.torang.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,11 +14,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val isLoginFlowUseCase: IsLoginFlowUseCase,
+    private val logoutUseCase: LogoutUseCase
+) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
-
+    val isLogin = isLoginFlowUseCase.isLogin
     val delay = 50L
+
+    fun logout(onLogout: () -> Unit) {
+        viewModelScope.launch {
+            logoutUseCase.invoke()
+            onLogout.invoke()
+        }
+    }
+
     init {
         viewModelScope.launch {
             _uiState.update { it.copy(title = "_") }

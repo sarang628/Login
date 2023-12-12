@@ -30,59 +30,45 @@ internal fun EmailLoginScreen(
     onLogin: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val isLogin by viewModel.isLogin.collectAsState(false)
     EmailLoginScreen(
-        loginUiState = loginUiState,
         uiState = uiState,
-        isLogin = isLogin,
         onLogin = { id, password -> viewModel.login(id, password, onLogin) },
         onChangeEmail = { viewModel.onChangeEmail(it) },
         onChangePassword = { viewModel.onChangePassword(it) },
         onClearEmail = { viewModel.clearEmail() },
         onClearPassword = { viewModel.clearPassword() },
-        onLogout = { viewModel.logout({ }) },
         onClearErrorMsg = { viewModel.clearErrorMsg() }
     )
 }
 
 @Composable
 internal fun EmailLoginScreen(
-    loginUiState: LoginUiState,
     uiState: EmailLoginUiState,
-    isLogin: Boolean,
     onLogin: (id: String, password: String) -> Unit,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
     onClearEmail: () -> Unit,
     onClearPassword: () -> Unit,
-    onLogout: () -> Unit,
     onClearErrorMsg: () -> Unit,
 ) {
-    Box(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-    ) {
+    Box {
         Column(
             Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (!isLogin) {
-                EmailLoginInput(
-                    onLogin = onLogin,
-                    onChangeEmail = onChangeEmail,
-                    onChangePassword = onChangePassword,
-                    onClearEmail = onClearEmail,
-                    onClearPassword = onClearPassword,
-                    progress = uiState.isProgress,
-                    email = uiState.email,
-                    password = uiState.password,
-                    emailErrorMessage = uiState.emailErrorMessage,
-                    passwordErrorMessage = uiState.passwordErrorMessage
-                )
-            } else {
-                Column {
-                    LogedIn(onLogout = onLogout)
-                }
-            }
+
+            EmailLoginInput(
+                onLogin = onLogin,
+                onChangeEmail = onChangeEmail,
+                onChangePassword = onChangePassword,
+                onClearEmail = onClearEmail,
+                onClearPassword = onClearPassword,
+                progress = uiState.isProgress,
+                email = uiState.email,
+                password = uiState.password,
+                emailErrorMessage = uiState.emailErrorMessage,
+                passwordErrorMessage = uiState.passwordErrorMessage
+            )
             uiState.error?.let {
                 AlertDialog(onDismissRequest = { onClearErrorMsg.invoke() },
                     confirmButton = {
@@ -102,15 +88,12 @@ internal fun EmailLoginScreen(
 @Composable
 fun PreviewEmailLoginScreen() {
     EmailLoginScreen(
-        loginUiState = LoginUiState(),
         uiState = EmailLoginUiState(error = "로그인에 실패하였습니다."),
-        isLogin = false,
         onLogin = { id, password -> },
         onClearPassword = {},
         onClearEmail = {},
         onChangePassword = {},
         onChangeEmail = {},
-        onLogout = {},
         onClearErrorMsg = {}
     )
 }

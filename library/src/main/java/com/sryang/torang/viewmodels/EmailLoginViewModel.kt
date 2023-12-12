@@ -17,13 +17,10 @@ import javax.inject.Inject
 @HiltViewModel
 class EmailLoginViewModel @Inject constructor(
     private val emailLoginService: EmailLoginUseCase,
-    private val logoutUseCase: LogoutUseCase,
-    private val isLoginFlowUseCase: IsLoginFlowUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EmailLoginUiState())
     var uiState = _uiState.asStateFlow()
-    val isLogin = isLoginFlowUseCase.isLogin
 
     fun login(id: String, password: String, onLogin: () -> Unit) {
         // ID 패스워드 둘 다 검사를 우선 해야 해서 변수로 결괏값 입력 받아 처리
@@ -43,13 +40,6 @@ class EmailLoginViewModel @Inject constructor(
             } finally {
                 showProgress(false)
             }
-        }
-    }
-
-    fun logout(onLogout: () -> Unit) {
-        viewModelScope.launch {
-            logoutUseCase.invoke()
-            onLogout.invoke()
         }
     }
 

@@ -5,6 +5,7 @@ import com.sryang.torang.usecase.EmailLoginUseCase
 import com.sryang.torang.usecase.IsLoginFlowUseCase
 import com.sryang.torang.usecase.LogoutUseCase
 import com.sryang.torang.usecase.SignUpUseCase
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
 import dagger.Module
@@ -44,10 +45,14 @@ object LoginServiceModule {
 
     @Singleton
     @Provides
-    fun ProvideLogoutUseCase(sessionService: SessionService): LogoutUseCase {
+    fun ProvideLogoutUseCase(
+        sessionService: SessionService,
+        loggedInUserDao: LoggedInUserDao
+    ): LogoutUseCase {
         return object : LogoutUseCase {
             override suspend fun invoke() {
                 sessionService.removeToken()
+                loggedInUserDao.clear()
             }
         }
     }

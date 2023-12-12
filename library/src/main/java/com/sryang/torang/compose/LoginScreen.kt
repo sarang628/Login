@@ -34,6 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sryang.torang.compose.email.EmailLoginScreen
+import com.sryang.torang.compose.email.LogedIn
 import com.sryang.torang.compose.signup.SignUpScreen
 import com.sryang.torang.uistate.LoginUiState
 import com.sryang.torang.viewmodels.LoginViewModel
@@ -41,26 +42,29 @@ import com.sryang.torang.viewmodels.LoginViewModel
 @Composable
 internal fun LoginScreen(
     uiState: LoginUiState,
+    isLogin: Boolean,
     onClickFacebookLogin: () -> Unit,   // 페이스북 로그인 클릭
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,            // 둘러보기 클릭
     onLogin: () -> Unit,
+    onLogout: () -> Unit
 ) {
     val navController = rememberNavController()
     val screenHeightDp = LocalConfiguration.current.screenHeightDp
     Log.d("_LoginScreen", screenHeightDp.toString())
     Column(
         Modifier
-            .fillMaxSize()
             .verticalScroll(state = rememberScrollState())
     ) {
         TorangLogo(uiState = uiState)
+        Spacer(modifier = Modifier.height(130.dp))
         Box(
-            modifier = Modifier
-                .weight(1f)
-                .padding(top = 150.dp)
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
         ) {
-            NavHost(navController = navController, startDestination = "main") {
+            NavHost(
+                navController = navController,
+                startDestination = if (isLogin) "logout" else "main"
+            ) {
                 composable("main") {
                     Column {
                         /*facebook 로그인 버튼*/
@@ -102,7 +106,9 @@ internal fun LoginScreen(
                 composable("email") {
                     EmailLoginScreen(loginUiState = uiState, onLogin = onLogin)
                 }
-
+                composable("logout") {
+                    LogedIn(onLogout = { onLogout.invoke() })
+                }
             }
         }
     }
@@ -110,13 +116,14 @@ internal fun LoginScreen(
 
 @Composable
 fun LoginNavHost(
-    loginViewModel: LoginViewModel = hiltViewModel(),
+    viewModel: LoginViewModel = hiltViewModel(),
     onLogin: () -> Unit,
     onLookAround: () -> Unit
 ) {
-    val uiState by loginViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val navController = rememberNavController()
     val context = LocalContext.current
+    val isLogin by viewModel.isLogin.collectAsState(false)
 
     Box {
         NavHost(navController = navController, startDestination = "login") {
@@ -127,7 +134,11 @@ fun LoginNavHost(
                     }, onSignUp = {
                         navController.navigate("signUp")
                     }, onLookAround = onLookAround,
-                    onLogin = onLogin
+                    onLogin = onLogin,
+                    isLogin = isLogin,
+                    onLogout = {
+                        viewModel.logout({})
+                    }
                 )
             }
             composable("signUp") {
@@ -148,7 +159,9 @@ fun PreviewLoginScreen() {
         uiState = LoginUiState(),
         onClickFacebookLogin = {},
         onSignUp = {},
-        onLookAround = {}, onLogin = {
-
-        })
+        onLookAround = {},
+        onLogin = {},
+        isLogin = false,
+        onLogout = {}
+    )
 }
