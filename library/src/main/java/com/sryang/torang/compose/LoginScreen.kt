@@ -104,7 +104,7 @@ internal fun LoginScreen(
                     }
                 }
                 composable("email") {
-                    EmailLoginScreen(loginUiState = uiState, onLogin = onLogin)
+                    EmailLoginScreen(onLogin = onLogin)
                 }
                 composable("logout") {
                     LogedIn(onLogout = { onLogout.invoke() })

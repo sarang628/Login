@@ -6,6 +6,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sryang.torang.compose.LoginScreen
+import com.sryang.torang.uistate.LoginUiState
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,22 +19,48 @@ class LoginTest {
     // use createAndroidComposeRule<YourActivity>() if you need access to
     // an activity
 
-    @Test
-    fun myTest() {
-        // Start the app
+    @Before
+    fun setUiState() {
         composeTestRule.setContent {
             LoginScreen(
                 onLookAround = {},
                 onSignUp = {},
                 onClickFacebookLogin = {},
-                onClickEmail = {}
+                isLogin = false,
+                uiState = LoginUiState(subtitle = "Hit the spot"),
+                onLogin = {},
+                onLogout = {}
             )
         }
-        composeTestRule.onNodeWithText("LOG IN WITH FACEBOOK").performClick()
+    }
+
+    @Test
+    fun checkEmailElement() {
+        composeTestRule.onNodeWithText("LOG IN WITH EMAIL").assertIsDisplayed()
         composeTestRule.onNodeWithText("LOG IN WITH EMAIL").performClick()
+    }
+
+    @Test
+    fun checkHitTheSpotElement() {
         composeTestRule.onNodeWithText("Hit the spot").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Hit the spot").performClick()
+    }
+
+    @Test
+    fun checkSignUpElement() {
         composeTestRule.onNodeWithText("Sign up.").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Sign up.").performClick()
+    }
+
+    @Test
+    fun checkLookAroundElement() {
         composeTestRule.onNodeWithText("Look Around").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Look Around").performClick()
+    }
+
+    @Test
+    fun myTest() {
+        //composeTestRule.onNodeWithText("LOG IN WITH FACEBOOK").performClick()
 
         //Select a single node
 //        composeTestRule.onNode(<<SemanticsMatcher>>, useUnmergedTree = false): SemanticsNodeInteraction

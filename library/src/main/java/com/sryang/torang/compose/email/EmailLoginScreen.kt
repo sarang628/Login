@@ -26,7 +26,6 @@ import com.sryang.torang.viewmodels.EmailLoginViewModel
 @Composable
 internal fun EmailLoginScreen(
     viewModel: EmailLoginViewModel = hiltViewModel(),
-    loginUiState: LoginUiState,
     onLogin: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
