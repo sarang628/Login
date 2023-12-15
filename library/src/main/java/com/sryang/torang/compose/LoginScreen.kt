@@ -34,15 +34,14 @@ import com.sryang.torang.viewmodels.LoginViewModel
 internal fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     onSignUp: () -> Unit,               // 회원가입 클릭
-    onLookAround: () -> Unit,            // 둘러보기 클릭
+    onLookAround: () -> Unit,           // 둘러보기 클릭
     onLogin: () -> Unit
 ) {
     val navController = rememberNavController()
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState(false)
     Column(
-        Modifier
-            .verticalScroll(state = rememberScrollState())
+        Modifier.verticalScroll(state = rememberScrollState())
     ) {
         TorangLogo(uiState = uiState)
         Spacer(modifier = Modifier.height(130.dp))

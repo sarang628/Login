@@ -2,6 +2,18 @@
 
 <img src="screenshots/screen.jpg" alt=""/>
 
+## Requirement
+
+### functional
+- 사용자는 이메일 주소와 비밀번호를 입력하여 로그인할 수 있습니다.
+- 사용자는 "회원가입" 버튼을 클릭하여 회원가입 화면으로 이동할 수 있습니다.
+- 사용자는 "둘러보기" 버튼을 클릭하여 로그인하지 않고도 앱을 둘러볼 수 있습니다.
+
+### Non-functional
+- 로그인 화면은 모든 기기에서 최적의 화면 크기로 표시되어야 합니다.
+- 로그인 화면의 버튼은 사용자에게 명확하게 구분되어야 합니다.
+- 로그인 화면은 사용하기 쉽고 직관적이어야 합니다.
+
 ## Convention
 ### package
 <img src="screenshots/package.png" width="40%" height="40%" alt=""/>
@@ -19,9 +31,6 @@
 - EmailLogin + ViewModel
 - Login + ViewModel
 - SignUp + ViewModel
-
-## Case
-
 
 ## Architecture
 ### UI Layer
