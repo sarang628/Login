@@ -14,8 +14,6 @@ fun LoginNavHost(
     onLookAround: () -> Unit,
 ) {
     val navController = rememberNavController()
-    val context = LocalContext.current
-
     Box {
         NavHost(navController = navController, startDestination = "login") {
             composable("login") {
