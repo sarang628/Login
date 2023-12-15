@@ -22,6 +22,7 @@ import com.sryang.torang.compose.TorangLogo
 import com.sryang.torang.uistate.EmailLoginUiState
 import com.sryang.torang.uistate.LoginUiState
 import com.sryang.torang.viewmodels.EmailLoginViewModel
+import kotlinx.coroutines.android.awaitFrame
 
 @Composable
 internal fun EmailLoginScreen(
@@ -87,7 +88,14 @@ internal fun EmailLoginScreen(
 @Composable
 fun PreviewEmailLoginScreen() {
     EmailLoginScreen(
-        uiState = EmailLoginUiState(error = "로그인에 실패하였습니다."),
+        uiState = EmailLoginUiState(
+            /*error = "로그인에 실패하였습니다.",*/
+            email = "torang@torang.com",
+            password = "password",
+            emailErrorMessage = "emailErrorMessage",
+            passwordErrorMessage = "passwordErrorMessage",
+            isProgress = true
+        ),
         onLogin = { id, password -> },
         onClearPassword = {},
         onClearEmail = {},
