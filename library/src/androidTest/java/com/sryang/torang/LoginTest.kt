@@ -32,8 +32,7 @@ class LoginTest {
                 onClickFacebookLogin = {},
                 isLogin = false,
                 uiState = LoginUiState(subtitle = "Hit the spot"),
-                onLogin = {},
-                onLogout = {}
+                onLogin = {}
             )
         }
     }
