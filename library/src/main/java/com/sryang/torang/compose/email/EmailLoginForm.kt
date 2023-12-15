@@ -49,7 +49,8 @@ fun EmailLoginInput(
                 onKeyTabOrDown = { focusManager.moveFocus(FocusDirection.Down) },
                 placeHolder = "이메일을 입력해주세요.",
                 errorMessage = emailErrorMessage,
-                onClear = { onClearEmail.invoke() }
+                onClear = { onClearEmail.invoke() },
+                enable = !progress
             )
             Spacer(modifier = Modifier.height(10.dp))
             LoginOutlinedTextField(
@@ -62,7 +63,8 @@ fun EmailLoginInput(
                 errorMessage = passwordErrorMessage,
                 onClear = { isPasswordVisible = !isPasswordVisible },
                 isPassword = true,
-                isPasswordVisual = isPasswordVisible
+                isPasswordVisual = isPasswordVisible,
+                enable = !progress
             )
             Spacer(modifier = Modifier.height(15.dp))
             LoginButton(
@@ -78,11 +80,11 @@ fun PreviewEmailLoginInput() {
     EmailLoginInput(
         onLogin = { id, password -> },
         progress = false,
-        email = "",
-        password = "",
+        email = "aaa@a.com",
+        password = "aaaaa",
         onChangeEmail = {},
         onChangePassword = {},
-        onClearEmail = { /*TODO*/ }) {
-
-    }
+        onClearEmail = { /*TODO*/ },
+        onClearPassword = {}
+    )
 }

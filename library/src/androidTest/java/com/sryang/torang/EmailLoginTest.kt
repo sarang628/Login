@@ -2,7 +2,6 @@ package com.sryang.torang
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -10,6 +9,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sryang.torang.compose.LoginScreen
+import com.sryang.torang.compose.email.EmailLoginScreen
+import com.sryang.torang.uistate.EmailLoginUiState
 import com.sryang.torang.uistate.LoginUiState
 import org.junit.Before
 import org.junit.Rule
@@ -17,7 +18,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class LoginTestByLogged {
+class EmailLoginTest {
     @get:Rule
     val composeTestRule = createComposeRule()
     // use createAndroidComposeRule<YourActivity>() if you need access to
@@ -26,21 +27,22 @@ class LoginTestByLogged {
     @Before
     fun setUiState() {
         composeTestRule.setContent {
-            LoginScreen(
-                onLookAround = {},
-                onSignUp = {},
-                onClickFacebookLogin = {},
-                isLogin = false,
-                uiState = LoginUiState(subtitle = "Hit the spot"),
-                onLogin = {}
+            EmailLoginScreen(
+                uiState = EmailLoginUiState(),
+                onLogin = { id, password -> {} },
+                onChangeEmail = {},
+                onChangePassword = {},
+                onClearEmail = {},
+                onClearErrorMsg = {},
+                onClearPassword = {}
             )
         }
     }
 
     @Test
-    fun checkEmailElement() {
-        composeTestRule.onNodeWithText("LOG IN WITH EMAIL").assertIsDisplayed()
-        composeTestRule.onNodeWithText("LOG IN WITH EMAIL").performClick()
+    fun checkLoginButton() {
+        composeTestRule.onNodeWithText("Log in").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Log in").performClick()
     }
 
     @Test

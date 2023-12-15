@@ -38,7 +38,8 @@ fun LoginOutlinedTextField(
     onNext: (() -> Unit)? = null,
     onClear: () -> Unit,
     isPassword: Boolean = false,
-    isPasswordVisual: Boolean = false
+    isPasswordVisual: Boolean = false,
+    enable: Boolean? = null
 ) {
     //에러 메시지를 필드 하단에 표시
     val compose = @Composable {
@@ -61,7 +62,8 @@ fun LoginOutlinedTextField(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
-                            onClear.invoke()
+                            if (enable != false)
+                                onClear.invoke()
                         }
                     )
                 } else if (isPassword) {
@@ -73,7 +75,8 @@ fun LoginOutlinedTextField(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
-                            onClear.invoke()
+                            if (enable != false)
+                                onClear.invoke()
                         }
                     )
                 } else if (value.isNotEmpty()) {
@@ -84,7 +87,8 @@ fun LoginOutlinedTextField(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
-                            onClear.invoke()
+                            if (enable != false)
+                                onClear.invoke()
                         }
                     )
                 }
@@ -110,7 +114,8 @@ fun LoginOutlinedTextField(
                         false
                     }
                 }
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            enabled = enable ?: true
 
         )
     }
@@ -120,12 +125,13 @@ fun LoginOutlinedTextField(
 @Composable
 fun PreviewLoginOutlinedTextField() {
     LoginOutlinedTextField(
-        label = "",
+        label = "label",
         onKeyTabOrDown = {},
         onValueChange = {},
-        placeHolder = "",
-        value = "",
+        placeHolder = "placeHolder",
+        value = "value",
         onNext = {},
-        onClear = {}
+        onClear = {},
+        enable = false
     )
 }

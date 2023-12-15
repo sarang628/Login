@@ -29,7 +29,6 @@ class LoginTest {
             LoginScreen(
                 onLookAround = {},
                 onSignUp = {},
-                onClickFacebookLogin = {},
                 isLogin = false,
                 uiState = LoginUiState(subtitle = "Hit the spot"),
                 onLogin = {}
@@ -60,6 +59,7 @@ class LoginTest {
         composeTestRule.onNodeWithText("Look Around").assertIsDisplayed()
         composeTestRule.onNodeWithText("Look Around").performClick()
     }
+
 
     @Test
     fun myTest() {
