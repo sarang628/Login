@@ -21,9 +21,7 @@ fun LoginNavHost(
         NavHost(navController = navController, startDestination = "login") {
             composable("login") {
                 LoginScreen(
-                    onClickFacebookLogin = {
-                        Toast.makeText(context, "facebook login", Toast.LENGTH_SHORT).show()
-                    }, onSignUp = {
+                    onSignUp = {
                         navController.navigate("signUp")
                     }, onLookAround = onLookAround,
                     onLogin = onLogin

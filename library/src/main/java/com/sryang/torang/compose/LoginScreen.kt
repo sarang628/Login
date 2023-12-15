@@ -33,7 +33,6 @@ import com.sryang.torang.viewmodels.LoginViewModel
 @Composable
 internal fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
-    onClickFacebookLogin: () -> Unit,   // 페이스북 로그인 클릭
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,            // 둘러보기 클릭
     onLogin: () -> Unit
@@ -57,13 +56,6 @@ internal fun LoginScreen(
                 ) {
                     composable("login") {
                         Column {
-                            /*facebook 로그인 버튼*/
-                            /*Spacer(modifier = Modifier.height(150.dp))
-                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                                Button(onClick = { onClickFacebookLogin.invoke() }) {
-                                    Text(text = "LOG IN WITH FACEBOOK")
-                                }
-                            }*/
                             /*email 로그인 버튼*/
                             Spacer(modifier = Modifier.height(10.dp))
                             Row(
@@ -116,7 +108,6 @@ internal fun LoginScreen(
 @Composable
 fun PreviewLoginScreen() {
     LoginScreen(
-        onClickFacebookLogin = {},
         onSignUp = {},
         onLookAround = {},
         onLogin = {}
