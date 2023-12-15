@@ -1,6 +1,5 @@
 package com.sryang.torang.compose
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext

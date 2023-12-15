@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sryang.torang.compose.email.EmailLoginScreen
+import com.sryang.torang.uistate.LoginUiState
 import com.sryang.torang.viewmodels.LoginViewModel
 
 @Composable
@@ -37,12 +39,32 @@ internal fun LoginScreen(
     onLookAround: () -> Unit,           // 둘러보기 클릭
     onLogin: () -> Unit
 ) {
-    val navController = rememberNavController()
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState(false)
+    LoginScreen(
+        uiState = uiState,
+        isLogin = isLogin, onSignUp = onSignUp,
+        onLookAround = onLookAround,
+        onLogin = onLogin
+    )
+}
+
+@Composable
+internal fun LoginScreen(
+    uiState: LoginUiState,
+    isLogin: Boolean,
+    onSignUp: () -> Unit,               // 회원가입 클릭
+    onLookAround: () -> Unit,           // 둘러보기 클릭
+    onLogin: () -> Unit
+) {
+    val navController = rememberNavController()
+    val height = LocalConfiguration.current.screenHeightDp.dp
     Column(
-        Modifier.verticalScroll(state = rememberScrollState())
+        Modifier
+            .height(height)
+            .verticalScroll(state = rememberScrollState())
     ) {
+        Spacer(modifier = Modifier.height(130.dp))
         TorangLogo(uiState = uiState)
         Spacer(modifier = Modifier.height(130.dp))
         Box(
@@ -56,12 +78,12 @@ internal fun LoginScreen(
                     composable("chooseLoginMethod") {
                         ChooseLoginMethod(
                             onEmailLogin = {
-                                navController.navigate("email")
+                                navController.navigate("emailLogin")
                             }, onSignUp = onSignUp,
                             onLookAround = onLookAround
                         )
                     }
-                    composable("email") {
+                    composable("emailLogin") {
                         EmailLoginScreen(onLogin = onLogin)
                     }
                 }
@@ -121,6 +143,8 @@ fun ChooseLoginMethod(
 @Composable
 fun PreviewLoginScreen() {
     LoginScreen(
+        uiState = LoginUiState(title = "T O R A N G", subtitle = "hit the spot"),
+        isLogin = false,
         onSignUp = {},
         onLookAround = {},
         onLogin = {}
