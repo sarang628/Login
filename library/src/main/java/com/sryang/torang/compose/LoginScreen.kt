@@ -51,54 +51,68 @@ internal fun LoginScreen(
             if (!isLogin) {
                 NavHost(
                     navController = navController,
-                    startDestination = "login"
+                    startDestination = "chooseLoginMethod"
                 ) {
-                    composable("login") {
-                        Column {
-                            /*email 로그인 버튼*/
-                            Spacer(modifier = Modifier.height(10.dp))
-                            Row(
-                                Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Button(onClick = { navController.navigate("email") }) {
-                                    Text(text = "LOG IN WITH EMAIL")
-                                }
-                            }
-                            /*sign up*/
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row(
-                                Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Text(text = "Don't have an account?")
-                                Spacer(modifier = Modifier.width(3.dp))
-                                Text(text = "Sign up.", color = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.clickable(
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        indication = null
-                                    ) { onSignUp.invoke() })
-                            }
-                            /*Look Around*/
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row(
-                                Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Text(text = "Look Around",
-                                    color = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.clickable(
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        indication = null
-                                    ) { onLookAround.invoke() })
-                            }
-                        }
+                    composable("chooseLoginMethod") {
+                        ChooseLoginMethod(
+                            onEmailLogin = {
+                                navController.navigate("email")
+                            }, onSignUp = onSignUp,
+                            onLookAround = onLookAround
+                        )
                     }
                     composable("email") {
                         EmailLoginScreen(onLogin = onLogin)
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun ChooseLoginMethod(
+    onEmailLogin: () -> Unit,
+    onSignUp: () -> Unit,               // 회원가입 클릭
+    onLookAround: () -> Unit,           // 둘러보기 클릭
+) {
+    Column {
+        /*email 로그인 버튼*/
+        Spacer(modifier = Modifier.height(10.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(onClick = { onEmailLogin.invoke() }) {
+                Text(text = "LOG IN WITH EMAIL")
+            }
+        }
+        /*sign up*/
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = "Don't have an account?")
+            Spacer(modifier = Modifier.width(3.dp))
+            Text(text = "Sign up.", color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) { onSignUp.invoke() })
+        }
+        /*Look Around*/
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = "Look Around",
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) { onLookAround.invoke() })
         }
     }
 }
