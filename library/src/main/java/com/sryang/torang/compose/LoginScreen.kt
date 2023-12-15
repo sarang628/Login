@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -34,7 +32,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sryang.torang.compose.email.EmailLoginScreen
-import com.sryang.torang.compose.email.LogedIn
 import com.sryang.torang.compose.signup.SignUpScreen
 import com.sryang.torang.uistate.LoginUiState
 import com.sryang.torang.viewmodels.LoginViewModel
@@ -46,8 +43,7 @@ internal fun LoginScreen(
     onClickFacebookLogin: () -> Unit,   // 페이스북 로그인 클릭
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,            // 둘러보기 클릭
-    onLogin: () -> Unit,
-    onLogout: () -> Unit
+    onLogin: () -> Unit
 ) {
     val navController = rememberNavController()
     val screenHeightDp = LocalConfiguration.current.screenHeightDp
@@ -63,7 +59,7 @@ internal fun LoginScreen(
         ) {
             NavHost(
                 navController = navController,
-                startDestination = if (isLogin) "logout" else "main"
+                startDestination = if (isLogin) "isLogin" else "main"
             ) {
                 composable("main") {
                     Column {
@@ -106,8 +102,8 @@ internal fun LoginScreen(
                 composable("email") {
                     EmailLoginScreen(onLogin = onLogin)
                 }
-                composable("logout") {
-                    LogedIn(onLogout = { onLogout.invoke() })
+                composable("isLogin") {
+
                 }
             }
         }
@@ -121,9 +117,28 @@ fun LoginNavHost(
     onLookAround: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val isLogin by viewModel.isLogin.collectAsState(false)
+    LoginNavHost(
+        uiState = uiState,
+        isLogin = isLogin,
+        onLogin = onLogin,
+        onLookAround = onLookAround,
+        onLogout = {
+            viewModel.logout({ })
+        }
+    )
+}
+
+@Composable
+fun LoginNavHost(
+    uiState: LoginUiState,
+    isLogin: Boolean,
+    onLogin: () -> Unit,
+    onLookAround: () -> Unit,
+    onLogout: () -> Unit
+) {
     val navController = rememberNavController()
     val context = LocalContext.current
-    val isLogin by viewModel.isLogin.collectAsState(false)
 
     Box {
         NavHost(navController = navController, startDestination = "login") {
@@ -135,10 +150,7 @@ fun LoginNavHost(
                         navController.navigate("signUp")
                     }, onLookAround = onLookAround,
                     onLogin = onLogin,
-                    isLogin = isLogin,
-                    onLogout = {
-                        viewModel.logout({})
-                    }
+                    isLogin = isLogin
                 )
             }
             composable("signUp") {
@@ -161,7 +173,6 @@ fun PreviewLoginScreen() {
         onSignUp = {},
         onLookAround = {},
         onLogin = {},
-        isLogin = false,
-        onLogout = {}
+        isLogin = false
     )
 }

@@ -1,6 +1,5 @@
 package com.sryang.login.di.login
 
-import android.util.Patterns
 import com.sryang.torang.usecase.ValidPasswordUseCase
 import dagger.Module
 import dagger.Provides

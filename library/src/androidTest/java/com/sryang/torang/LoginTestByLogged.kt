@@ -17,7 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class LoginTest {
+class LoginTestByLogged {
     @get:Rule
     val composeTestRule = createComposeRule()
     // use createAndroidComposeRule<YourActivity>() if you need access to

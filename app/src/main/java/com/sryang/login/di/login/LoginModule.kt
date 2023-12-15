@@ -23,7 +23,6 @@ object LoginServiceModule {
     @Provides
     fun emailLoginService(
         loginRepository: LoginRepository,
-        sessionService: SessionService
     ): EmailLoginUseCase {
         return object : EmailLoginUseCase {
             override suspend fun invoke(id: String, email: String) {
