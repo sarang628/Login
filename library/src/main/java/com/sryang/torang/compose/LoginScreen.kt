@@ -13,9 +13,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,7 +45,8 @@ internal fun LoginScreen(
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
     onLogin: () -> Unit,
-    goEmailLoginDirect: Boolean = false
+    goEmailLoginDirect: Boolean = false,
+    showLookAround: Boolean = true
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState(false)
@@ -47,7 +55,8 @@ internal fun LoginScreen(
         isLogin = isLogin, onSignUp = onSignUp,
         onLookAround = onLookAround,
         onLogin = onLogin,
-        goEmailLoginDirect = goEmailLoginDirect
+        goEmailLoginDirect = goEmailLoginDirect,
+        showLookAround = showLookAround
     )
 }
 
@@ -58,7 +67,8 @@ internal fun LoginScreen(
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
     onLogin: () -> Unit,
-    goEmailLoginDirect: Boolean = false
+    goEmailLoginDirect: Boolean = false,
+    showLookAround: Boolean = true
 ) {
     val navController = rememberNavController()
     val height = LocalConfiguration.current.screenHeightDp.dp
@@ -83,7 +93,8 @@ internal fun LoginScreen(
                             onEmailLogin = {
                                 navController.navigate("emailLogin")
                             }, onSignUp = onSignUp,
-                            onLookAround = onLookAround
+                            onLookAround = onLookAround,
+                            showLookAround = showLookAround
                         )
                     }
                     composable("emailLogin") {
@@ -100,6 +111,7 @@ fun ChooseLoginMethod(
     onEmailLogin: () -> Unit,
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
+    showLookAround: Boolean = true
 ) {
     Column {
         /*email 로그인 버튼*/
@@ -128,16 +140,18 @@ fun ChooseLoginMethod(
         }
         /*Look Around*/
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Look Around",
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) { onLookAround.invoke() })
+        if (showLookAround) {
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Look Around",
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) { onLookAround.invoke() })
+            }
         }
     }
 }

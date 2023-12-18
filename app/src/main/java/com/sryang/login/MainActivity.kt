@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         setContent {
-            TorangTheme() {
+            TorangTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -45,7 +45,8 @@ class MainActivity : ComponentActivity() {
                         LoginNavHost(onLogin = {
                             Log.d("MainActivity", "onLogin")
                         }, onLookAround = {},
-                            goEmailLoginDirect = true
+                            goEmailLoginDirect = false,
+                            showTopBar = true
                         )
                         LoginRepositoryTest(loginRepository = loginRepository)
                     }
