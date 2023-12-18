@@ -26,7 +26,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
     }
 
-    namespace 'com.sryang.login'
+    namespace 'com.sarang.torang'
 }
 
 dependencies {
