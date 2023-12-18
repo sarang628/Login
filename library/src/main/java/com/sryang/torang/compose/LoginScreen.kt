@@ -37,7 +37,8 @@ internal fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
-    onLogin: () -> Unit
+    onLogin: () -> Unit,
+    goEmailLoginDirect: Boolean = false
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState(false)
@@ -45,7 +46,8 @@ internal fun LoginScreen(
         uiState = uiState,
         isLogin = isLogin, onSignUp = onSignUp,
         onLookAround = onLookAround,
-        onLogin = onLogin
+        onLogin = onLogin,
+        goEmailLoginDirect = goEmailLoginDirect
     )
 }
 
@@ -55,7 +57,8 @@ internal fun LoginScreen(
     isLogin: Boolean,
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
-    onLogin: () -> Unit
+    onLogin: () -> Unit,
+    goEmailLoginDirect: Boolean = false
 ) {
     val navController = rememberNavController()
     val height = LocalConfiguration.current.screenHeightDp.dp
@@ -73,7 +76,7 @@ internal fun LoginScreen(
             if (!isLogin) {
                 NavHost(
                     navController = navController,
-                    startDestination = "chooseLoginMethod"
+                    startDestination = if (goEmailLoginDirect) "emailLogin" else "chooseLoginMethod"
                 ) {
                     composable("chooseLoginMethod") {
                         ChooseLoginMethod(

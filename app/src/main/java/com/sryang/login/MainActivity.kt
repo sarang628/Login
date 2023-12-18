@@ -44,7 +44,9 @@ class MainActivity : ComponentActivity() {
                     Column(Modifier.verticalScroll(state = rememberScrollState())) {
                         LoginNavHost(onLogin = {
                             Log.d("MainActivity", "onLogin")
-                        }, onLookAround = {})
+                        }, onLookAround = {},
+                            goEmailLoginDirect = true
+                        )
                         LoginRepositoryTest(loginRepository = loginRepository)
                     }
                 }

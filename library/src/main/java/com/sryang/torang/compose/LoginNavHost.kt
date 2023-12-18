@@ -12,6 +12,7 @@ import com.sryang.torang.compose.signup.SignUpScreen
 fun LoginNavHost(
     onLogin: () -> Unit,
     onLookAround: () -> Unit,
+    goEmailLoginDirect: Boolean = false
 ) {
     val navController = rememberNavController()
     Box {
@@ -21,7 +22,8 @@ fun LoginNavHost(
                     onSignUp = {
                         navController.navigate("signUp")
                     }, onLookAround = onLookAround,
-                    onLogin = onLogin
+                    onLogin = onLogin,
+                    goEmailLoginDirect = goEmailLoginDirect
                 )
             }
             composable("signUp") {

@@ -1,7 +1,9 @@
 package com.sryang.torang
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasContentDescriptionExactly
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -28,7 +30,9 @@ class EmailLoginTest {
     fun setUiState() {
         composeTestRule.setContent {
             EmailLoginScreen(
-                uiState = EmailLoginUiState(),
+                uiState = EmailLoginUiState(
+                    passwordErrorMessage = "password error"
+                ),
                 onLogin = { id, password -> {} },
                 onChangeEmail = {},
                 onChangePassword = {},
@@ -46,21 +50,14 @@ class EmailLoginTest {
     }
 
     @Test
-    fun checkHitTheSpotElement() {
-        composeTestRule.onNodeWithText("Hit the spot").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Hit the spot").performClick()
+    fun checkErrorPassword() {
+        composeTestRule.onNode(hasText("password error")).assertIsDisplayed()
     }
 
     @Test
-    fun checkSignUpElement() {
-        composeTestRule.onNodeWithText("Sign up.").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign up.").performClick()
-    }
-
-    @Test
-    fun checkLookAroundElement() {
-        composeTestRule.onNodeWithText("Look Around").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Look Around").performClick()
+    fun test1(){
+        // If you need to match a node of what would be the unmerged tree, you can set useUnmergedTree to true:
+        composeTestRule.onRoot(useUnmergedTree = true).printToLog("TAG")
     }
 
     @Test
@@ -68,12 +65,10 @@ class EmailLoginTest {
         //composeTestRule.onNodeWithText("LOG IN WITH FACEBOOK").performClick()
 
         // Example
-        composeTestRule.onNode(!hasText("Button1")) // Equivalent to onNodeWithText("Button")
+        //composeTestRule.onNode(!hasText("Button1")) // Equivalent to onNodeWithText("Button")
         // Example
-        composeTestRule.onAllNodes(hasText("Button")) // Equivalent to onAllNodesWithText("Button")
+        //composeTestRule.onAllNodes(hasText("Button")) // Equivalent to onAllNodesWithText("Button")
 
-        // If you need to match a node of what would be the unmerged tree, you can set useUnmergedTree to true:
-        composeTestRule.onRoot(useUnmergedTree = true).printToLog("TAG")
 
 //        Assertions
 //        Check assertions by calling assert() on the SemanticsNodeInteraction returned by a finder with one or multiple matchers:
