@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,7 +47,9 @@ internal fun LoginScreen(
     onLookAround: () -> Unit,           // 둘러보기 클릭
     onLogin: () -> Unit,
     goEmailLoginDirect: Boolean = false,
-    showLookAround: Boolean = true
+    showLookAround: Boolean = true,
+    showTopBar: Boolean = false,
+    onBack: (() -> Unit)? = null
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isLogin by viewModel.isLogin.collectAsState(false)
@@ -56,10 +59,13 @@ internal fun LoginScreen(
         onLookAround = onLookAround,
         onLogin = onLogin,
         goEmailLoginDirect = goEmailLoginDirect,
-        showLookAround = showLookAround
+        showLookAround = showLookAround,
+        showTopBar = showTopBar,
+        onBack = onBack
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoginScreen(
     uiState: LoginUiState,
@@ -68,37 +74,59 @@ internal fun LoginScreen(
     onLookAround: () -> Unit,           // 둘러보기 클릭
     onLogin: () -> Unit,
     goEmailLoginDirect: Boolean = false,
-    showLookAround: Boolean = true
+    showLookAround: Boolean = true,
+    showTopBar: Boolean = false,
+    onBack: (() -> Unit)? = null
 ) {
     val navController = rememberNavController()
     val height = LocalConfiguration.current.screenHeightDp.dp
-    Column(
-        Modifier
-            .height(height)
-            .verticalScroll(state = rememberScrollState())
-    ) {
-        Spacer(modifier = Modifier.height(130.dp))
-        TorangLogo(uiState = uiState)
-        Spacer(modifier = Modifier.height(130.dp))
-        Box(
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-        ) {
-            if (!isLogin) {
-                NavHost(
-                    navController = navController,
-                    startDestination = if (goEmailLoginDirect) "emailLogin" else "chooseLoginMethod"
-                ) {
-                    composable("chooseLoginMethod") {
-                        ChooseLoginMethod(
-                            onEmailLogin = {
-                                navController.navigate("emailLogin")
-                            }, onSignUp = onSignUp,
-                            onLookAround = onLookAround,
-                            showLookAround = showLookAround
+    Scaffold(
+        topBar = {
+            if (showTopBar) {
+                TopAppBar(title = { }, navigationIcon = {
+                    IconButton(onClick = {
+                        if (!navController.popBackStack()) {
+                            onBack?.invoke()
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                            ""
                         )
                     }
-                    composable("emailLogin") {
-                        EmailLoginScreen(onLogin = onLogin)
+                })
+            }
+        }
+    ) {
+        Column(
+            Modifier
+                .height(height)
+                .padding(it)
+                .verticalScroll(state = rememberScrollState())
+        ) {
+            Spacer(modifier = Modifier.height(130.dp))
+            TorangLogo(uiState = uiState)
+            Spacer(modifier = Modifier.height(130.dp))
+            Box(
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+            ) {
+                if (!isLogin) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = if (goEmailLoginDirect) "emailLogin" else "chooseLoginMethod"
+                    ) {
+                        composable("chooseLoginMethod") {
+                            ChooseLoginMethod(
+                                onEmailLogin = {
+                                    navController.navigate("emailLogin")
+                                }, onSignUp = onSignUp,
+                                onLookAround = onLookAround,
+                                showLookAround = showLookAround
+                            )
+                        }
+                        composable("emailLogin") {
+                            EmailLoginScreen(onLogin = onLogin)
+                        }
                     }
                 }
             }

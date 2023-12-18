@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -40,14 +41,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
                     Column(Modifier.verticalScroll(state = rememberScrollState())) {
-                        LoginNavHost(onLogin = {
-                            Log.d("MainActivity", "onLogin")
-                        }, onLookAround = {},
-                            goEmailLoginDirect = false,
-                            showTopBar = true
-                        )
+                        Box(modifier = Modifier.size(LocalConfiguration.current.screenHeightDp.dp))
+                        {
+                            LoginNavHost(onLogin = {
+                                Log.d("MainActivity", "onLogin")
+                            }, onLookAround = {},
+                                goEmailLoginDirect = false,
+                                showTopBar = true,
+                                showLookAround = true,
+                                onBack = {}
+                            )
+                        }
                         LoginRepositoryTest(loginRepository = loginRepository)
                     }
                 }
