@@ -25,7 +25,7 @@ import com.sarang.torang.viewmodels.EmailLoginViewModel
 import kotlinx.coroutines.android.awaitFrame
 
 @Composable
-internal fun EmailLoginScreen(
+fun EmailLoginScreen(
     viewModel: EmailLoginViewModel = hiltViewModel(),
     onLogin: () -> Unit
 ) {

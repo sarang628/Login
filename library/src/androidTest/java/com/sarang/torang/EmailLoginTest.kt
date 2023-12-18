@@ -1,19 +1,15 @@
 package com.sarang.torang
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasContentDescriptionExactly
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.compose.LoginScreen
 import com.sarang.torang.compose.email.EmailLoginScreen
 import com.sarang.torang.uistate.EmailLoginUiState
-import com.sarang.torang.uistate.LoginUiState
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
