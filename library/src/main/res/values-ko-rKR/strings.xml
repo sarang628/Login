@@ -7,4 +7,10 @@
     <string name="dont_have_an_account">계정이 없으신가요??</string>
     <string name="look_around">둘러보기</string>
     <string name="sign_up">회원가입.</string>
+
+    <string name="email_place_holder">이메일을 입력해주세요.</string>
+    <string name="password_place_holder">비밀번호를 입력해주세요.</string>
+
+    <string name="label_email">이메일</string>
+    <string name="label_password">비밀번호</string>
 </resources>

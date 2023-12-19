@@ -82,8 +82,9 @@ internal fun EmailLoginScreen(
 @Composable
 fun PreviewEmailLoginScreen() {
     EmailLoginScreen(
+        //uiState = EmailLoginUiState(),
         uiState = EmailLoginUiState(
-            /*error = "로그인에 실패하였습니다.",*/
+            //error = "로그인에 실패하였습니다.",
             email = "torang@torang.com",
             password = "password",
             emailErrorMessage = "emailErrorMessage",

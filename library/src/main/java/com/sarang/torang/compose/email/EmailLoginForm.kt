@@ -15,9 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.sarang.torang.R
 
 @Composable
 fun EmailLoginInput(
@@ -44,10 +46,10 @@ fun EmailLoginInput(
             LoginOutlinedTextField(
                 value = email,
                 onValueChange = onChangeEmail,
-                label = "Email",
+                label = stringResource(id = R.string.label_email),
                 onNext = { focusManager.moveFocus(FocusDirection.Down) },
                 onKeyTabOrDown = { focusManager.moveFocus(FocusDirection.Down) },
-                placeHolder = "이메일을 입력해주세요.",
+                placeHolder = stringResource(id = R.string.email_place_holder),
                 errorMessage = emailErrorMessage,
                 onClear = { onClearEmail.invoke() },
                 enable = !progress
@@ -56,10 +58,10 @@ fun EmailLoginInput(
             LoginOutlinedTextField(
                 value = password,
                 onValueChange = onChangePassword,
-                label = "Password",
+                label = stringResource(id = R.string.label_password),
                 onNext = { focusManager.clearFocus(true) },
                 onKeyTabOrDown = { focusManager.clearFocus(true) },
-                placeHolder = "비밀번호를 입력해주세요.",
+                placeHolder = stringResource(id = R.string.password_place_holder),
                 errorMessage = passwordErrorMessage,
                 onClear = { isPasswordVisible = !isPasswordVisible },
                 isPassword = true,
@@ -80,8 +82,8 @@ fun PreviewEmailLoginInput() {
     EmailLoginInput(
         onLogin = { id, password -> },
         progress = false,
-        email = "aaa@a.com",
-        password = "aaaaa",
+        email = "",
+        password = "",
         onChangeEmail = {},
         onChangePassword = {},
         onClearEmail = { /*TODO*/ },

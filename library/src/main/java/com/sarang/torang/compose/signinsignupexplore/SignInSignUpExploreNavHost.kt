@@ -38,7 +38,6 @@ internal fun SignInSignUpExploreNavHost(
     isLogin: Boolean,
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
-    goEmailLoginDirect: Boolean = false,
     showLookAround: Boolean = true,
     showTopBar: Boolean = false,
     onBack: (() -> Unit)? = null,
@@ -72,7 +71,7 @@ internal fun SignInSignUpExploreNavHost(
             if (!isLogin) {
                 NavHost(
                     navController = navController,
-                    startDestination = if (goEmailLoginDirect) Screen.EmailLogin.route else Screen.ChooseLoginMethod.route
+                    startDestination = Screen.ChooseLoginMethod.route
                 ) {
                     composable(Screen.ChooseLoginMethod.route) {
                         SignInSignUpExplore(
@@ -163,7 +162,6 @@ fun PreviewChooseLoginMethod() {
 fun PreviewSignInSignUpExploreNavHost() {
     SignInSignUpExploreNavHost(
         isLogin = false,
-        goEmailLoginDirect = false,
         onSignUp = {},
         onLookAround = {},
     )

@@ -7,6 +7,12 @@
     <string name="look_around">Look Around</string>
     <string name="sign_up">Sign up.</string>
 
+    <string name="password_place_holder">input your password.</string>
+    <string name="email_place_holder">input your email.</string>
+
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+
     <!---->
     <string name="a11y_back" translatable="false">Navigate up</string>
 </resources>

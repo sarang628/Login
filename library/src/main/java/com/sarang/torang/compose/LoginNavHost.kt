@@ -31,7 +31,6 @@ fun LoginNavHost(
                 isLogin = isLogin,
                 onSignUp = { navController.navigate(Screen.SignUp.route) },
                 onLookAround = onLookAround,
-                goEmailLoginDirect = goEmailLoginDirect,
                 showLookAround = showLookAround,
                 showTopBar = showTopBar,
                 onBack = onBack,
