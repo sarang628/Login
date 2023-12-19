@@ -7,7 +7,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.loginmethod.LoginChooseMethodNavHost
+import com.sarang.torang.compose.email.EmailLoginScreen
+import com.sarang.torang.compose.signinsignupexplore.SignInSignUpExploreNavHost
 import com.sarang.torang.compose.signup.SignUpNavHost
 import com.sarang.torang.screen.login.Screen
 import com.sarang.torang.viewmodels.LoginViewModel
@@ -24,17 +25,19 @@ fun LoginNavHost(
 ) {
     val navController = rememberNavController()
     val isLogin by viewModel.isLogin.collectAsState(false)
-    NavHost(navController = navController, startDestination = Screen.ChooseMethod.route) {
-        composable(Screen.ChooseMethod.route) {
-            LoginChooseMethodNavHost(
+    NavHost(navController = navController, startDestination = Screen.SignInSignUpExplore.route) {
+        composable(Screen.SignInSignUpExplore.route) {
+            SignInSignUpExploreNavHost(
                 isLogin = isLogin,
                 onSignUp = { navController.navigate(Screen.SignUp.route) },
                 onLookAround = onLookAround,
-                onLogin = onSuccessLogin,
                 goEmailLoginDirect = goEmailLoginDirect,
                 showLookAround = showLookAround,
                 showTopBar = showTopBar,
-                onBack = onBack
+                onBack = onBack,
+                loginScreen = {
+                    EmailLoginScreen(onLogin = onSuccessLogin)
+                }
             )
         }
         composable(Screen.SignUp.route) {

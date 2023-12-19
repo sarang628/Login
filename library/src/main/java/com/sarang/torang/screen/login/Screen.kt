@@ -6,7 +6,7 @@ sealed class Screen(
     val route: String,
     val navArguments: List<NamedNavArgument> = emptyList()
 ) {
-    object ChooseMethod : Screen("chooseMethod")
+    object SignInSignUpExplore : Screen("signInSignUpExplore")
     object ChooseLoginMethod : Screen("chooseLoginMethod")
     object SignUp : Screen("signUp")
     object JoinName : Screen("joinName")

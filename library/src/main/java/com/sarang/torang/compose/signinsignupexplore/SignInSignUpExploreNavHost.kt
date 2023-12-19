@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.loginmethod
+package com.sarang.torang.compose.signinsignupexplore
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,31 +31,30 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.R
 import com.sarang.torang.compose.TorangLogo
-import com.sarang.torang.compose.email.EmailLoginScreen
 import com.sarang.torang.screen.login.Screen
 
 @Composable
-internal fun LoginChooseMethodNavHost(
+internal fun SignInSignUpExploreNavHost(
     isLogin: Boolean,
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
-    onLogin: () -> Unit,
     goEmailLoginDirect: Boolean = false,
     showLookAround: Boolean = true,
     showTopBar: Boolean = false,
-    onBack: (() -> Unit)? = null
+    onBack: (() -> Unit)? = null,
+    loginScreen: @Composable (() -> Unit)? = null
 ) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
-            ChooseMethodTopAppBar(
-                showTopBar = showTopBar,
-                onBack = {
-                    if (!navController.popBackStack()) {
-                        onBack?.invoke()
+            if (showTopBar)
+                SignInSignUpExploreTopAppBar(
+                    onBack = {
+                        if (!navController.popBackStack()) {
+                            onBack?.invoke()
+                        }
                     }
-                }
-            )
+                )
         }
     ) {
         Column(
@@ -76,16 +75,16 @@ internal fun LoginChooseMethodNavHost(
                     startDestination = if (goEmailLoginDirect) Screen.EmailLogin.route else Screen.ChooseLoginMethod.route
                 ) {
                     composable(Screen.ChooseLoginMethod.route) {
-                        ChooseLoginMethod(
+                        SignInSignUpExplore(
                             onEmailLogin = {
-                                navController.navigate("emailLogin")
+                                navController.navigate(Screen.EmailLogin.route)
                             }, onSignUp = onSignUp,
                             onLookAround = onLookAround,
                             showLookAround = showLookAround
                         )
                     }
                     composable(Screen.EmailLogin.route) {
-                        EmailLoginScreen(onLogin = onLogin)
+                        loginScreen?.invoke()
                     }
                 }
             }
@@ -95,28 +94,25 @@ internal fun LoginChooseMethodNavHost(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChooseMethodTopAppBar(
-    showTopBar: Boolean = false,
+fun SignInSignUpExploreTopAppBar(
     onBack: (() -> Unit)? = null
 ) {
-    if (showTopBar) {
-        TopAppBar(
-            title = { },
-            navigationIcon = {
-                IconButton(onClick = {
-                    onBack?.invoke()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        stringResource(id = R.string.a11y_back)
-                    )
-                }
-            })
-    }
+    TopAppBar(
+        title = { },
+        navigationIcon = {
+            IconButton(onClick = {
+                onBack?.invoke()
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                    stringResource(id = R.string.a11y_back)
+                )
+            }
+        })
 }
 
 @Composable
-fun ChooseLoginMethod(
+fun SignInSignUpExplore(
     onEmailLogin: () -> Unit,
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
@@ -154,7 +150,7 @@ fun ChooseLoginMethod(
 @Preview
 @Composable
 fun PreviewChooseLoginMethod() {
-    ChooseLoginMethod(
+    SignInSignUpExplore(
         onEmailLogin = { /*TODO*/ },
         onSignUp = { /*TODO*/ },
         onLookAround = { /*TODO*/ },
@@ -164,11 +160,11 @@ fun PreviewChooseLoginMethod() {
 
 @Preview
 @Composable
-fun PreviewLoginScreen() {
-    LoginChooseMethodNavHost(
+fun PreviewSignInSignUpExploreNavHost() {
+    SignInSignUpExploreNavHost(
         isLogin = false,
+        goEmailLoginDirect = false,
         onSignUp = {},
         onLookAround = {},
-        onLogin = {}
     )
 }
