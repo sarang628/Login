@@ -21,7 +21,10 @@ class EmailLoginScreenTest {
     fun setScreen() {
         composeTestRule.setContent {
             EmailLoginScreen(
-                uiState = EmailLoginUiState(),
+                uiState = EmailLoginUiState(
+                    emailErrorMessage = "error",
+                    passwordErrorMessage = "error"
+                ),
                 onLogin = { id, password -> },
                 onChangeEmail = {},
                 onChangePassword = {},
@@ -33,10 +36,27 @@ class EmailLoginScreenTest {
     }
 
     @Test
+    fun checkLoginButton() {
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_login))
+            .assertIsDisplayed()
+    }
+
+    @Test
     fun checkEmailField() {
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_email))
             .assertIsDisplayed()
     }
 
+    @Test
+    fun checkErrorEmailField() {
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.invalid_email_format))
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun checkErrorPasswordField() {
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.invalid_password_format))
+            .assertIsDisplayed()
+    }
 
 }

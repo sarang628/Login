@@ -1,10 +1,13 @@
 package com.sarang.torang.di.login
 
+import android.content.res.Resources
 import android.util.Patterns
+import com.sarang.torang.R
 import com.sarang.torang.usecase.ValidEmailUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module

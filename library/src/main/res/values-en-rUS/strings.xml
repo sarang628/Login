@@ -11,6 +11,15 @@
     <string name="email_place_holder">input your email.</string>
     <string name="password_place_holder">input your password.</string>
 
+    <string name="label_login">Log in</string>
+    <string name="label_full_name">FullName</string>
+    <string name="label_next">Next</string>
+
+    <string name="invalid_email_format">Email format is incorrect.</string>
+    <string name="invalid_password_format">Please enter a password of at least 5 characters.</string>
+
     <string name="label_email">Email</string>
     <string name="label_password">Password</string>
+
+    <string name="what_s_your_name">What\'s your name?</string>
 </resources>

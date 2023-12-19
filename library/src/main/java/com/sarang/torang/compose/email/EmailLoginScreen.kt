@@ -60,8 +60,8 @@ internal fun EmailLoginScreen(
                 progress = uiState.isProgress,
                 email = uiState.email,
                 password = uiState.password,
-                emailErrorMessage = uiState.emailErrorMessage,
-                passwordErrorMessage = uiState.passwordErrorMessage
+                emailErrorMessage = if (uiState.emailErrorMessage != null) stringResource(id = R.string.invalid_email_format) else null,
+                passwordErrorMessage = if (uiState.passwordErrorMessage != null) stringResource(id = R.string.invalid_password_format) else null
             )
             uiState.error?.let {
                 AlertDialog(onDismissRequest = { onClearErrorMsg.invoke() },

@@ -11,6 +11,15 @@
     <string name="email_place_holder">이메일을 입력해주세요.</string>
     <string name="password_place_holder">비밀번호를 입력해주세요.</string>
 
+    <string name="label_login">로그인</string>
+    <string name="label_full_name">성명</string>
+    <string name="label_next">다음</string>
+
+    <string name="invalid_email_format">이메일 형식이 올바르지 않습니다.</string>
+    <string name="invalid_password_format">비밀번호는 5자 이상 입력해주세요.</string>
+
     <string name="label_email">이메일</string>
     <string name="label_password">비밀번호</string>
+
+    <string name="what_s_your_name">성명을 입력해주세요.</string>
 </resources>

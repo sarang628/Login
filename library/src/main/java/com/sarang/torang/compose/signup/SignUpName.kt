@@ -53,17 +53,21 @@ internal fun SignUpName(
                 .padding(innerPadding)
                 .padding(start = 16.dp, end = 16.dp)
         ) {
-            Text(text = "What's your name?", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = stringResource(id = R.string.what_s_your_name),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
             LoginOutlinedTextField(
-                label = "Full name",
+                label = stringResource(id = R.string.label_full_name),
                 value = name,
                 onValueChange = onValueChange,
-                placeHolder = "Full name",
+                placeHolder = stringResource(id = R.string.label_full_name),
                 onClear = onClear
             )
             Spacer(modifier = Modifier.height(8.dp))
             Button(modifier = Modifier.fillMaxWidth(), onClick = { onNext.invoke() }) {
-                Text(text = "Next")
+                Text(text = stringResource(id = R.string.label_next))
             }
         }
     }
