@@ -36,18 +36,18 @@ fun SignUpNavHost(
             composable(Screen.JoinName.route) {
                 SignUpName(
                     name = uiState.name,
-                    onValueChange = { signUpViewModel.onChangeName(it) },
+                    onValueChange = signUpViewModel::onChangeName,
                     onBack = onBack,
-                    onClear = { signUpViewModel.clearName() },
+                    onClear = signUpViewModel::clearName,
                     onNext = { navController.navigate(Screen.SignUpPassword.route) })
             }
             composable(Screen.JoinEmail.route) {
                 SignUpEmail(
                     email = uiState.email,
                     errorMessage = uiState.emailErrorMessage,
-                    onValueChange = { signUpViewModel.onChangeEmail(it) },
-                    onBack = { navController.popBackStack() },
-                    onClear = { signUpViewModel.clearEmail() },
+                    onValueChange = signUpViewModel::onChangeEmail,
+                    onBack = navController::popBackStack,
+                    onClear = signUpViewModel::clearEmail,
                     onNext = {
                         coroutine.launch {
                             if (signUpViewModel.registerEmail()) {
@@ -62,9 +62,9 @@ fun SignUpNavHost(
                     email = uiState.email,
                     confirmCode = uiState.confirmCode,
                     errorMessage = uiState.confirmCodeErrorMessage,
-                    onValueChange = { signUpViewModel.onChangeConfirmationCode(it) },
-                    onBack = { navController.popBackStack() },
-                    onClear = { signUpViewModel.clearConfirmationCode() },
+                    onValueChange = signUpViewModel::onChangeConfirmationCode,
+                    onBack = navController::popBackStack,
+                    onClear = signUpViewModel::clearConfirmationCode,
                     onNext = {
                         coroutine.launch {
                             if (signUpViewModel.confirmCode()) {
@@ -78,16 +78,14 @@ fun SignUpNavHost(
             composable(Screen.SignUpPassword.route) {
                 SignUpPassword(
                     password = uiState.password,
-                    onValueChange = { signUpViewModel.onChangePassword(it) },
-                    onBack = { navController.popBackStack() },
-                    onClear = { signUpViewModel.clearPassword() },
+                    onValueChange = signUpViewModel::onChangePassword,
+                    errorMessage = uiState.passwordErrorMessage,
+                    onBack = navController::popBackStack,
+                    onClear = signUpViewModel::clearPassword,
                     onNext = {
-                        coroutine.launch {
-                            if (signUpViewModel.validPassword())
-                                navController.navigate(Screen.JoinEmail.route)
-                        }
-                    },
-                    errorMessage = uiState.passwordErrorMessage
+                        if (signUpViewModel.validPassword())
+                            navController.navigate(Screen.JoinEmail.route)
+                    }
                 )
             }
             composable(Screen.SuccessSignUp.route) {

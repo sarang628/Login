@@ -1,6 +1,5 @@
 package com.sarang.torang.compose
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,8 +39,8 @@ fun LoginNavHost(
         }
         composable(Screen.SignUp.route) {
             SignUpNavHost(
-                onBack = { navController.popBackStack() },
-                signUpSuccess = { navController.popBackStack() }
+                onBack = navController::popBackStack,
+                signUpSuccess = navController::popBackStack
             )
         }
     }
