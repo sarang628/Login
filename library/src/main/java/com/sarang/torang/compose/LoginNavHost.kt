@@ -2,14 +2,20 @@ package com.sarang.torang.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sarang.torang.compose.loginmethod.LoginChooseMethodNavHost
 import com.sarang.torang.compose.signup.SignUpNavHost
+import com.sarang.torang.viewmodels.LoginViewModel
 
 @Composable
 fun LoginNavHost(
-    onLogin: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel(),
+    onSuccessLogin: () -> Unit,
     onLookAround: () -> Unit,
     goEmailLoginDirect: Boolean = false,
     showTopBar: Boolean = false,
@@ -17,30 +23,25 @@ fun LoginNavHost(
     showLookAround: Boolean = true
 ) {
     val navController = rememberNavController()
-    Box {
-        NavHost(navController = navController, startDestination = "login") {
-            composable("login") {
-                LoginScreen(
-                    onSignUp = {
-                        navController.navigate("signUp")
-                    }, onLookAround = onLookAround,
-                    onLogin = onLogin,
-                    goEmailLoginDirect = goEmailLoginDirect,
-                    showLookAround = showLookAround,
-                    showTopBar = showTopBar,
-                    onBack = {
-                        onBack?.invoke()
-                    }
-                )
-            }
-            composable("signUp") {
-                SignUpNavHost(onBack = {
-                    navController.popBackStack()
-                }, signUpSuccess = {
-                    navController.popBackStack()
-                })
-            }
+    val isLogin by viewModel.isLogin.collectAsState(false)
+    NavHost(navController = navController, startDestination = "chooseMethod") {
+        composable("chooseMethod") {
+            LoginChooseMethodNavHost(
+                isLogin = isLogin,
+                onSignUp = { navController.navigate("signUp") },
+                onLookAround = onLookAround,
+                onLogin = onSuccessLogin,
+                goEmailLoginDirect = goEmailLoginDirect,
+                showLookAround = showLookAround,
+                showTopBar = showTopBar,
+                onBack = onBack
+            )
+        }
+        composable("signUp") {
+            SignUpNavHost(
+                onBack = { navController.popBackStack() },
+                signUpSuccess = { navController.popBackStack() }
+            )
         }
     }
-
 }

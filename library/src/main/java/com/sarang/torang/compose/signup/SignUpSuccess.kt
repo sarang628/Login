@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SignUpSuccess(
+internal fun SignUpSuccess(
     onNext: () -> Unit
 ) {
     Scaffold { innerPadding ->

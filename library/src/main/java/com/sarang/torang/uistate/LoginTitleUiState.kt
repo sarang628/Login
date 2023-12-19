@@ -1,6 +1,6 @@
 package com.sarang.torang.uistate
 
-data class LoginUiState(
+data class LoginTitleUiState(
     val title: String = "",
     val subtitle: String = ""
 )

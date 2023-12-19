@@ -24,7 +24,7 @@ import com.sarang.torang.compose.email.LoginOutlinedTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpName(
+internal fun SignUpName(
     name: String,
     onValueChange: (String) -> Unit,
     onBack: () -> Unit,

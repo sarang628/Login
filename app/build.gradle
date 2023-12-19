@@ -8,7 +8,7 @@ plugins {
 
 android {
     compileSdk rootProject.compileSdk
-
+    namespace 'com.sarang.torang'
     defaultConfig {
         minSdk rootProject.minSdk
         targetSdk rootProject.targetSdk
@@ -30,8 +30,6 @@ android {
     hilt {
         enableTransformForLocalTests = true
     }
-
-    namespace 'com.sarang.torang'
 }
 
 dependencies {

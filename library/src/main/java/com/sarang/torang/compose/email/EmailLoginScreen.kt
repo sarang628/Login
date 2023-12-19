@@ -2,10 +2,6 @@ package com.sarang.torang.compose.email
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -14,15 +10,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.compose.TorangLogo
+import com.sarang.torang.R
 import com.sarang.torang.uistate.EmailLoginUiState
-import com.sarang.torang.uistate.LoginUiState
 import com.sarang.torang.viewmodels.EmailLoginViewModel
-import kotlinx.coroutines.android.awaitFrame
 
 @Composable
 fun EmailLoginScreen(
@@ -73,7 +67,7 @@ internal fun EmailLoginScreen(
                 AlertDialog(onDismissRequest = { onClearErrorMsg.invoke() },
                     confirmButton = {
                         Button(onClick = { onClearErrorMsg.invoke() }) {
-                            Text(text = "확인")
+                            Text(text = stringResource(id = R.string.confirm))
                         }
                     },
                     title = {

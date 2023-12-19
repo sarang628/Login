@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     Column(Modifier.verticalScroll(state = rememberScrollState())) {
                         Box(modifier = Modifier.size(LocalConfiguration.current.screenHeightDp.dp))
                         {
-                            LoginNavHost(onLogin = {
+                            LoginNavHost(onSuccessLogin = {
                                 Log.d("MainActivity", "onLogin")
                             }, onLookAround = {},
                                 goEmailLoginDirect = false,
