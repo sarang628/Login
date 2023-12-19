@@ -26,7 +26,7 @@ fun LoginNavHost(
     val navController = rememberNavController()
     val isLogin by viewModel.isLogin.collectAsState(false)
     NavHost(navController = navController, startDestination = Screen.ChooseMethod.route) {
-        composable("chooseMethod") {
+        composable(Screen.ChooseMethod.route) {
             LoginChooseMethodNavHost(
                 isLogin = isLogin,
                 onSignUp = { navController.navigate(Screen.SignUp.route) },
