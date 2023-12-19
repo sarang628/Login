@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sarang.torang.screen.login.Screen
 import com.sarang.torang.viewmodels.SignUpViewModel
 import kotlinx.coroutines.launch
 
@@ -31,16 +32,16 @@ fun SignUpNavHost(
             CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
     } else {
-        NavHost(navController = navController, startDestination = "JoinName") {
-            composable("JoinName") {
+        NavHost(navController = navController, startDestination = Screen.JoinName.route) {
+            composable(Screen.JoinName.route) {
                 SignUpName(
                     name = uiState.name,
                     onValueChange = { signUpViewModel.onChangeName(it) },
                     onBack = onBack,
                     onClear = { signUpViewModel.clearName() },
-                    onNext = { navController.navigate("SignUpPassword") })
+                    onNext = { navController.navigate(Screen.SignUpPassword.route) })
             }
-            composable("JoinEmail") {
+            composable(Screen.JoinEmail.route) {
                 SignUpEmail(
                     email = uiState.email,
                     errorMessage = uiState.emailErrorMessage,
@@ -50,13 +51,13 @@ fun SignUpNavHost(
                     onNext = {
                         coroutine.launch {
                             if (signUpViewModel.registerEmail()) {
-                                navController.navigate("SignUpConfirmationCode")
+                                navController.navigate(Screen.SignUpConfirmationCode.route)
                             }
                         }
                     }
                 )
             }
-            composable("SignUpConfirmationCode") {
+            composable(Screen.SignUpConfirmationCode.route) {
                 SignUpConfirmationScreen(
                     email = uiState.email,
                     confirmCode = uiState.confirmCode,
@@ -67,14 +68,14 @@ fun SignUpNavHost(
                     onNext = {
                         coroutine.launch {
                             if (signUpViewModel.confirmCode()) {
-                                navController.navigate("SuccessSignUp") {
+                                navController.navigate(Screen.SuccessSignUp.route) {
                                     popUpTo(0)
                                 }
                             }
                         }
                     })
             }
-            composable("SignUpPassword") {
+            composable(Screen.SignUpPassword.route) {
                 SignUpPassword(
                     password = uiState.password,
                     onValueChange = { signUpViewModel.onChangePassword(it) },
@@ -83,13 +84,13 @@ fun SignUpNavHost(
                     onNext = {
                         coroutine.launch {
                             if (signUpViewModel.validPassword())
-                                navController.navigate("JoinEmail")
+                                navController.navigate(Screen.JoinEmail.route)
                         }
                     },
                     errorMessage = uiState.passwordErrorMessage
                 )
             }
-            composable("SuccessSignUp") {
+            composable(Screen.SuccessSignUp.route) {
                 SignUpSuccess(onNext = signUpSuccess)
             }
         }

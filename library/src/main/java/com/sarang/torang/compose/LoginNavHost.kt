@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.loginmethod.LoginChooseMethodNavHost
 import com.sarang.torang.compose.signup.SignUpNavHost
+import com.sarang.torang.screen.login.Screen
 import com.sarang.torang.viewmodels.LoginViewModel
 
 @Composable
@@ -24,11 +25,11 @@ fun LoginNavHost(
 ) {
     val navController = rememberNavController()
     val isLogin by viewModel.isLogin.collectAsState(false)
-    NavHost(navController = navController, startDestination = "chooseMethod") {
+    NavHost(navController = navController, startDestination = Screen.ChooseMethod.route) {
         composable("chooseMethod") {
             LoginChooseMethodNavHost(
                 isLogin = isLogin,
-                onSignUp = { navController.navigate("signUp") },
+                onSignUp = { navController.navigate(Screen.SignUp.route) },
                 onLookAround = onLookAround,
                 onLogin = onSuccessLogin,
                 goEmailLoginDirect = goEmailLoginDirect,
@@ -37,7 +38,7 @@ fun LoginNavHost(
                 onBack = onBack
             )
         }
-        composable("signUp") {
+        composable(Screen.SignUp.route) {
             SignUpNavHost(
                 onBack = { navController.popBackStack() },
                 signUpSuccess = { navController.popBackStack() }

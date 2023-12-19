@@ -32,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.R
 import com.sarang.torang.compose.TorangLogo
 import com.sarang.torang.compose.email.EmailLoginScreen
+import com.sarang.torang.screen.login.Screen
 
 @Composable
 internal fun LoginChooseMethodNavHost(
@@ -72,9 +73,9 @@ internal fun LoginChooseMethodNavHost(
             if (!isLogin) {
                 NavHost(
                     navController = navController,
-                    startDestination = if (goEmailLoginDirect) "emailLogin" else "chooseLoginMethod"
+                    startDestination = if (goEmailLoginDirect) Screen.EmailLogin.route else Screen.ChooseLoginMethod.route
                 ) {
-                    composable("chooseLoginMethod") {
+                    composable(Screen.ChooseLoginMethod.route) {
                         ChooseLoginMethod(
                             onEmailLogin = {
                                 navController.navigate("emailLogin")
@@ -83,7 +84,7 @@ internal fun LoginChooseMethodNavHost(
                             showLookAround = showLookAround
                         )
                     }
-                    composable("emailLogin") {
+                    composable(Screen.EmailLogin.route) {
                         EmailLoginScreen(onLogin = onLogin)
                     }
                 }
