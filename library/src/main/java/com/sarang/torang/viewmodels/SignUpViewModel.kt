@@ -4,6 +4,8 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import com.sarang.torang.uistate.SignUpUiState
 import com.sarang.torang.usecase.SignUpUseCase
+import com.sarang.torang.usecase.ValidEmailUseCase
+import com.sarang.torang.usecase.ValidPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val signUpUseCase: SignUpUseCase
+    private val signUpUseCase: SignUpUseCase,
+    private val validEmailUseCase: ValidEmailUseCase,
+    private val validPasswordUseCase: ValidPasswordUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SignUpUiState())
@@ -20,7 +24,7 @@ class SignUpViewModel @Inject constructor(
     private var token = "";
 
     suspend fun registerEmail(): Boolean {
-        if (!Patterns.EMAIL_ADDRESS.matcher(uiState.value.email).matches()) {
+        if (!validEmailUseCase.invoke(uiState.value.email)) {
             _uiState.update { it.copy(emailErrorMessage = "이메일 형식이 아닙니다.") }
             return false
         } else {
@@ -38,7 +42,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun validPassword(): Boolean {
-        return if (uiState.value.password.length < 5) {
+        return if (!validPasswordUseCase.invoke(uiState.value.password)) {
             _uiState.update { it.copy(passwordErrorMessage = "5자 이상 입력해 주세요") }
             false
         } else {
