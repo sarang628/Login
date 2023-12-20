@@ -47,8 +47,8 @@ class MainActivity : ComponentActivity() {
                                 Log.d("MainActivity", "onLogin")
                             }, onLookAround = {},
                                 goEmailLoginDirect = false,
-                                showTopBar = true,
-                                showLookAround = true,
+                                //showTopBar = false,
+                                //showLookAround = true,
                                 onBack = {}
                             )
                         }

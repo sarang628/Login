@@ -21,5 +21,14 @@
     <string name="label_email">이메일</string>
     <string name="label_password">비밀번호</string>
 
+    <string name="what_s_your_email">이메일을 입력해 주세요.</string>
+    <string name="describe_input_email">연락가능한 이메일을 입력해주세요. 다른사람이 보지 않게 주의하세요.</string>
+
+    <string name="create_a_password">비밀번호 입력</string>
+    <string name="describe_input_password">최소 6자리 이상의 문자와 숫자를 비밀번호를 입력해주세요. 다른사람이 보지 않게 주의하세요.</string>
+
     <string name="what_s_your_name">성명을 입력해주세요.</string>
+
+    <string name="success_sign_up">회원가입 성공!</string>
+    <string name="go_sign_in">로그인 하러 가기!</string>
 </resources>

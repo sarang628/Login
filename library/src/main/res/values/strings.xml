@@ -21,6 +21,14 @@
     <string name="label_login">Log in</string>
 
     <string name="what_s_your_name">What\'s your name?</string>
+    <string name="what_s_your_email">What\'s your email?</string>
+    <string name="describe_input_email">Enter the email where you can be contacted. No one will see this on your profile</string>
+
+    <string name="create_a_password">Create a password</string>
+    <string name="describe_input_password">Create a password with at least 6 letters on numbers. It should be something others can\'t guess</string>
+
+    <string name="success_sign_up">Success Sign up!</string>
+    <string name="go_sign_in">go sign in!</string>
 
     <!---->
     <string name="a11y_back" translatable="false">Navigate up</string>

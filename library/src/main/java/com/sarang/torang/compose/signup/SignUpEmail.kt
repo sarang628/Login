@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
 import com.sarang.torang.compose.email.LoginOutlinedTextField
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignUpEmail(
     email: String,
@@ -34,42 +33,29 @@ internal fun SignUpEmail(
     onClear: () -> Unit,
     onNext: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(onClick = { onBack.invoke() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(id = R.string.a11y_back)
-                        )
-                    }
-                }
-            )
-        },
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .padding(start = 16.dp, end = 16.dp)
-        ) {
-            Text(text = "What's your email?", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = "Enter the email where you can be contacted. No one will see this on your profile")
-            Spacer(modifier = Modifier.height(12.dp))
-            LoginOutlinedTextField(
-                label = "Email",
-                value = email,
-                onValueChange = onValueChange,
-                placeHolder = "Email",
-                onClear = onClear,
-                errorMessage = errorMessage
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
-                Text(text = "Next")
-            }
+    Column(
+        Modifier
+            .padding(start = 16.dp, end = 16.dp)
+    ) {
+        Text(
+            text = stringResource(id = R.string.what_s_your_email),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(text = stringResource(id = R.string.describe_input_email))
+        Spacer(modifier = Modifier.height(12.dp))
+        LoginOutlinedTextField(
+            label = stringResource(id = R.string.label_email),
+            value = email,
+            onValueChange = onValueChange,
+            placeHolder = stringResource(id = R.string.label_email),
+            onClear = onClear,
+            errorMessage = errorMessage
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
+            Text(text = stringResource(id = R.string.label_next))
         }
     }
 }
