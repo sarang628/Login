@@ -87,5 +87,4 @@ class EmailLoginViewModelTest {
             Assert.assertEquals(null, viewModel.uiState.value.error)
         }
     }
-
 }

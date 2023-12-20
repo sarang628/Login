@@ -25,7 +25,7 @@ class EmailLoginScreenTest {
                     emailErrorMessage = "error",
                     passwordErrorMessage = "error"
                 ),
-                onLogin = { id, password -> },
+                onLogin = {},
                 onChangeEmail = {},
                 onChangePassword = {},
                 onClearEmail = { /*TODO*/ },
