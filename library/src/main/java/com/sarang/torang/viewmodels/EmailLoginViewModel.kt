@@ -1,6 +1,5 @@
 package com.sarang.torang.viewmodels
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.torang.uistate.EmailLoginUiState
@@ -24,33 +23,18 @@ class EmailLoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(EmailLoginUiState())
     var uiState = _uiState.asStateFlow()
 
-    fun login(id: String, password: String, onLogin: () -> Unit) {
-        // ID 패스워드 둘 다 검사를 우선 해야 해서 변수로 결괏값 입력 받아 처리
-        var isValid = true
-        try {
-            _uiState.update { it.copy(emailErrorMessage = null) }
-            emailUseCase.invoke(id)
-        } catch (e: Exception) {
-            _uiState.update { it.copy(emailErrorMessage = e.message) }
-            isValid = false
-        }
-
-        try {
-            _uiState.update { it.copy(passwordErrorMessage = null) }
-            passwordUseCase.invoke(password)
-        } catch (e: Exception) {
-            _uiState.update { it.copy(passwordErrorMessage = e.message) }
-            isValid = false
-        }
-
-        if (!isValid)
-            return
+    fun login(onLogin: () -> Unit) {
+        if (!validateIdPw())
+            return;
 
         viewModelScope.launch {
             try {
                 showProgress(true)
                 clearErrorMsg()
-                emailLoginService.invoke(id, password) // 이메일 로그인 API 호출
+                emailLoginService.invoke(
+                    uiState.value.email,
+                    uiState.value.password
+                ) // 이메일 로그인 API 호출
                 onLogin.invoke()
             } catch (e: Exception) {
                 showError(e.message!!)
@@ -58,6 +42,34 @@ class EmailLoginViewModel @Inject constructor(
                 showProgress(false)
             }
         }
+    }
+
+    private fun validateIdPw(): Boolean {
+        clearValidErrorMessage()
+        var isValid = true
+        if (!emailUseCase.invoke(uiState.value.email)) {
+            showEmailErrorMessage("Error")
+            isValid = false
+        }
+
+        if (!passwordUseCase.invoke(uiState.value.password)) {
+            showPasswordErrorMessage("Error")
+            isValid = false
+        }
+        return isValid
+    }
+
+
+    private fun showPasswordErrorMessage(message: String?) {
+        _uiState.update { it.copy(passwordErrorMessage = message.toString()) }
+    }
+
+    private fun showEmailErrorMessage(message: String?) {
+        _uiState.update { it.copy(emailErrorMessage = message.toString()) }
+    }
+
+    private fun clearValidErrorMessage() {
+        _uiState.update { it.copy(passwordErrorMessage = null, emailErrorMessage = null) }
     }
 
     private fun showProgress(b: Boolean) {

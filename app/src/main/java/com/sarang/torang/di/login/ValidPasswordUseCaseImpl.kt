@@ -12,10 +12,8 @@ class ValidPasswordUseCaseImpl {
     @Provides
     fun providesValidPasswordUseCase(): ValidPasswordUseCase {
         return object : ValidPasswordUseCase {
-            override fun invoke(password: String) {
-                if (password.length < 5) {
-                    throw Exception("5자리 이상 입력해주세요.")
-                }
+            override fun invoke(password: String): Boolean {
+                return password.length >= 5
             }
         }
     }

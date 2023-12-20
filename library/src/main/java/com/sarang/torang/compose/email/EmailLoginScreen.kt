@@ -26,7 +26,7 @@ fun EmailLoginScreen(
     val uiState by viewModel.uiState.collectAsState()
     EmailLoginScreen(
         uiState = uiState,
-        onLogin = { id, password -> viewModel.login(id, password, onLogin) },
+        onLogin = { viewModel.login(onLogin) },
         onChangeEmail = { viewModel.onChangeEmail(it) },
         onChangePassword = { viewModel.onChangePassword(it) },
         onClearEmail = { viewModel.clearEmail() },
@@ -38,7 +38,7 @@ fun EmailLoginScreen(
 @Composable
 internal fun EmailLoginScreen(
     uiState: EmailLoginUiState,
-    onLogin: (id: String, password: String) -> Unit,
+    onLogin: () -> Unit,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
     onClearEmail: () -> Unit,
@@ -91,7 +91,7 @@ fun PreviewEmailLoginScreen() {
             passwordErrorMessage = "passwordErrorMessage",
             isProgress = false
         ),
-        onLogin = { id, password -> },
+        onLogin = { },
         onClearPassword = {},
         onClearEmail = {},
         onChangePassword = {},

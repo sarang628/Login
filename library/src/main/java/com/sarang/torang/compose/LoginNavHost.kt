@@ -18,13 +18,12 @@ fun LoginNavHost(
     viewModel: LoginViewModel = hiltViewModel(),
     onSuccessLogin: () -> Unit,
     onLookAround: () -> Unit,
-    goEmailLoginDirect: Boolean = false,
     showTopBar: Boolean = false,
     onBack: (() -> Unit)? = null,
     showLookAround: Boolean = true
 ) {
     val navController = rememberNavController()
-    val isLogin by viewModel.isLogin.collectAsState(false)
+    val isLogin by viewModel.isLogin.collectAsState()
     NavHost(navController = navController, startDestination = Screen.SignInSignUpExplore.route) {
         composable(Screen.SignInSignUpExplore.route) {
             SignInSignUpExploreNavHost(

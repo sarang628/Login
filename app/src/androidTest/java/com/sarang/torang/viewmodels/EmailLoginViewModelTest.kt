@@ -45,30 +45,46 @@ class EmailLoginViewModelTest {
     @Test
     fun invalidEmail() {
         runBlocking {
-            viewModel.login("aaa", "aaa", onLogin = {})
+            viewModel.login(onLogin = {})
             //do business logic
-            Assert.assertEquals("이메일 형식이 올바르지 않습니다.", viewModel.uiState.value.emailErrorMessage)
+            Assert.assertEquals("Error", viewModel.uiState.value.emailErrorMessage)
         }
     }
 
     @Test
     fun invalidPassword() {
         runBlocking {
-            viewModel.login("aaa", "aaa", onLogin = {})
+            viewModel.login(onLogin = {})
             //do business logic
-            Assert.assertEquals("5자리 이상 입력해주세요.", viewModel.uiState.value.passwordErrorMessage)
+            Assert.assertEquals("Error", viewModel.uiState.value.passwordErrorMessage)
         }
     }
 
     @Test
     fun wrongLogin() {
         runBlocking {
-            viewModel.login("sarang628@naver.com", "bbbbb", onLogin = {
+            viewModel.onChangeEmail("sarang628@naver.com")
+            viewModel.onChangePassword("bbbbb")
+            viewModel.login(onLogin = {
 
             })
             //do business logic by api call
             delay(3000)
             Assert.assertEquals("로그인에 실패하였습니다.", viewModel.uiState.value.error)
+        }
+    }
+
+    @Test
+    fun collectLogin() {
+        runBlocking {
+            viewModel.onChangeEmail("sarang628@naver.com")
+            viewModel.onChangePassword("aaaaa")
+            viewModel.login(onLogin = {
+
+            })
+            //do business logic by api call
+            delay(3000)
+            Assert.assertEquals(null, viewModel.uiState.value.error)
         }
     }
 

@@ -23,7 +23,7 @@ import com.sarang.torang.R
 
 @Composable
 fun EmailLoginInput(
-    onLogin: (id: String, password: String) -> Unit,    // 로그인 클릭
+    onLogin: () -> Unit,    // 로그인 클릭
     progress: Boolean,                                  // 로그인 프로그레스
     emailErrorMessage: String? = null,                  // 이메일 입력 에러 메세지
     passwordErrorMessage: String? = null,               // 비밀번호 입력 에러 메세지
@@ -70,7 +70,7 @@ fun EmailLoginInput(
             )
             Spacer(modifier = Modifier.height(15.dp))
             LoginButton(
-                onClick = { onLogin.invoke(email, password) }, progress = progress
+                onClick = onLogin::invoke, progress = progress
             )
         }
     }
@@ -80,7 +80,7 @@ fun EmailLoginInput(
 @Composable
 fun PreviewEmailLoginInput() {
     EmailLoginInput(
-        onLogin = { id, password -> },
+        onLogin = { },
         progress = false,
         email = "",
         password = "",

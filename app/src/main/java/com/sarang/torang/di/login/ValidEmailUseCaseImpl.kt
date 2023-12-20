@@ -16,10 +16,8 @@ class ValidEmailUseCaseImpl {
     @Provides
     fun provides(): ValidEmailUseCase {
         return object : ValidEmailUseCase {
-            override fun invoke(email: String) {
-                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    throw Exception("이메일 형식이 올바르지 않습니다.")
-                }
+            override fun invoke(email: String): Boolean {
+                return Patterns.EMAIL_ADDRESS.matcher(email).matches()
             }
         }
     }

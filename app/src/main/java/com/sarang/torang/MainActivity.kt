@@ -46,7 +46,6 @@ class MainActivity : ComponentActivity() {
                             LoginNavHost(onSuccessLogin = {
                                 Log.d("MainActivity", "onLogin")
                             }, onLookAround = {},
-                                goEmailLoginDirect = false,
                                 //showTopBar = false,
                                 //showLookAround = true,
                                 onBack = {}
