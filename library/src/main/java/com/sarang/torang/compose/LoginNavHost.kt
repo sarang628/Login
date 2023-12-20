@@ -23,7 +23,7 @@ fun LoginNavHost(
     showLookAround: Boolean = true
 ) {
     val navController = rememberNavController()
-    val isLogin by viewModel.isLogin.collectAsState()
+    val isLogin by viewModel.isLogin.collectAsState(false)
     NavHost(navController = navController, startDestination = Screen.SignInSignUpExplore.route) {
         composable(Screen.SignInSignUpExplore.route) {
             SignInSignUpExploreNavHost(

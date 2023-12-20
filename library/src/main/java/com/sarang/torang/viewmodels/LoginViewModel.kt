@@ -20,15 +20,5 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     isLoginFlowUseCase: IsLoginFlowUseCase
 ) : ViewModel() {
-    private val isLoginFlow = isLoginFlowUseCase.isLogin
-    private val _isLogin = MutableStateFlow(false)
-    val isLogin: StateFlow<Boolean> = _isLogin.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            isLoginFlow.collectLatest {
-                _isLogin.update { it }
-            }
-        }
-    }
+    val isLogin = isLoginFlowUseCase.isLogin
 }
