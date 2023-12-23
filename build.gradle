@@ -9,7 +9,7 @@ plugins {
 ext {
     // Sdk and tools
     compileSdk = 34
-    minSdk = 24
+    minSdk = 26
     targetSdk = 34
     buildToolsVersion = '30.0.3'
     compose_version = '1.6.0'

@@ -37,46 +37,29 @@ internal fun SignUpConfirmationScreen(
     onClear: () -> Unit,
     onNext: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { },
-                navigationIcon = {
-                    IconButton(onClick = onBack::invoke) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(id = R.string.a11y_back)
-                        )
-                    }
-                }
-            )
-        },
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .padding(innerPadding)
-                .padding(start = 16.dp, end = 16.dp)
-        ) {
-            Text(
-                text = "Enter the confirmation code",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = "To confirm your account, enter the 6-digit code we sent to ${email}.")
-            Spacer(modifier = Modifier.height(12.dp))
-            LoginOutlinedTextField(
-                label = "Confirmation code",
-                value = confirmCode,
-                onValueChange = onValueChange,
-                placeHolder = "Confirmation code",
-                onClear = onClear,
-                errorMessage = errorMessage
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
-                Text(text = "Next")
-            }
+    Column(
+        Modifier
+            .padding(start = 16.dp, end = 16.dp)
+    ) {
+        Text(
+            text = "Enter the confirmation code",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(text = "To confirm your account, enter the 6-digit code we sent to ${email}.")
+        Spacer(modifier = Modifier.height(12.dp))
+        LoginOutlinedTextField(
+            label = "Confirmation code",
+            value = confirmCode,
+            onValueChange = onValueChange,
+            placeHolder = "Confirmation code",
+            onClear = onClear,
+            errorMessage = errorMessage
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
+            Text(text = "Next")
         }
     }
 }
