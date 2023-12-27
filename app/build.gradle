@@ -85,7 +85,6 @@ dependencies {
 
     implementation project(path: ':library')
 
-    implementation 'com.github.sarang628:Design:df442fbb8c'
     implementation "com.github.sarang628:TorangRepository:$repositoryVersion"
     implementation "com.github.sarang628:Theme:$themeVersion"
 }
