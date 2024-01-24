@@ -6,7 +6,6 @@ import com.sarang.torang.uistate.SignUpUiState
 import com.sarang.torang.usecase.SignUpUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
-import com.sarang.torang.util.Encrypt.encrypt
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,7 +32,7 @@ class SignUpViewModel @Inject constructor(
             try {
                 token = signUpUseCase.checkEmail(
                     uiState.value.email,
-                    encrypt(uiState.value.password)
+                    uiState.value.password
                 )
                 return true
             } catch (e: Exception) {
@@ -63,7 +62,7 @@ class SignUpViewModel @Inject constructor(
                 confirmCode = uiState.value.confirmCode,
                 name = uiState.value.name,
                 email = uiState.value.email,
-                password = encrypt(uiState.value.password)
+                password = uiState.value.password
             )
         } catch (e: Exception) {
             _uiState.update { it.copy(confirmCodeErrorMessage = e.toString()) }

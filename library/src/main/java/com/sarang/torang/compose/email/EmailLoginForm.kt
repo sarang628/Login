@@ -79,7 +79,7 @@ fun EmailLoginInput(
 @Preview
 @Composable
 fun PreviewEmailLoginInput() {
-    EmailLoginInput(
+    EmailLoginInput(/*Preview*/
         onLogin = { },
         progress = false,
         email = "",
