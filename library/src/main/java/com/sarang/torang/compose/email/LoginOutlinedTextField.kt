@@ -7,9 +7,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,7 +42,7 @@ fun LoginOutlinedTextField(
     onClear: () -> Unit,
     isPassword: Boolean = false,
     isPasswordVisual: Boolean = false,
-    enable: Boolean? = null
+    enable: Boolean? = null,
 ) {
     //에러 메시지를 필드 하단에 표시
     val compose = @Composable {
@@ -67,18 +70,20 @@ fun LoginOutlinedTextField(
                         }
                     )
                 } else if (isPassword) {
-                    Image(
-                        painter = if (!isPasswordVisual) painterResource(id = R.drawable.ic_password_off)
-                        else painterResource(id = R.drawable.ic_password_on),
-                        contentDescription = "",
-                        modifier = Modifier.clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
+                    IconButton(
+                        onClick = {
                             if (enable != false)
                                 onClear.invoke()
                         }
-                    )
+                    ) {
+                        Icon(
+                            painter = if (!isPasswordVisual) painterResource(id = R.drawable.ic_password_off)
+                            else painterResource(id = R.drawable.ic_password_on),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(25.dp)
+                        )
+                    }
                 } else if (value.isNotEmpty()) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_x),

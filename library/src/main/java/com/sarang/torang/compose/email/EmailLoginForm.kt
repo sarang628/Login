@@ -17,6 +17,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.sarang.torang.R
@@ -32,7 +33,7 @@ fun EmailLoginInput(
     onChangeEmail: (String) -> Unit,                    // 이메일 입력
     onChangePassword: (String) -> Unit,                 // 비밀번호 임력
     onClearEmail: () -> Unit,                           // 이메일 초기화
-    onClearPassword: () -> Unit                         // 비밀번호 초기화
+    onClearPassword: () -> Unit,                         // 비밀번호 초기화
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -76,7 +77,7 @@ fun EmailLoginInput(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun PreviewEmailLoginInput() {
     EmailLoginInput(/*Preview*/
