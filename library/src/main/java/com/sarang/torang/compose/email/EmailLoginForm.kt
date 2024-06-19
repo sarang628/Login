@@ -33,7 +33,6 @@ fun EmailLoginInput(
     onChangeEmail: (String) -> Unit,                    // 이메일 입력
     onChangePassword: (String) -> Unit,                 // 비밀번호 임력
     onClearEmail: () -> Unit,                           // 이메일 초기화
-    onClearPassword: () -> Unit,                         // 비밀번호 초기화
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -87,7 +86,6 @@ fun PreviewEmailLoginInput() {
         password = "",
         onChangeEmail = {},
         onChangePassword = {},
-        onClearEmail = { /*TODO*/ },
-        onClearPassword = {}
+        onClearEmail = { /*TODO*/ }
     )
 }

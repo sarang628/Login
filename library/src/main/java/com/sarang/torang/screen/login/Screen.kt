@@ -1,18 +1,30 @@
 package com.sarang.torang.screen.login
 
-import androidx.navigation.NamedNavArgument
+import kotlinx.serialization.Serializable
 
-sealed class Screen(
-    val route: String,
-    val navArguments: List<NamedNavArgument> = emptyList()
-) {
-    object SignInSignUpExplore : Screen("signInSignUpExplore")
-    object ChooseLoginMethod : Screen("chooseLoginMethod")
-    object SignUp : Screen("signUp")
-    object JoinName : Screen("joinName")
-    object JoinEmail : Screen("joinEmail")
-    object SignUpConfirmationCode : Screen("signUpConfirmationCode")
-    object SignUpPassword : Screen("signUpPassword")
-    object SuccessSignUp : Screen("successSignUp")
-    object EmailLogin : Screen("emailLogin")
-}
+@Serializable
+object SignInSignUpExplore
+
+@Serializable
+object ChooseLoginMethod
+
+@Serializable
+object SignUp
+
+@Serializable
+object JoinName
+
+@Serializable
+object JoinEmail
+
+@Serializable
+object SignUpConfirmationCode
+
+@Serializable
+object SignUpPassword
+
+@Serializable
+object SuccessSignUp
+
+@Serializable
+object EmailLogin

@@ -58,7 +58,8 @@ dependencies {
     testImplementation 'com.google.dagger:hilt-android-testing:2.44' // For Robolectric tests.
     kaptTest 'com.google.dagger:hilt-android-compiler:2.44' // ...with Kotlin.
     testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44'// ...with Java.
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44' // For instrumented tests.
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
+    // For instrumented tests.
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44' // ...with Kotlin.
     androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44' // ...with Java.
     implementation 'androidx.test:runner:1.5.2'
@@ -79,9 +80,20 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     // Needed for createAndroidComposeRule, but not createComposeRule:
 
-    def nav_version = "2.5.3"
+    /** Navigation start */
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
+    /** Navigation end */
 
     implementation project(path: ':library')
 

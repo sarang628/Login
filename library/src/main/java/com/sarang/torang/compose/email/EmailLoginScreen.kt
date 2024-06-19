@@ -30,7 +30,6 @@ fun EmailLoginScreen(
         onChangeEmail = { viewModel.onChangeEmail(it) },
         onChangePassword = { viewModel.onChangePassword(it) },
         onClearEmail = { viewModel.clearEmail() },
-        onClearPassword = { viewModel.clearPassword() },
         onClearErrorMsg = { viewModel.clearErrorMsg() }
     )
 }
@@ -42,7 +41,6 @@ internal fun EmailLoginScreen(
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
     onClearEmail: () -> Unit,
-    onClearPassword: () -> Unit,
     onClearErrorMsg: () -> Unit,
 ) {
     Box {
@@ -56,7 +54,6 @@ internal fun EmailLoginScreen(
                 onChangeEmail = onChangeEmail,
                 onChangePassword = onChangePassword,
                 onClearEmail = onClearEmail,
-                onClearPassword = onClearPassword,
                 progress = uiState.isProgress,
                 email = uiState.email,
                 password = uiState.password,
@@ -92,7 +89,6 @@ fun PreviewEmailLoginScreen() {
             isProgress = false
         ),
         onLogin = { },
-        onClearPassword = {},
         onClearEmail = {},
         onChangePassword = {},
         onChangeEmail = {},

@@ -23,7 +23,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.R
-import com.sarang.torang.screen.login.Screen
+import com.sarang.torang.screen.login.JoinEmail
+import com.sarang.torang.screen.login.JoinName
+import com.sarang.torang.screen.login.SignUpConfirmationCode
+import com.sarang.torang.screen.login.SignUpPassword
+import com.sarang.torang.screen.login.SuccessSignUp
 import com.sarang.torang.viewmodels.SignUpViewModel
 import kotlinx.coroutines.launch
 
@@ -33,7 +37,7 @@ import kotlinx.coroutines.launch
 fun SignUpNavHost(
     signUpViewModel: SignUpViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    signUpSuccess: () -> Unit
+    signUpSuccess: () -> Unit,
 ) {
     val uiState by signUpViewModel.uiState.collectAsState()
     val navController = rememberNavController()
@@ -48,7 +52,7 @@ fun SignUpNavHost(
                 TopAppBar(
                     title = {},
                     navigationIcon = {
-                        if (navController.currentDestination?.route != Screen.SuccessSignUp.route)
+                        if (navController.currentDestination?.route != SuccessSignUp.toString())
                             IconButton(onClick = {
                                 if (!navController.popBackStack())
                                     onBack.invoke()
@@ -65,17 +69,17 @@ fun SignUpNavHost(
             NavHost(
                 modifier = Modifier.padding(it),
                 navController = navController,
-                startDestination = Screen.JoinName.route
+                startDestination = JoinName
             ) {
-                composable(Screen.JoinName.route) {
+                composable<JoinName> {
                     SignUpName(
                         name = uiState.name,
                         onValueChange = signUpViewModel::onChangeName,
                         onBack = onBack,
                         onClear = signUpViewModel::clearName,
-                        onNext = { navController.navigate(Screen.SignUpPassword.route) })
+                        onNext = { navController.navigate(SignUpPassword) })
                 }
-                composable(Screen.JoinEmail.route) {
+                composable<JoinEmail> {
                     SignUpEmail(
                         email = uiState.email,
                         errorMessage = uiState.emailErrorMessage,
@@ -85,13 +89,13 @@ fun SignUpNavHost(
                         onNext = {
                             coroutine.launch {
                                 if (signUpViewModel.registerEmail()) {
-                                    navController.navigate(Screen.SignUpConfirmationCode.route)
+                                    navController.navigate(SignUpConfirmationCode)
                                 }
                             }
                         }
                     )
                 }
-                composable(Screen.SignUpConfirmationCode.route) {
+                composable<SignUpConfirmationCode> {
                     SignUpConfirmationScreen(
                         email = uiState.email,
                         confirmCode = uiState.confirmCode,
@@ -102,14 +106,14 @@ fun SignUpNavHost(
                         onNext = {
                             coroutine.launch {
                                 if (signUpViewModel.confirmCode()) {
-                                    navController.navigate(Screen.SuccessSignUp.route) {
+                                    navController.navigate(SuccessSignUp) {
                                         popUpTo(0)
                                     }
                                 }
                             }
                         })
                 }
-                composable(Screen.SignUpPassword.route) {
+                composable<SignUpPassword> {
                     SignUpPassword(
                         password = uiState.password,
                         onValueChange = signUpViewModel::onChangePassword,
@@ -118,11 +122,11 @@ fun SignUpNavHost(
                         onClear = signUpViewModel::clearPassword,
                         onNext = {
                             if (signUpViewModel.validPassword())
-                                navController.navigate(Screen.JoinEmail.route)
+                                navController.navigate(JoinEmail)
                         }
                     )
                 }
-                composable(Screen.SuccessSignUp.route) {
+                composable<SuccessSignUp> {
                     SignUpSuccess(onNext = signUpSuccess)
                 }
             }
