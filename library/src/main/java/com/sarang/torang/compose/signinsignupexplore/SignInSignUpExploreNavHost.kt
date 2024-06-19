@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -59,8 +60,8 @@ internal fun SignInSignUpExploreNavHost(
     showTopBar: Boolean = false,
     onBack: (() -> Unit)? = null,
     loginScreen: @Composable (() -> Unit)? = null,
+    navController: NavHostController = rememberNavController(),
 ) {
-    val navController = rememberNavController()
     Scaffold(
         topBar = {
             if (showTopBar)

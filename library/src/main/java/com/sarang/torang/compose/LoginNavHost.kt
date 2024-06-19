@@ -1,9 +1,14 @@
 package com.sarang.torang.compose
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -26,8 +31,6 @@ import com.sarang.torang.viewmodels.LoginViewModel
  * @param onBack 뒤로가기 버튼을 눌렀을 때 호출되는 콜백
  * @param showLookAround 탐색 화면을 보여줄지 여부
  */
-object Test
-
 @Composable
 fun LoginNavHost(
     viewModel: LoginViewModel = hiltViewModel(),
@@ -36,9 +39,10 @@ fun LoginNavHost(
     showTopBar: Boolean = false,
     onBack: (() -> Unit)? = null,
     showLookAround: Boolean = true,
+    navController: NavHostController = rememberNavController(),
 ) {
-    val navController = rememberNavController()
     val isLogin by viewModel.isLogin.collectAsState(false)
+
     NavHost(navController = navController, startDestination = SignInSignUpExplore) {
         composable<SignInSignUpExplore> {
             SignInSignUpExploreNavHost(
