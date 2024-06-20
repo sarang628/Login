@@ -20,6 +20,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -34,6 +39,7 @@ import com.sarang.torang.R
 import com.sarang.torang.compose.TorangLogo
 import com.sarang.torang.screen.login.ChooseLoginMethod
 import com.sarang.torang.screen.login.EmailLogin
+import java.util.Objects
 
 /**
  * 로그인 회원가입 선택화면.
@@ -51,6 +57,7 @@ import com.sarang.torang.screen.login.EmailLogin
  * @param loginScreen 로그인 화면 composeable
  *
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignInSignUpExploreNavHost(
     isLogin: Boolean,
@@ -62,9 +69,17 @@ internal fun SignInSignUpExploreNavHost(
     loginScreen: @Composable (() -> Unit)? = null,
     navController: NavHostController = rememberNavController(),
 ) {
+    var currentScreen: String? by remember { mutableStateOf(null) }
+
+    LaunchedEffect(key1 = "") {
+        navController.currentBackStackEntryFlow.collect {
+            currentScreen = it.destination.route
+        }
+    }
+
     Scaffold(
         topBar = {
-            if (showTopBar)
+            if (showTopBar || currentScreen?.isEmailLoginScreen() == true)
                 SignInSignUpExploreTopAppBar(
                     onBack = {
                         if (!navController.popBackStack()) {
@@ -72,6 +87,9 @@ internal fun SignInSignUpExploreNavHost(
                         }
                     }
                 )
+            else {
+                TopAppBar(title = {})
+            }
         }
     ) {
         Column(
@@ -107,6 +125,10 @@ internal fun SignInSignUpExploreNavHost(
             }
         }
     }
+}
+
+private fun String.isEmailLoginScreen(): Boolean {
+    return EmailLogin.toString().split("@")[0] == this
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -29,7 +29,7 @@ fun TorangLogo(
 @Composable
 fun TorangLogo(uiState: LoginTitleUiState) {
     Column {
-        Spacer(modifier = Modifier.height(130.dp))
+        Spacer(modifier = Modifier.height(100.dp))
         Column(Modifier.fillMaxWidth())
         {
             /*T O R A N G 제목*/
