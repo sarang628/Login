@@ -1,7 +1,10 @@
 package com.sarang.torang.viewmodels
 
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sarang.torang.R
+import com.sarang.torang.data.LoginErrorMessage
 import com.sarang.torang.uistate.EmailLoginUiState
 import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
@@ -17,7 +20,7 @@ import javax.inject.Inject
 class EmailLoginViewModel @Inject constructor(
     private val emailLoginService: EmailLoginUseCase,
     private val emailUseCase: ValidEmailUseCase,
-    private val passwordUseCase: ValidPasswordUseCase
+    private val passwordUseCase: ValidPasswordUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EmailLoginUiState())
@@ -48,24 +51,24 @@ class EmailLoginViewModel @Inject constructor(
         clearValidErrorMessage()
         var isValid = true
         if (!emailUseCase.invoke(uiState.value.email)) {
-            showEmailErrorMessage("Error")
+            showEmailErrorMessage(LoginErrorMessage.InvalidEmail)
             isValid = false
         }
 
         if (!passwordUseCase.invoke(uiState.value.password)) {
-            showPasswordErrorMessage("Error")
+            showPasswordErrorMessage(LoginErrorMessage.InvalidPassword)
             isValid = false
         }
         return isValid
     }
 
 
-    private fun showPasswordErrorMessage(message: String?) {
-        _uiState.update { it.copy(passwordErrorMessage = message.toString()) }
+    private fun showPasswordErrorMessage(message: LoginErrorMessage) {
+        _uiState.update { it.copy(passwordErrorMessage = message) }
     }
 
-    private fun showEmailErrorMessage(message: String?) {
-        _uiState.update { it.copy(emailErrorMessage = message.toString()) }
+    private fun showEmailErrorMessage(message: LoginErrorMessage) {
+        _uiState.update { it.copy(emailErrorMessage = message) }
     }
 
     private fun clearValidErrorMessage() {

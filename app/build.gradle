@@ -55,14 +55,25 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     // coroutines unit test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1"
-    testImplementation 'com.google.dagger:hilt-android-testing:2.44' // For Robolectric tests.
-    kaptTest 'com.google.dagger:hilt-android-compiler:2.44' // ...with Kotlin.
-    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44'// ...with Java.
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
-    // For instrumented tests.
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44' // ...with Kotlin.
-    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44' // ...with Java.
     implementation 'androidx.test:runner:1.5.2'
+
+    // hilt testing
+    // For Robolectric tests.
+    testImplementation 'com.google.dagger:hilt-android-testing:2.44'
+    // ...with Kotlin.
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.44'
+    // ...with Java.
+    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44'
+
+
+    // For instrumented tests.
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
+    // ...with Kotlin.
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44'
+    // ...with Java.
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44'
+
+    /* Test End*/
 
     /** compose */
     def composeBom = platform('androidx.compose:compose-bom:2023.04.01')

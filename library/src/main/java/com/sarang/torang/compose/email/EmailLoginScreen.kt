@@ -15,13 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.R
+import com.sarang.torang.data.LoginErrorMessage
 import com.sarang.torang.uistate.EmailLoginUiState
 import com.sarang.torang.viewmodels.EmailLoginViewModel
 
 @Composable
 fun EmailLoginScreen(
     viewModel: EmailLoginViewModel = hiltViewModel(),
-    onLogin: () -> Unit
+    onLogin: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     EmailLoginScreen(
@@ -57,8 +58,8 @@ internal fun EmailLoginScreen(
                 progress = uiState.isProgress,
                 email = uiState.email,
                 password = uiState.password,
-                emailErrorMessage = if (uiState.emailErrorMessage != null) stringResource(id = R.string.invalid_email_format) else null,
-                passwordErrorMessage = if (uiState.passwordErrorMessage != null) stringResource(id = R.string.invalid_password_format) else null
+                emailErrorMessage = if (uiState.emailErrorMessage != null) stringResource(id = uiState.emailErrorMessage.resId) else null,
+                passwordErrorMessage = if (uiState.passwordErrorMessage != null) stringResource(id = uiState.passwordErrorMessage.resId) else null
             )
             uiState.error?.let {
                 AlertDialog(onDismissRequest = { onClearErrorMsg.invoke() },
@@ -84,8 +85,29 @@ fun PreviewEmailLoginScreen() {
             //error = "로그인에 실패하였습니다.",
             email = "torang@torang.com",
             password = "password",
-            emailErrorMessage = "emailErrorMessage",
-            passwordErrorMessage = "passwordErrorMessage",
+            emailErrorMessage = LoginErrorMessage.InvalidEmail,
+            passwordErrorMessage = LoginErrorMessage.InvalidPassword,
+            isProgress = false
+        ),
+        onLogin = { },
+        onClearEmail = {},
+        onChangePassword = {},
+        onChangeEmail = {},
+        onClearErrorMsg = {}
+    )
+}
+
+@Preview
+@Composable
+fun PreviewEmailLoginScreen1() {
+    EmailLoginScreen(
+        //uiState = EmailLoginUiState(),
+        uiState = EmailLoginUiState(
+            //error = "로그인에 실패하였습니다.",
+            email = "",
+            password = "",
+//            emailErrorMessage = "emailErrorMessage",
+//            passwordErrorMessage = "passwordErrorMessage",
             isProgress = false
         ),
         onLogin = { },
