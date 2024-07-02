@@ -8,9 +8,9 @@
 인스타그램의 ui와 flow를 참조.
 
 ## 개발 환경 구성
-- app: login module를 실행하고 테스트하는 앱
-- library: login module이 실제 구현되어있는 라이브러리
-- di: app에 위치하며 실제 환경에서 테스트를 위한 필수 코드
+- app: login module을 실행하고 테스트하는 앱
+- library: login module이 실제 구현되어 있는 라이브러리
+- di: app에 위치하여 실제 라이브러리에 필요한 의존성을 제공하는 필수 코드
   - repository - 저장소(API, DB) 모듈을 주입하여 사용
   - login - login 모듈을 사용하는데 있어 필요한 의존성 정의
 
@@ -26,6 +26,13 @@
 
 
 ## 코드 설명
+
+```
+LoginNavHost --- SignInSignUpExploreNavHost  --- EmailLoginScreen
+                 (로그인 회원가입 선택화면)        |   (이메일 로그인 화면)
+                                             --- SignInSignUpExplore
+                                                 (회원가입 화면)
+```
 
 ### LoginNavHost.kt
 로그인 화면의 경로들을 정의. 실질적인 화면의 시작점 이다.

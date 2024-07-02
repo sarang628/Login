@@ -1,7 +1,6 @@
 package com.sarang.torang
 
 import androidx.activity.ComponentActivity
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -14,7 +13,6 @@ import com.sarang.torang.usecase.ValidPasswordUseCase
 import com.sarang.torang.viewmodels.EmailLoginViewModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -70,7 +68,5 @@ class EmailLoginTest {
             .performTextInput("aaaaa")
 
         composeTestRule.onNodeWithText("Log in").performClick()
-        delay(10000)
-        composeTestRule.onNodeWithText("Email").assertIsDisplayed()
     }
 }

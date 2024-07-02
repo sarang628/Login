@@ -31,7 +31,12 @@ import com.sarang.torang.screen.login.SuccessSignUp
 import com.sarang.torang.viewmodels.SignUpViewModel
 import kotlinx.coroutines.launch
 
-
+/**
+ * 회원 가입 화면
+ * @param signUpViewModel 회원 가입 뷰모델
+ * @param onBack 뒤로가기
+ * @param signUpSuccess 회원 가입 성공
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpNavHost(
