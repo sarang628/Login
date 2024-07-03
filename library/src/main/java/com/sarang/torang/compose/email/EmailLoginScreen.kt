@@ -49,8 +49,7 @@ internal fun EmailLoginScreen(
             Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
-            EmailLoginInput(
+            SignInForm(
                 onLogin = onLogin,
                 onChangeEmail = onChangeEmail,
                 onChangePassword = onChangePassword,

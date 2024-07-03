@@ -16,23 +16,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.sarang.torang.R
 
+/**
+ * 로그인 폼
+ * @param onLogin 로그인 클릭
+ * @param progress 로그인 프로그레스
+ * @param emailErrorMessage 이메일 입력 에러 메세지
+ * @param passwordErrorMessage 비밀번호 입력 에러 메세지
+ * @param email 이메일
+ * @param password 비밀번호
+ * @param onChangeEmail 이메일 입력
+ * @param onChangePassword 비밀번호 입력
+ * @param onClearEmail 이메일 초기화
+ */
 @Composable
-fun EmailLoginInput(
-    onLogin: () -> Unit,    // 로그인 클릭
-    progress: Boolean,                                  // 로그인 프로그레스
-    emailErrorMessage: String? = null,                  // 이메일 입력 에러 메세지
-    passwordErrorMessage: String? = null,               // 비밀번호 입력 에러 메세지
-    email: String,                                      // 이메일
-    password: String,                                   // 비밀번호
-    onChangeEmail: (String) -> Unit,                    // 이메일 입력
-    onChangePassword: (String) -> Unit,                 // 비밀번호 임력
-    onClearEmail: () -> Unit,                           // 이메일 초기화
+fun SignInForm(
+    onLogin: () -> Unit,
+    progress: Boolean,
+    emailErrorMessage: String? = null,
+    passwordErrorMessage: String? = null,
+    email: String,
+    password: String,
+    onChangeEmail: (String) -> Unit,
+    onChangePassword: (String) -> Unit,
+    onClearEmail: () -> Unit,
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -78,8 +88,8 @@ fun EmailLoginInput(
 
 @PreviewLightDark
 @Composable
-fun PreviewEmailLoginInput() {
-    EmailLoginInput(/*Preview*/
+fun PreviewSignInForm() {
+    SignInForm(/*Preview*/
         onLogin = { },
         progress = false,
         email = "",

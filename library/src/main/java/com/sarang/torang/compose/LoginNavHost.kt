@@ -16,11 +16,14 @@ import com.sarang.torang.screen.login.SignUp
 import com.sarang.torang.viewmodels.LoginViewModel
 
 /**
- * 실질적인 로그인 화면의 시작점.
+ * 로그인 화면 시작점.
+ *
+ * 로그인/회원가입 선택화면과 회원가입 화면으로 나누어짐.
  *
  * SignInSignUpExploreNavHost - 로그인, 회원가입 선택화면
  *
  * SignUpNavHost - 회원 가입 화면
+ *
  * @param onSuccessLogin 로그인 성공시 호출되는 콜백
  * @param onLookAround 탐색 화면으로 이동하는 콜백
  * @param showTopBar 상단바를 보여줄지 여부

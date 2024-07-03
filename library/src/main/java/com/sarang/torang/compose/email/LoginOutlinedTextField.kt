@@ -140,3 +140,19 @@ fun PreviewLoginOutlinedTextField() {
         enable = false
     )
 }
+
+@Preview
+@Composable
+fun PreviewLoginOutlinedTextField1() {
+    LoginOutlinedTextField(
+        label = "label",
+        onKeyTabOrDown = {},
+        onValueChange = {},
+        placeHolder = "placeHolder",
+        value = "value",
+        onNext = {},
+        onClear = {},
+        enable = false,
+        errorMessage = "errorMessage"
+    )
+}

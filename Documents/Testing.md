@@ -7,6 +7,16 @@ https://developer.android.com/develop/ui/compose/testing#setup
 https://developer.android.com/develop/ui/compose/testing
 https://youtu.be/JyUJZvJ-OV8
 
+## 테스트 하고 싶은 기능
+- 로그인 API가 제대로 동작하는지 확인
+- 회원가입 API가 제대로 동작하는지 확인
+- 이메일 또는 비밀번호 형식 유효성 검사
+- 실제 이메일 비밀번호 항목을 입력하고 로그인 버튼을 누르는 action을 테스트 하고 싶음
+- 회원가입 화면 이름 유효성 검사
+- 회원가입 화면 비밀번호 유효성 검사
+- 회원가입 화면 이메일 유효성 검사
+- 회원가입 화면 중복 이메일 검사
+
 ## 이메일, 비밀번호 표시 테스트
 
 ```

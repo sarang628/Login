@@ -48,6 +48,8 @@ import java.util.Objects
  *
  * loginScreen : 로그인 화면
  *
+ * navigation을 한 곳에서 관리하고 싶은데, 로고 애니메이션 일관성 유지를 위해 따로 사용
+ *
  * @param isLogin 로그인 여부
  * @param onSignUp 회원가입 클릭
  * @param onLookAround 둘러보기 클릭
