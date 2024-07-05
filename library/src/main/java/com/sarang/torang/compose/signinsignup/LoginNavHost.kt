@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -45,26 +46,30 @@ fun LoginNavHost(
 ) {
     val isLogin by viewModel.isLogin.collectAsState(false)
 
-    NavHost(navController = navController, startDestination = SignInSignUp) {
-        composable<SignInSignUp> {
-            SignInSignUpNavHost(
-                isLogin = isLogin,
-                onSignUp = { navController.navigate(SignUp) },
-                onLookAround = onLookAround,
-                showLookAround = showLookAround,
-                showTopBar = showTopBar,
-                onBack = onBack,
-                loginScreen = {
-                    SignInScreen(onLogin = onSuccessLogin)
-                }
-            )
-        }
+    val graph: NavGraph = remember(navController) {
+        navController.createGraph(SignInSignUp, null, emptyMap()) {
+            composable<SignInSignUp> {
+                SignInSignUpNavHost(
+                    isLogin = isLogin,
+                    onSignUp = { navController.navigate(SignUp) },
+                    onLookAround = onLookAround,
+                    showLookAround = showLookAround,
+                    showTopBar = showTopBar,
+                    onBack = onBack,
+                    loginScreen = {
+                        SignInScreen(onLogin = onSuccessLogin)
+                    }
+                )
+            }
 
-        composable<SignUp> {
-            SignUpNavHost(
-                onBack = navController::popBackStack,
-                signUpSuccess = navController::popBackStack
-            )
+            composable<SignUp> {
+                SignUpNavHost(
+                    onBack = navController::popBackStack,
+                    signUpSuccess = navController::popBackStack
+                )
+            }
         }
     }
+
+    NavHost(navController = navController, graph = graph)
 }
