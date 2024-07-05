@@ -1,5 +1,5 @@
-# [이론 정리]()
-안드로이드 웹사이트에 
+# [웹사이트 이론 정리](./UiLayer.md)
+안드로이드 웹사이트에있는 UI layer 이론 정리 
 
 # [SignInScreen](../../library/src/main/java/com/sarang/torang/compose/signinsignup/signin/SignInScreen.kt)
 
