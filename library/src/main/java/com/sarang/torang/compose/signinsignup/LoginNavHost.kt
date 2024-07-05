@@ -1,22 +1,25 @@
-package com.sarang.torang.compose
+package com.sarang.torang.compose.signinsignup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.email.EmailLoginScreen
-import com.sarang.torang.compose.signinsignupexplore.SignInSignUpExploreNavHost
-import com.sarang.torang.compose.signup.SignUpNavHost
-import com.sarang.torang.screen.login.SignInSignUpExplore
+import androidx.navigation.createGraph
+import com.sarang.torang.compose.signinsignup.signin.SignInScreen
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpNavHost
+import com.sarang.torang.compose.signinsignup.signup.SignUpNavHost
+import com.sarang.torang.screen.login.SignInSignUp
 import com.sarang.torang.screen.login.SignUp
-import com.sarang.torang.viewmodels.LoginViewModel
 
 /**
  * 로그인 화면 시작점.
+ * Entry point for a SignIn/Up screen.
  *
  * 로그인/회원가입 선택화면과 회원가입 화면으로 나누어짐.
  *
@@ -42,9 +45,9 @@ fun LoginNavHost(
 ) {
     val isLogin by viewModel.isLogin.collectAsState(false)
 
-    NavHost(navController = navController, startDestination = SignInSignUpExplore) {
-        composable<SignInSignUpExplore> {
-            SignInSignUpExploreNavHost(
+    NavHost(navController = navController, startDestination = SignInSignUp) {
+        composable<SignInSignUp> {
+            SignInSignUpNavHost(
                 isLogin = isLogin,
                 onSignUp = { navController.navigate(SignUp) },
                 onLookAround = onLookAround,
@@ -52,7 +55,7 @@ fun LoginNavHost(
                 showTopBar = showTopBar,
                 onBack = onBack,
                 loginScreen = {
-                    EmailLoginScreen(onLogin = onSuccessLogin)
+                    SignInScreen(onLogin = onSuccessLogin)
                 }
             )
         }

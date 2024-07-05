@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signup
+package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

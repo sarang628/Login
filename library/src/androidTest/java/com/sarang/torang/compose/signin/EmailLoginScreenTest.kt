@@ -1,19 +1,18 @@
-package com.sarang.torang.compose.email
+package com.sarang.torang.compose.signin
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.uistate.EmailLoginUiState
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.sarang.torang.R
+import com.sarang.torang.compose.signinsignup.signin.SignInScreen
+import com.sarang.torang.compose.signinsignup.signin.SignInUiState
 import com.sarang.torang.data.LoginErrorMessage
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 
 @RunWith(AndroidJUnit4::class)
@@ -24,8 +23,8 @@ class EmailLoginScreenTest {
     @Before
     fun setScreen() {
         composeTestRule.setContent {
-            EmailLoginScreen(
-                uiState = EmailLoginUiState(
+            SignInScreen(
+                uiState = SignInUiState(
                     email = "sry_ang@naver.com",
                     password = "12345678",
                     emailErrorMessage = LoginErrorMessage.InvalidEmail,

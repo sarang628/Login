@@ -1,21 +1,16 @@
-package com.sarang.torang.compose.email
+package com.sarang.torang.compose.signin
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
-import androidx.compose.ui.util.fastCbrt
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import com.sarang.torang.R
-import com.sarang.torang.compose.LoginNavHost
-import com.sarang.torang.compose.signinsignupexplore.SignInSignUpExploreNavHost
-import com.sarang.torang.screen.login.ChooseLoginMethod
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpNavHost
 import com.sarang.torang.screen.login.EmailLogin
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
@@ -32,7 +27,7 @@ class NavigationTest {
         composeTestRule.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
-            SignInSignUpExploreNavHost(
+            SignInSignUpNavHost(
                 navController = navController,
                 onLookAround = {},
                 isLogin = false,

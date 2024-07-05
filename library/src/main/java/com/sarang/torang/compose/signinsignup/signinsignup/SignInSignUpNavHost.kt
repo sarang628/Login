@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signinsignupexplore
+package com.sarang.torang.compose.signinsignup.signinsignup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +21,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,17 +30,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.R
-import com.sarang.torang.compose.TorangLogo
 import com.sarang.torang.screen.login.ChooseLoginMethod
 import com.sarang.torang.screen.login.EmailLogin
-import java.util.Objects
 
 /**
  * 로그인 회원가입 선택화면.
@@ -61,7 +63,7 @@ import java.util.Objects
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SignInSignUpExploreNavHost(
+internal fun SignInSignUpNavHost(
     isLogin: Boolean,
     onSignUp: () -> Unit,
     onLookAround: () -> Unit,
@@ -196,6 +198,40 @@ fun SignInSignUpExplore(
     }
 }
 
+@Composable
+fun TorangLogo(
+    viewModel: TorangLogoViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.loginTitleUiState.collectAsState()
+    TorangLogo(uiState = uiState)
+}
+
+@Composable
+fun TorangLogo(uiState: LoginTitleUiState) {
+    Column {
+        Spacer(modifier = Modifier.height(100.dp))
+        Column(Modifier.fillMaxWidth())
+        {
+            /*T O R A N G 제목*/
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = uiState.title, fontSize = 45.sp, fontWeight = FontWeight.Bold)
+            }
+            /*hit the spot 부제*/
+            Spacer(modifier = Modifier.height(30.dp))
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = uiState.subtitle, fontSize = 20.sp)
+            }
+        }
+        Spacer(modifier = Modifier.height(130.dp))
+    }
+}
+
+@Preview
+@Composable
+fun PreviewTorangLogo() {
+    TorangLogo(uiState = LoginTitleUiState(title = "T O R A N G", subtitle = "hit the spot"))
+}
+
 @Preview
 @Composable
 fun PreviewSignInSignUpExplore() {
@@ -210,7 +246,7 @@ fun PreviewSignInSignUpExplore() {
 @Preview
 @Composable
 fun PreviewSignInSignUpExploreNavHost() {
-    SignInSignUpExploreNavHost(
+    SignInSignUpNavHost(
         isLogin = false,
         onSignUp = {},
         onLookAround = {},
@@ -220,7 +256,7 @@ fun PreviewSignInSignUpExploreNavHost() {
 @Preview
 @Composable
 fun PreviewSignInSignUpExploreNavHostShowTopBar() {
-    SignInSignUpExploreNavHost(
+    SignInSignUpNavHost(
         isLogin = false,
         onSignUp = {},
         showTopBar = true,

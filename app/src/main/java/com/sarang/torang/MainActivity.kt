@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.google.samples.apps.sunflower.ui.TorangTheme
-import com.sarang.torang.compose.LoginNavHost
+import com.sarang.torang.compose.signinsignup.LoginNavHost
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint

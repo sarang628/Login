@@ -1,43 +1,51 @@
-package com.sarang.torang.viewmodels
+package com.sarang.torang.compose.signinsignup.signin
 
-import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.R
 import com.sarang.torang.data.LoginErrorMessage
-import com.sarang.torang.uistate.EmailLoginUiState
 import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * UiState - what the app says they should see
+ */
+data class SignInUiState(
+    val email: String = "",
+    val password: String = "",
+    val isProgress: Boolean = false,
+    val error: String? = null,
+    val emailErrorMessage: LoginErrorMessage? = null,
+    val passwordErrorMessage: LoginErrorMessage? = null,
+)
+
 @HiltViewModel
-class EmailLoginViewModel @Inject constructor(
+class SignInViewModel @Inject constructor(
     private val emailLoginService: EmailLoginUseCase,
     private val emailUseCase: ValidEmailUseCase,
     private val passwordUseCase: ValidPasswordUseCase,
 ) : ViewModel() {
+    var uiState by mutableStateOf(SignInUiState())
+        private set
 
-    private val _uiState = MutableStateFlow(EmailLoginUiState())
-    var uiState = _uiState.asStateFlow()
+    private var fetchJob: Job? = null
+
 
     fun login(onLogin: () -> Unit) {
-        if (!validateIdPw())
-            return;
-
-        viewModelScope.launch {
+        if (!validateIdPw()) return;
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            clearErrorMsg()
+            showProgress(true)
             try {
-                showProgress(true)
-                clearErrorMsg()
-                emailLoginService.invoke(
-                    uiState.value.email,
-                    uiState.value.password
-                ) // 이메일 로그인 API 호출
+                emailLoginService.invoke(uiState.email, uiState.password) // 이메일 로그인 API 호출
                 onLogin.invoke()
             } catch (e: Exception) {
                 showError(e.message!!)
@@ -50,12 +58,12 @@ class EmailLoginViewModel @Inject constructor(
     private fun validateIdPw(): Boolean {
         clearValidErrorMessage()
         var isValid = true
-        if (!emailUseCase.invoke(uiState.value.email)) {
+        if (!emailUseCase.invoke(uiState.email)) {
             showEmailErrorMessage(LoginErrorMessage.InvalidEmail)
             isValid = false
         }
 
-        if (!passwordUseCase.invoke(uiState.value.password)) {
+        if (!passwordUseCase.invoke(uiState.password)) {
             showPasswordErrorMessage(LoginErrorMessage.InvalidPassword)
             isValid = false
         }
@@ -64,42 +72,38 @@ class EmailLoginViewModel @Inject constructor(
 
 
     private fun showPasswordErrorMessage(message: LoginErrorMessage) {
-        _uiState.update { it.copy(passwordErrorMessage = message) }
+        uiState = uiState.copy(passwordErrorMessage = message)
     }
 
     private fun showEmailErrorMessage(message: LoginErrorMessage) {
-        _uiState.update { it.copy(emailErrorMessage = message) }
+        uiState = uiState.copy(emailErrorMessage = message)
     }
 
     private fun clearValidErrorMessage() {
-        _uiState.update { it.copy(passwordErrorMessage = null, emailErrorMessage = null) }
+        uiState = uiState.copy(passwordErrorMessage = null, emailErrorMessage = null)
     }
 
     private fun showProgress(b: Boolean) {
-        _uiState.update { it.copy(isProgress = b) }
+        uiState = uiState.copy(isProgress = b)
     }
 
     private fun showError(error: String) {
-        _uiState.update { it.copy(error = error) }
+        uiState = uiState.copy(error = error)
     }
 
     fun onChangeEmail(email: String) {
-        _uiState.update { it.copy(email = email) }
+        uiState = uiState.copy(email = email)
     }
 
     fun onChangePassword(password: String) {
-        _uiState.update { it.copy(password = password) }
+        uiState = uiState.copy(password = password)
     }
 
     fun clearEmail() {
-        _uiState.update { it.copy(email = "") }
-    }
-
-    fun clearPassword() {
-        _uiState.update { it.copy(password = "") }
+        uiState = uiState.copy(email = "")
     }
 
     fun clearErrorMsg() {
-        _uiState.update { it.copy(error = null) }
+        uiState = uiState.copy(error = null)
     }
 }

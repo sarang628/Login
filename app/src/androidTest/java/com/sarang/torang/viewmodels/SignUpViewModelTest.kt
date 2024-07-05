@@ -2,6 +2,7 @@ package com.sarang.torang.viewmodels
 
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
 import com.sarang.torang.usecase.SignUpUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase

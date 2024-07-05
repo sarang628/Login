@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signup
+package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
-import com.sarang.torang.compose.email.LoginOutlinedTextField
+import com.sarang.torang.compose.signinsignup.signin.SignInTextField
 
 @Composable
 internal fun SignUpName(
@@ -34,7 +34,7 @@ internal fun SignUpName(
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        LoginOutlinedTextField(
+        SignInTextField(
             label = stringResource(id = R.string.label_full_name),
             value = name,
             onValueChange = onValueChange,

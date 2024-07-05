@@ -3,7 +3,7 @@ package com.sarang.torang.screen.login
 import kotlinx.serialization.Serializable
 
 @Serializable
-object SignInSignUpExplore
+object SignInSignUp
 
 @Serializable
 object ChooseLoginMethod

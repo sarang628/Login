@@ -1,6 +1,7 @@
 package com.sarang.torang.viewmodels
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sarang.torang.compose.signinsignup.LoginViewModel
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.usecase.IsLoginFlowUseCase
 import dagger.hilt.android.testing.HiltAndroidRule

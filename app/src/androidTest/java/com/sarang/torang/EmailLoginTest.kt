@@ -6,11 +6,11 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.compose.email.EmailLoginScreen
+import com.sarang.torang.compose.signinsignup.signin.SignInScreen
 import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
-import com.sarang.torang.viewmodels.EmailLoginViewModel
+import com.sarang.torang.compose.signinsignup.signin.SignInViewModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -39,19 +39,19 @@ class EmailLoginTest {
     @Inject
     lateinit var passwordUseCase: ValidPasswordUseCase
 
-    private lateinit var viewModel: EmailLoginViewModel
+    private lateinit var viewModel: SignInViewModel
 
     @Before
     fun init() {
         hiltRule.inject()
-        viewModel = EmailLoginViewModel(
+        viewModel = SignInViewModel(
             emailUseCase = emailUseCase,
             emailLoginService = emailLoginService,
             passwordUseCase = passwordUseCase
         )
 
         composeTestRule.setContent {
-            EmailLoginScreen(
+            SignInScreen(
                 viewModel = viewModel,
                 onLogin = {}
             )

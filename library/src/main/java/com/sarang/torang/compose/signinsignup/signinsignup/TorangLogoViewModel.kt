@@ -1,8 +1,7 @@
-package com.sarang.torang.viewmodels
+package com.sarang.torang.compose.signinsignup.signinsignup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.uistate.LoginTitleUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +9,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+data class LoginTitleUiState(
+    val title: String = "",
+    val subtitle: String = "",
+)
 
 @HiltViewModel
 class TorangLogoViewModel @Inject constructor() : ViewModel() {

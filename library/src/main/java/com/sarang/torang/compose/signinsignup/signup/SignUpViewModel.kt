@@ -1,8 +1,7 @@
-package com.sarang.torang.viewmodels
+package com.sarang.torang.compose.signinsignup.signup
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
-import com.sarang.torang.uistate.SignUpUiState
+import com.sarang.torang.compose.signinsignup.signup.SignUpUiState
 import com.sarang.torang.usecase.SignUpUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
@@ -12,6 +11,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+data class SignUpUiState(
+    val name: String = "",
+    val email: String = "",
+    val confirmCode: String = "",
+    val password: String = "",
+    val isProgress: Boolean = false,
+    val emailErrorMessage: String? = null,
+    val passwordErrorMessage: String? = null,
+    val confirmCodeErrorMessage: String? = null
+)
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,

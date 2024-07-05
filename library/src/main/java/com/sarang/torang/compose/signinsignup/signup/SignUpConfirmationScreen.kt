@@ -1,32 +1,26 @@
-package com.sarang.torang.compose.signup
+package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sarang.torang.R
-import com.sarang.torang.compose.email.LoginOutlinedTextField
+import com.sarang.torang.compose.signinsignup.signin.SignInTextField
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SignUpEmail(
+internal fun SignUpConfirmationScreen(
     email: String,
+    confirmCode: String,
     errorMessage: String? = null,
     onValueChange: (String) -> Unit,
     onBack: () -> Unit,
@@ -38,24 +32,24 @@ internal fun SignUpEmail(
             .padding(start = 16.dp, end = 16.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.what_s_your_email),
+            text = "Enter the confirmation code",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Text(text = stringResource(id = R.string.describe_input_email))
+        Text(text = "To confirm your account, enter the 6-digit code we sent to ${email}.")
         Spacer(modifier = Modifier.height(12.dp))
-        LoginOutlinedTextField(
-            label = stringResource(id = R.string.label_email),
-            value = email,
+        SignInTextField(
+            label = "Confirmation code",
+            value = confirmCode,
             onValueChange = onValueChange,
-            placeHolder = stringResource(id = R.string.label_email),
+            placeHolder = "Confirmation code",
             onClear = onClear,
-            errorMessage = if (errorMessage != null) stringResource(id = R.string.error_email_valid) else null
+            errorMessage = errorMessage
         )
         Spacer(modifier = Modifier.height(12.dp))
         Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
-            Text(text = stringResource(id = R.string.label_next))
+            Text(text = "Next")
         }
     }
 }
@@ -63,10 +57,10 @@ internal fun SignUpEmail(
 
 @Preview
 @Composable
-fun PreviewSignUp() {
-    SignUpEmail(
+fun PreviewSignUpConfirmationScreen() {
+    SignUpConfirmationScreen(
         email = "",
-        errorMessage = "aa",
+        confirmCode = "",
         onClear = {},
         onValueChange = {},
         onBack = {},

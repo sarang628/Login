@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signup
+package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +28,6 @@ import com.sarang.torang.screen.login.JoinName
 import com.sarang.torang.screen.login.SignUpConfirmationCode
 import com.sarang.torang.screen.login.SignUpPassword
 import com.sarang.torang.screen.login.SuccessSignUp
-import com.sarang.torang.viewmodels.SignUpViewModel
 import kotlinx.coroutines.launch
 
 /**

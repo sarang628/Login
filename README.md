@@ -23,14 +23,16 @@ API와 DB는 저장소 모듈을 제공받아 사용하여
 - theme - 화면의 공통 UI를 적용 하는데 사용
 
 # Feature
-- [UI Layer](./Documents/UILayer.md)
-- [Navigation component](./Documents/Navigation.md)
+
+- [UI Layer](Documents/ui_layer/UiLayerImplements)
+- [Navigation component](Documents/navigation/1_0Navigation)
 - [JetPack Compose](Documents/jetpack_compose/JetpackCompose.md)
 - [Testing](./Documents/Testing.md)
 
 # 코드 설명
 
 ```
+[navigation]
 LoginNavHost --- SignInSignUpExploreNavHost  --- EmailLoginScreen
                  (로그인 회원가입 선택화면)        |   (이메일 로그인 화면)
                                              --- SignInSignUpExplore
@@ -39,10 +41,9 @@ LoginNavHost --- SignInSignUpExploreNavHost  --- EmailLoginScreen
 
 ## LoginNavHost.kt
 
-로그인 화면의 경로들을 정의. 실질적인 화면의 시작점 이다.
+로그인 화면의 경로 정의. 화면의 시작점.
 SignInSignUpExploreNavHost - 로그인, 회원가입 선택화면
 SignUpNavHost - 회원 가입 화면
-가 선언되어 있다.
 
 ## SignInSignUpExploreNavHost.kt
 
@@ -74,7 +75,6 @@ SignInSignUpExplore
 LoginNavHost 말고도 여러 하위 navigation들이 있는데 화면 이동 시 마다 깜빡이는 현상이 있어서
 로고 UI 애니메이션 또는 상단 뒤로가기 버튼 등이 깜빡이지 않도록 UI 일관성을 유지하기위해
 navigation을 나눔.
-
 
 # What was difficult
 

@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.sarang.torang.R
+import com.sarang.torang.compose.signinsignup.signup.SignUpName
 
 @RunWith(AndroidJUnit4::class)
 class SignUpNameTest {
