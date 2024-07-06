@@ -3,6 +3,7 @@
     <string name="app_name">ToringLogin</string>
     <string name="error_email_valid">It doesn\'t match the email address format.</string>
     <string name="confirm">confirm</string>
+    <string name="unknown_error">An unknown error occurred.</string>
     <string name="login_with_email">LOG IN WITH EMAIL</string>
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="look_around">Look Around</string>

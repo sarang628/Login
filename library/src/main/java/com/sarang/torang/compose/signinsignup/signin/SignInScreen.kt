@@ -1,10 +1,5 @@
 package com.sarang.torang.compose.signinsignup.signin
 
-import android.util.Log
-import android.view.KeyEvent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,17 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,20 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.R
+import com.sarang.torang.compose.signinsignup.common.SignInTextField
 import com.sarang.torang.data.LoginErrorMessage
 
 @Composable
@@ -104,27 +88,6 @@ internal fun SignInScreen(
     }
 }
 
-@Preview
-@Composable
-fun PreviewEmailLoginScreen() {
-    SignInScreen(
-        //uiState = EmailLoginUiState(),
-        uiState = SignInUiState(
-            //error = "로그인에 실패하였습니다.",
-            email = "torang@torang.com",
-            password = "password",
-            emailErrorMessage = LoginErrorMessage.InvalidEmail,
-            passwordErrorMessage = LoginErrorMessage.InvalidPassword,
-            isProgress = false
-        ),
-        onLogin = { },
-        onClearEmail = {},
-        onChangePassword = {},
-        onChangeEmail = {},
-        onClearErrorMsg = {}
-    )
-}
-
 /**
  * 로그인 폼
  * @param onLogin 로그인 클릭
@@ -138,7 +101,7 @@ fun PreviewEmailLoginScreen() {
  * @param onClearEmail 이메일 초기화
  */
 @Composable
-fun SignInForm(
+private fun SignInForm(
     onLogin: () -> Unit,
     progress: Boolean,
     emailErrorMessage: String? = null,
@@ -159,6 +122,7 @@ fun SignInForm(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SignInTextField(
+                modifier = Modifier.testTag("EmailTextField"),
                 value = email,
                 onValueChange = onChangeEmail,
                 label = stringResource(id = R.string.label_email),
@@ -171,6 +135,7 @@ fun SignInForm(
             )
             Spacer(modifier = Modifier.height(10.dp))
             SignInTextField(
+                modifier = Modifier.testTag("PasswordTextField"),
                 value = password,
                 onValueChange = onChangePassword,
                 label = stringResource(id = R.string.label_password),
@@ -191,14 +156,36 @@ fun SignInForm(
     }
 }
 
+@Preview
 @Composable
-fun SignInButton(onClick: () -> Unit, progress: Boolean, modifier: Modifier = Modifier) {
+private fun PreviewEmailLoginScreen() {
+    SignInScreen(
+        //uiState = EmailLoginUiState(),
+        uiState = SignInUiState(
+            //error = "로그인에 실패하였습니다.",
+            email = "torang@torang.com",
+            password = "password",
+            emailErrorMessage = LoginErrorMessage.InvalidEmail,
+            passwordErrorMessage = LoginErrorMessage.InvalidPassword,
+            isProgress = false
+        ),
+        onLogin = { },
+        onClearEmail = {},
+        onChangePassword = {},
+        onChangeEmail = {},
+        onClearErrorMsg = {}
+    )
+}
+
+@Composable
+private fun SignInButton(onClick: () -> Unit, progress: Boolean, modifier: Modifier = Modifier) {
     Button(
         onClick = onClick,
         enabled = !progress,
         modifier = modifier
             .fillMaxWidth()
-            .height(54.dp),
+            .height(54.dp)
+            .testTag("LoginBtn"),
         shape = RoundedCornerShape(15.dp)
     ) {
         if (progress)
@@ -212,105 +199,9 @@ fun SignInButton(onClick: () -> Unit, progress: Boolean, modifier: Modifier = Mo
     }
 }
 
-@Composable
-internal fun SignInTextField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    errorMessage: String? = null,
-    placeHolder: String,
-    onKeyTabOrDown: (() -> Unit)? = null,
-    onNext: (() -> Unit)? = null,
-    onClear: () -> Unit,
-    isPassword: Boolean = false,
-    isPasswordVisual: Boolean = false,
-    enable: Boolean? = null,
-) {
-    //에러 메시지를 필드 하단에 표시
-    val compose = @Composable {
-        Text(text = errorMessage ?: "", color = Color.Red)
-    }
-
-    Column {
-        OutlinedTextField(
-            label = { Text(text = label) },
-            value = value,
-            onValueChange = onValueChange,
-            isError = !errorMessage.isNullOrEmpty(), //빨강 라인
-            supportingText = if (errorMessage != null) compose else null,
-            trailingIcon = { // 오류 아이콘
-                if (errorMessage != null) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_warning),
-                        contentDescription = "",
-                        modifier = Modifier.clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            if (enable != false)
-                                onClear.invoke()
-                        }
-                    )
-                } else if (isPassword) {
-                    IconButton(
-                        onClick = {
-                            if (enable != false)
-                                onClear.invoke()
-                        }
-                    ) {
-                        Icon(
-                            painter = if (!isPasswordVisual) painterResource(id = R.drawable.ic_password_off)
-                            else painterResource(id = R.drawable.ic_password_on),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(25.dp)
-                        )
-                    }
-                } else if (value.isNotEmpty()) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_x),
-                        contentDescription = "",
-                        modifier = Modifier.clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            if (enable != false)
-                                onClear.invoke()
-                        }
-                    )
-                }
-            },
-            placeholder = { Text(text = placeHolder) }, // 힌트
-            singleLine = true,
-            maxLines = 1,
-            shape = RoundedCornerShape(14.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), // 키보드 엔터 부분 Next로 바꾸기
-            keyboardActions = KeyboardActions(onNext = { // Next를 눌렀을 경우
-                onNext?.invoke()
-            }),
-            visualTransformation = if (isPassword && !isPasswordVisual) PasswordVisualTransformation() else VisualTransformation.None,
-            modifier = Modifier
-                .onPreviewKeyEvent { // 키보드 탭 또는 방향키 아래를 눌렀을 경우
-                    if (it.key == Key.Tab && it.nativeKeyEvent.action == KeyEvent.ACTION_DOWN
-                        || it.key == Key.NavigateNext && it.nativeKeyEvent.action == KeyEvent.ACTION_DOWN
-                    ) {
-                        Log.d("LoginOutlinedTextField", "onDown")
-                        onKeyTabOrDown?.invoke()
-                        true
-                    } else {
-                        false
-                    }
-                }
-                .fillMaxWidth(),
-            enabled = enable ?: true
-
-        )
-    }
-}
-
 @Preview
 @Composable
-fun PreviewLoginOutlinedTextField1() {
+private fun PreviewLoginOutlinedTextField1() {
     SignInTextField(
         label = "label",
         onKeyTabOrDown = {},
@@ -324,9 +215,8 @@ fun PreviewLoginOutlinedTextField1() {
     )
 }
 
-
 @Preview
 @Composable
-fun PreviewSignInButton() {
+private fun PreviewSignInButton() {
     SignInButton(onClick = { /*TODO*/ }, progress = false)
 }

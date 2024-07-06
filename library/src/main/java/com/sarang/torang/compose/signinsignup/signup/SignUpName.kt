@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.signin.SignInTextField
+import com.sarang.torang.compose.signinsignup.common.SignInTextField
 
 @Composable
 internal fun SignUpName(

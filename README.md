@@ -27,7 +27,7 @@ API와 DB는 저장소 모듈을 제공받아 사용하여
 - [UI Layer](Documents/ui_layer/UiLayerImplements.md)
 - [Navigation component](Documents/navigation/1_0Navigation.md)
 - [JetPack Compose](Documents/jetpack_compose/JetpackCompose.md)
-- [Testing](./Documents/Testing.md)
+- [Testing](Documents/test/Testing.md)
 
 # 코드 설명
 

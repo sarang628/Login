@@ -1,3 +1,6 @@
+#
+https://developer.android.com/training/testing
+
 # Compose Test
 
 ## Compose Test 환경 구성
@@ -49,7 +52,7 @@ SignUpViewModelTest.kt
 
 ## UnitTest
 ### package
-<img src="../screenshots/unittest_package.png" alt=""/>
+<img src="../../screenshots/unittest_package.png" alt=""/>
 
 ### compose test
 - 문구들이 나오는지 주로 작성

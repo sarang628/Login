@@ -3,6 +3,7 @@
     <string name="app_name">ToringLogin</string>
     <string name="error_email_valid">이메일 형식이 올바르지 않습니다.</string>
     <string name="confirm">확인</string>
+    <string name="unknown_error">알 수 없는 오류가 발생했습니다.</string>
     <string name="login_with_email">이메일 로그인</string>
     <string name="dont_have_an_account">계정이 없으신가요??</string>
     <string name="look_around">둘러보기</string>

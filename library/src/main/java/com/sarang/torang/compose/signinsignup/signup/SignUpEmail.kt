@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.signin.SignInTextField
+import com.sarang.torang.compose.signinsignup.common.SignInTextField
 
 @Composable
 internal fun SignUpEmail(
@@ -24,7 +24,7 @@ internal fun SignUpEmail(
     onValueChange: (String) -> Unit,
     onBack: () -> Unit,
     onClear: () -> Unit,
-    onNext: () -> Unit
+    onNext: () -> Unit,
 ) {
     Column(
         Modifier
@@ -44,7 +44,7 @@ internal fun SignUpEmail(
             onValueChange = onValueChange,
             placeHolder = stringResource(id = R.string.label_email),
             onClear = onClear,
-            errorMessage = if (errorMessage != null) stringResource(id = R.string.error_email_valid) else null
+            errorMessage = if (errorMessage != null) stringResource(id = R.string.unknown_error) else null
         )
         Spacer(modifier = Modifier.height(12.dp))
         Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
@@ -57,7 +57,7 @@ internal fun SignUpEmail(
 @Preview
 @Composable
 fun PreviewSignUp() {
-    SignUpEmail(
+    SignUpEmail(/*Preview*/
         email = "",
         errorMessage = "aa",
         onClear = {},

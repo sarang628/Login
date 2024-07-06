@@ -1,8 +1,11 @@
 package com.sarang.torang.compose.signin
 
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
@@ -41,14 +44,13 @@ class EmailLoginScreenTest {
 
     @Test
     fun displayEmail() = runTest {
-        composeTestRule.onNodeWithText("sry_ang@naver.com")
-            .assertExists()
+        composeTestRule.onNodeWithTag("EmailTextField").assert(hasText("sry_ang@naver.com"))
+
     }
 
     @Test
     fun displayPassword() = runTest {
-        composeTestRule.onNodeWithText("••••••••")
-            .assertExists()
+        composeTestRule.onNodeWithTag("PasswordTextField").assert(hasText("••••••••"))
     }
 
     @Test
