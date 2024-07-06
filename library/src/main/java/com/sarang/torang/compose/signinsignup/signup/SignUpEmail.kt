@@ -44,7 +44,7 @@ internal fun SignUpEmail(
             onValueChange = onValueChange,
             placeHolder = stringResource(id = R.string.label_email),
             onClear = onClear,
-            errorMessage = if (errorMessage != null) stringResource(id = R.string.unknown_error) else null
+            errorMessage = errorMessage
         )
         Spacer(modifier = Modifier.height(12.dp))
         Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {

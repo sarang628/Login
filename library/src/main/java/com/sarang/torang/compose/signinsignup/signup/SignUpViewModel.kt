@@ -1,5 +1,9 @@
 package com.sarang.torang.compose.signinsignup.signup
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.sarang.torang.compose.signinsignup.signup.SignUpUiState
 import com.sarang.torang.usecase.SignUpUseCase
@@ -19,97 +23,100 @@ data class SignUpUiState(
     val isProgress: Boolean = false,
     val emailErrorMessage: String? = null,
     val passwordErrorMessage: String? = null,
-    val confirmCodeErrorMessage: String? = null
+    val confirmCodeErrorMessage: String? = null,
 )
+
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val validEmailUseCase: ValidEmailUseCase,
-    private val validPasswordUseCase: ValidPasswordUseCase
+    private val validPasswordUseCase: ValidPasswordUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SignUpUiState())
-    val uiState = _uiState.asStateFlow()
+    var uiState by mutableStateOf(SignUpUiState())
+        private set
+
     private var token = "";
 
     suspend fun registerEmail(): Boolean {
-        if (!validEmailUseCase.invoke(uiState.value.email)) {
-            _uiState.update { it.copy(emailErrorMessage = "이메일 형식이 아닙니다.") }
+        if (!validEmailUseCase.invoke(uiState.email)) {
+            uiState = uiState.copy(emailErrorMessage = "이메일 형식이 아닙니다.")
             return false
         } else {
-            _uiState.update { it.copy(emailErrorMessage = null, isProgress = true) }
+            uiState = uiState.copy(emailErrorMessage = null, isProgress = true)
             try {
                 token = signUpUseCase.checkEmail(
-                    uiState.value.email,
-                    uiState.value.password
+                    uiState.email,
+                    uiState.password
                 )
                 return true
             } catch (e: Exception) {
-                _uiState.update { it.copy(emailErrorMessage = e.message) }
+                Log.e("__SignUpViewModel", "registerEmail: ${e.message}")
+                uiState = uiState.copy(emailErrorMessage = e.message)
             } finally {
-                _uiState.update { it.copy(isProgress = false) }
+                uiState = uiState.copy(isProgress = false)
             }
             return false
         }
     }
 
     fun validPassword(): Boolean {
-        return if (!validPasswordUseCase.invoke(uiState.value.password)) {
-            _uiState.update { it.copy(passwordErrorMessage = "5자 이상 입력해 주세요") }
+        return if (!validPasswordUseCase.invoke(uiState.password)) {
+            uiState = uiState.copy(passwordErrorMessage = "5자 이상 입력해 주세요")
             false
         } else {
-            _uiState.update { it.copy(passwordErrorMessage = null) }
+            uiState = uiState.copy(passwordErrorMessage = null)
             true
         }
     }
 
     suspend fun confirmCode(): Boolean {
         try {
-            _uiState.update { it.copy(confirmCodeErrorMessage = null, isProgress = true) }
+            uiState = uiState.copy(confirmCodeErrorMessage = null, isProgress = true)
             return signUpUseCase.confirmCode(
                 token = token,
-                confirmCode = uiState.value.confirmCode,
-                name = uiState.value.name,
-                email = uiState.value.email,
-                password = uiState.value.password
+                confirmCode = uiState.confirmCode,
+                name = uiState.name,
+                email = uiState.email,
+                password = uiState.password
             )
         } catch (e: Exception) {
-            _uiState.update { it.copy(confirmCodeErrorMessage = e.toString()) }
+            uiState = uiState.copy(confirmCodeErrorMessage = e.toString())
         } finally {
-            _uiState.update { it.copy(isProgress = false) }
+            uiState = uiState.copy(isProgress = false)
         }
         return false
     }
 
     fun onChangeName(name: String) {
-        _uiState.update { it.copy(name = name) }
+        uiState = uiState.copy(name = name)
     }
 
     fun clearName() {
-        _uiState.update { it.copy(name = "") }
+        uiState = uiState.copy(name = "")
     }
 
     fun onChangeEmail(email: String) {
-        _uiState.update { it.copy(email = email) }
+        uiState = uiState.copy(email = email)
     }
 
     fun clearEmail() {
-        _uiState.update { it.copy(email = "") }
+        uiState = uiState.copy(email = "")
     }
 
     fun clearConfirmationCode() {
-        _uiState.update { it.copy(confirmCode = "") }
+        uiState = uiState.copy(confirmCode = "")
     }
 
     fun onChangePassword(password: String) {
-        _uiState.update { it.copy(password = password) }
+        uiState = uiState.copy(password = password)
     }
 
     fun clearPassword() {
-        _uiState.update { it.copy(password = "") }
+        uiState = uiState.copy(password = "")
     }
 
     fun onChangeConfirmationCode(code: String) {
-        _uiState.update { it.copy(confirmCode = code) }
+        uiState = uiState.copy(confirmCode = code)
     }
 }

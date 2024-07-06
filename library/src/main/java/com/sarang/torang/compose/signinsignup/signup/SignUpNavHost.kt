@@ -43,7 +43,7 @@ fun SignUpNavHost(
     onBack: () -> Unit,
     signUpSuccess: () -> Unit,
 ) {
-    val uiState by signUpViewModel.uiState.collectAsState()
+    val uiState = signUpViewModel.uiState
     val navController = rememberNavController()
     val coroutine = rememberCoroutineScope()
     if (uiState.isProgress) {
