@@ -44,8 +44,8 @@ class SignUpViewModelTest {
     fun invalidEmailTest() {
         runBlocking {
             signUpViewModel.registerEmail()
-            Log.d("_SignUpViewModelTest", signUpViewModel.uiState.value.toString())
-            Assert.assertEquals("이메일 형식이 아닙니다.", signUpViewModel.uiState.value.emailErrorMessage)
+            Log.d("_SignUpViewModelTest", signUpViewModel.uiState.toString())
+            Assert.assertEquals("이메일 형식이 아닙니다.", signUpViewModel.uiState.emailErrorMessage)
         }
     }
 
@@ -53,10 +53,10 @@ class SignUpViewModelTest {
     fun invalidPasswordTest() {
         runBlocking {
             signUpViewModel.validPassword()
-            Log.d("_SignUpViewModelTest", signUpViewModel.uiState.value.toString())
+            Log.d("_SignUpViewModelTest", signUpViewModel.uiState.toString())
             Assert.assertEquals(
                 "5자 이상 입력해 주세요",
-                signUpViewModel.uiState.value.passwordErrorMessage
+                signUpViewModel.uiState.passwordErrorMessage
             )
         }
     }
@@ -68,7 +68,7 @@ class SignUpViewModelTest {
             signUpViewModel.onChangePassword("aaaaa")
             signUpViewModel.registerEmail()
             delay(2000)
-            Assert.assertEquals("등록된 이메일 입니다.", signUpViewModel.uiState.value.emailErrorMessage)
+            Assert.assertEquals("등록된 이메일 입니다.", signUpViewModel.uiState.emailErrorMessage)
         }
     }
 

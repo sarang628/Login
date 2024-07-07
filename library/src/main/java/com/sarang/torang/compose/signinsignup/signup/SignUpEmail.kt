@@ -56,7 +56,7 @@ internal fun SignUpEmail(
 
 @Preview
 @Composable
-fun PreviewSignUp() {
+fun PreviewSignUpEmail() {
     SignUpEmail(/*Preview*/
         email = "",
         errorMessage = "aa",

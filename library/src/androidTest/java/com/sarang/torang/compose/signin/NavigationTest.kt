@@ -10,8 +10,8 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpNavHost
-import com.sarang.torang.screen.login.EmailLogin
+import com.sarang.torang.compose.signinsignup.SignInSignUpComponent
+import com.sarang.torang.screen.login.SignIn
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -27,11 +27,10 @@ class NavigationTest {
         composeTestRule.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
-            SignInSignUpNavHost(
-                navController = navController,
+            SignInSignUpComponent(
                 onLookAround = {},
-                isLogin = false,
-                onSignUp = {})
+                onSignUp = {},
+                onEmailLogin = {})
         }
     }
 
@@ -50,6 +49,6 @@ class NavigationTest {
             .performClick()
 
         val route = navController.currentBackStackEntry?.destination?.route
-        assertEquals(route, EmailLogin.toString().split("@")[0])
+        assertEquals(route, SignIn.toString().split("@")[0])
     }
 }

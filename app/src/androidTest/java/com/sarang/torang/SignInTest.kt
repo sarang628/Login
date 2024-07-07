@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class EmailLoginTest {
+class SignInTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)

@@ -3,7 +3,6 @@ package com.sarang.torang.compose.signinsignup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph
@@ -12,9 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import com.sarang.torang.compose.signinsignup.signin.SignInScreen
-import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpNavHost
-import com.sarang.torang.compose.signinsignup.signup.SignUpNavHost
 import com.sarang.torang.screen.login.SignInSignUp
 import com.sarang.torang.screen.login.SignUp
 
@@ -49,16 +45,16 @@ fun LoginNavHost(
     val graph: NavGraph = remember(navController) {
         navController.createGraph(SignInSignUp, null, emptyMap()) {
             composable<SignInSignUp> {
-                SignInSignUpNavHost(
+                SignInSignUpScreen(
                     isLogin = isLogin,
-                    onSignUp = { navController.navigate(SignUp) },
+                    showTopBar = showTopBar,
+                    onBack = {
+                        onBack?.invoke()
+                    },
+                    onSuccessLogin = onSuccessLogin,
                     onLookAround = onLookAround,
                     showLookAround = showLookAround,
-                    showTopBar = showTopBar,
-                    onBack = onBack,
-                    loginScreen = {
-                        SignInScreen(onLogin = onSuccessLogin)
-                    }
+                    onSignUp = { navController.navigate(SignUp) }
                 )
             }
 

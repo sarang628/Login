@@ -16,12 +16,11 @@ import androidx.compose.ui.unit.sp
 import com.sarang.torang.compose.signinsignup.common.SignInTextField
 
 @Composable
-internal fun SignUpConfirmationScreen(
+internal fun SignUpConfirmation(
     email: String,
     confirmCode: String,
     errorMessage: String? = null,
     onValueChange: (String) -> Unit,
-    onBack: () -> Unit,
     onClear: () -> Unit,
     onNext: () -> Unit
 ) {
@@ -55,13 +54,12 @@ internal fun SignUpConfirmationScreen(
 
 @Preview
 @Composable
-fun PreviewSignUpConfirmationScreen() {
-    SignUpConfirmationScreen(
+fun PreviewSignUpConfirmation() {
+    SignUpConfirmation(
         email = "",
         confirmCode = "",
         onClear = {},
         onValueChange = {},
-        onBack = {},
         onNext = {}
     )
 }

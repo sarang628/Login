@@ -158,7 +158,7 @@ private fun SignInForm(
 
 @Preview
 @Composable
-private fun PreviewEmailLoginScreen() {
+fun PreviewSignInScreen() {
     SignInScreen(
         //uiState = EmailLoginUiState(),
         uiState = SignInUiState(

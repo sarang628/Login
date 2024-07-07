@@ -26,7 +26,6 @@ internal fun SignUpPassword(
     password: String,
     errorMessage: String? = null,
     onValueChange: (String) -> Unit,
-    onBack: () -> Unit,
     onClear: () -> Unit,
     onNext: () -> Unit
 ) {
@@ -68,7 +67,6 @@ fun PreviewSignUpPassword() {
         password = "password",
         onClear = {},
         onValueChange = {},
-        onBack = {},
         onNext = {}
     )
 }

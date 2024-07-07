@@ -27,4 +27,4 @@ object SignUpPassword
 object SuccessSignUp
 
 @Serializable
-object EmailLogin
+object SignIn

@@ -8,7 +8,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpNavHost
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,12 +25,11 @@ class SignInSignUpNavHostTest {
     @Before
     fun setUiState() {
         composeTestRule.setContent {
-            SignInSignUpNavHost(
-                showTopBar = true,
+            SignInSignUpComponent(
                 onLookAround = {},
                 onSignUp = {},
-                isLogin = false,
-                showLookAround = true
+                showLookAround = true,
+                onEmailLogin = {}
             )
         }
     }
