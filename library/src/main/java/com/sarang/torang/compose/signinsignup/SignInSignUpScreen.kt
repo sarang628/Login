@@ -81,6 +81,19 @@ internal fun SignInSignUpScreen(
 }
 
 
+/**
+ * @param isLogin 로그인 여부
+ * @param showTopBar 상단바를 보여줄지 여부
+ * @param onBack 뒤로가기 버튼을 눌렀을 때 호출되는 콜백
+ * @param onSuccessLogin 로그인 성공시 호출되는 콜백
+ * @param onLookAround 둘러보기 버튼을 눌렀을 때 호출되는 콜백
+ * @param showLookAround 둘러보기 버튼을 보여줄지 여부
+ * @param onSignUp 회원가입 버튼을 눌렀을 때 호출되는 콜백
+ * @param startDestination 로그인/회원가입 선택화면 시작점
+ * @param signInScreen 로그인 화면
+ * @param torangLogo Torang 로고
+ * @param navController 네비게이션 컨트롤러
+ */
 @Composable
 internal fun SignInSignUpScreen(
     isLogin: Boolean,
