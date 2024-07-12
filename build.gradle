@@ -25,7 +25,7 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    repositoryVersion = '817b4c2117'
+    repositoryVersion = 'cf300ac841'
     designVersion = 'a7236c358c'
     themeVersion = '28a1702347'
 }

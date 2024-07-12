@@ -18,17 +18,17 @@ import javax.inject.Inject
  * UiState - what the app says they should see
  */
 data class SignInUiState(
-    val email: String = "",
-    val password: String = "",
-    val isProgress: Boolean = false,
-    val error: String? = null,
-    val emailErrorMessage: LoginErrorMessage? = null,
-    val passwordErrorMessage: LoginErrorMessage? = null,
+    val email: String = "", // 이메일
+    val password: String = "", // 비밀번호
+    val isProgress: Boolean = false, // 로그인 요청 시 프로그레스바 표시
+    val error: String? = null, // 에러 팝업 메시지
+    val emailErrorMessage: LoginErrorMessage? = null, // 이메일 입력 유효성 오류 메시지
+    val passwordErrorMessage: LoginErrorMessage? = null, // 비밀번호 입력 유효성 오류 메시지
 )
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val emailLoginService: EmailLoginUseCase,
+    private val emailLoginUseCase: EmailLoginUseCase,
     private val emailUseCase: ValidEmailUseCase,
     private val passwordUseCase: ValidPasswordUseCase,
 ) : ViewModel() {
@@ -38,23 +38,27 @@ class SignInViewModel @Inject constructor(
     private var fetchJob: Job? = null
 
 
-    fun login(onLogin: () -> Unit) {
+    /** 로그인 요청 */
+    fun signIn(onSignIn: () -> Unit) {
         if (!validateIdPw()) return;
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             clearErrorMsg()
-            showProgress(true)
+            uiState = uiState.copy(isProgress = true) // 프로그래스바 표시
             try {
-                emailLoginService.invoke(uiState.email, uiState.password) // 이메일 로그인 API 호출
-                onLogin.invoke()
+                emailLoginUseCase.invoke(uiState.email, uiState.password) // 이메일 로그인 API 호출
+                onSignIn.invoke()
             } catch (e: Exception) {
-                showError(e.message!!)
+                uiState = uiState.copy(error = e.message.toString()) // 에러메시지 표시
             } finally {
-                showProgress(false)
+                uiState = uiState.copy(isProgress = false) // 프로그래스바 감추기
             }
         }
     }
 
+    /**
+     * 유효성 검사
+     */
     private fun validateIdPw(): Boolean {
         clearValidErrorMessage()
         var isValid = true
@@ -81,14 +85,6 @@ class SignInViewModel @Inject constructor(
 
     private fun clearValidErrorMessage() {
         uiState = uiState.copy(passwordErrorMessage = null, emailErrorMessage = null)
-    }
-
-    private fun showProgress(b: Boolean) {
-        uiState = uiState.copy(isProgress = b)
-    }
-
-    private fun showError(error: String) {
-        uiState = uiState.copy(error = error)
     }
 
     fun onChangeEmail(email: String) {

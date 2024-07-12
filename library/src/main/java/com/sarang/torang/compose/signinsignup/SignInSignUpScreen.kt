@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -26,6 +24,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -48,8 +48,37 @@ import com.sarang.torang.compose.signinsignup.signin.PreviewSignInScreen
 import com.sarang.torang.compose.signinsignup.signin.SignInScreen
 import com.sarang.torang.screen.login.ChooseLoginMethod
 import com.sarang.torang.screen.login.SignIn
-import com.sarang.torang.screen.login.SignUp
 import kotlinx.coroutines.delay
+
+@Composable
+internal fun SignInSignUpScreen(
+    viewModel: SignInSignViewModel = hiltViewModel(),
+    showTopBar: Boolean,
+    onBack: (() -> Unit),
+    onSuccessLogin: () -> Unit,
+    onLookAround: () -> Unit,
+    showLookAround: Boolean = true,
+    onSignUp: () -> Unit,
+    startDestination: Any = ChooseLoginMethod,
+    signInScreen: @Composable () -> Unit = { SignInScreen(onLogin = onSuccessLogin) },
+    torangLogo: @Composable (() -> Unit) = { TorangLogo() },
+    navController: NavHostController = rememberNavController(),
+) {
+    val isLogin by viewModel.isLogin.collectAsState(false)
+    SignInSignUpScreen(
+        isLogin = isLogin,
+        showTopBar = showTopBar,
+        onBack = onBack,
+        onSuccessLogin = onSuccessLogin,
+        onLookAround = onLookAround,
+        showLookAround = showLookAround,
+        onSignUp = onSignUp,
+        startDestination = startDestination,
+        signInScreen = signInScreen,
+        torangLogo = torangLogo,
+        navController = navController
+    )
+}
 
 
 @Composable
@@ -74,7 +103,8 @@ internal fun SignInSignUpScreen(
         }
     }
 
-    TorangLogoScaffold( //Custom Scaffold
+    TorangLogoScaffold(
+        //Custom Scaffold
         isLogin = isLogin,
         showTopBar = showTopBar || currentScreen?.isEmailLoginScreen() == true,
         onBack = {
@@ -254,6 +284,25 @@ fun TorangLogo(previewTitle: String = "", previewSubtitle: String = "") {
     }
 }
 
+@Preview
+@Composable
+fun SignInSignUpScreenPreview() {
+    SignInSignUpScreen(/*Preview*/
+        isLogin = false,
+        showTopBar = false,
+        onBack = { /*TODO*/ },
+        onSuccessLogin = { /*TODO*/ },
+        onLookAround = { /*TODO*/ },
+        startDestination = ChooseLoginMethod,
+        torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
+        signInScreen = {
+            PreviewSignInScreen()
+        }, onSignUp = {}
+
+    )
+}
+
+
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun TorangLogoPreview() {
@@ -295,24 +344,6 @@ fun TorangLogoScaffoldPreview() {
 @Composable
 fun SignInSignUpTopAppBarPreview() {
     SignInSignUpTopAppBar()
-}
-
-@Preview
-@Composable
-fun SignInSignUpScreenPreview() {
-    SignInSignUpScreen(/*Preview*/
-        isLogin = false,
-        showTopBar = false,
-        onBack = { /*TODO*/ },
-        onSuccessLogin = { /*TODO*/ },
-        onLookAround = { /*TODO*/ },
-        startDestination = ChooseLoginMethod,
-        torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
-        signInScreen = {
-            PreviewSignInScreen()
-        }, onSignUp = {}
-
-    )
 }
 
 @Preview

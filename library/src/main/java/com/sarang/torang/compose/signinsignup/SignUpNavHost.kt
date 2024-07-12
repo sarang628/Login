@@ -1,16 +1,9 @@
 package com.sarang.torang.compose.signinsignup
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,13 +12,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpConfirmation
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpEmail
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
@@ -36,165 +28,154 @@ import com.sarang.torang.compose.signinsignup.signup.SignUpEmail
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.compose.signinsignup.signup.SignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.SignUpSuccess
+import com.sarang.torang.compose.signinsignup.signup.SignUpUiState
 import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
 import com.sarang.torang.screen.login.JoinEmail
 import com.sarang.torang.screen.login.JoinName
 import com.sarang.torang.screen.login.SignUpConfirmationCode
 import com.sarang.torang.screen.login.SignUpPassword
 import com.sarang.torang.screen.login.SuccessSignUp
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-/**
- * 회원 가입 화면
- * @param signUpViewModel 회원 가입 뷰모델
- * @param onBack 뒤로가기
- * @param signUpSuccess 회원 가입 성공
- */
 @Composable
-fun SignUpNavHost(
+fun SignUpScreen(
     signUpViewModel: SignUpViewModel = hiltViewModel(),
     onBack: () -> Unit,
     signUpSuccess: () -> Unit,
 ) {
+    val navController: NavHostController = rememberNavController()
+    // Read screen UI state from the business logic state holder
     val uiState = signUpViewModel.uiState
-    SignUpNavHost(
-        name = uiState.name,
-        email = uiState.email,
-        password = uiState.password,
-        confirmCode = uiState.confirmCode,
-        onBack = onBack,
-        signUpSuccess = signUpSuccess,
-        isProgress = uiState.isProgress,
+    val coroutine = rememberCoroutineScope()
+
+    SignUpScreen(
+        uiState = uiState,
+        onBack = {
+            if (!navController.popBackStack())
+                onBack.invoke()
+        },
+        onBackConfirm = {
+            signUpViewModel.onBackConfirm()
+        },
         onChangeName = signUpViewModel::onChangeName,
         onClearName = signUpViewModel::clearName,
-        errorMessage = uiState.emailErrorMessage,
         onChangeEmail = signUpViewModel::onChangeEmail,
         onClearEmail = signUpViewModel::clearEmail,
-        confirmCodeErrorMessage = uiState.confirmCodeErrorMessage,
         onChangeConfirmationCode = signUpViewModel::onChangeConfirmationCode,
         onClearConfirmationCode = signUpViewModel::clearConfirmationCode,
-        onConfirmCode = { signUpViewModel.confirmCode() },
         onChangePassword = signUpViewModel::onChangePassword,
-        passwordErrorMessage = uiState.passwordErrorMessage,
         onClearPassword = signUpViewModel::clearPassword,
-        validPassword = { signUpViewModel.validPassword() },
-        registerEmail = { signUpViewModel.registerEmail() }
+        onNextName = { navController.navigate(SignUpPassword) },
+        onNextEmail = { signUpViewModel.registerEmail() },
+        onNextConfirmCode = { signUpViewModel.confirmCode() },
+        onNextPassword = {
+            if (signUpViewModel.validPassword())
+                navController.navigate(JoinEmail)
+        },
+        onAlertDismiss = { signUpViewModel.onAlertDismiss() },
+        signUpSuccess = signUpSuccess,
+        navController = navController,
+        moveConfirmCode = {
+            Log.d("__SignUpScreen", "moveConfirmCode")
+            navController.navigate(SignUpConfirmationCode)
+        },
+        onMoveBackEmail = {
+            Log.d("__SignUpScreen", "onMoveBackEmail")
+            signUpViewModel.clearAlertMessage()
+            signUpViewModel.onMoveBackEmail()
+            coroutine.launch {
+                delay(100)
+                navController.popBackStack()
+            }
+        }
     )
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SignUpNavHost(
-    name: String,
-    email: String,
-    password: String,
-    confirmCode: String,
+private fun SignUpScreen(
+    uiState: SignUpUiState,
     onBack: () -> Unit,
+    onBackConfirm: () -> Unit,
     signUpSuccess: () -> Unit,
-    isProgress: Boolean,
     onChangeName: (String) -> Unit,
     onClearName: () -> Unit,
     onClearPassword: () -> Unit,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
-    onConfirmCode: suspend () -> Boolean,
-    registerEmail: suspend () -> Boolean,
-    validPassword: () -> Boolean,
     onChangeConfirmationCode: (String) -> Unit,
     onClearEmail: () -> Unit,
     onClearConfirmationCode: () -> Unit,
-    errorMessage: String?,
-    confirmCodeErrorMessage: String?,
-    passwordErrorMessage: String?,
+    startDestination: Any = JoinName,
+    onNextName: () -> Unit,
+    onNextEmail: () -> Unit,
+    onNextConfirmCode: () -> Unit,
+    onNextPassword: () -> Unit,
+    onAlertDismiss: () -> Unit,
+    moveConfirmCode: () -> Unit,
+    onMoveBackEmail: () -> Unit,
+    navController: NavHostController = rememberNavController(),
 ) {
-    val navController = rememberNavController()
-    val coroutine = rememberCoroutineScope()
-    if (isProgress) {
+    if (uiState.isProgress) {
         Box(modifier = Modifier.fillMaxSize()) {
             CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
     } else {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = {
-                        if (navController.currentDestination?.route != SuccessSignUp.toString())
-                            IconButton(onClick = {
-                                if (!navController.popBackStack())
-                                    onBack.invoke()
-                            }) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                    contentDescription = stringResource(id = R.string.a11y_back)
-                                )
-                            }
-                    }
-                )
-            },
+        NavHost(
+            navController = navController,
+            startDestination = startDestination
         ) {
-            NavHost(
-                modifier = Modifier.padding(it),
-                navController = navController,
-                startDestination = JoinName
-            ) {
-                composable<JoinName> {
-                    SignUpName(
-                        name = name,
-                        onValueChange = onChangeName,
-                        onBack = onBack,
-                        onClear = onClearName,
-                        onNext = { navController.navigate(SignUpPassword) })
-                }
-                composable<JoinEmail> {
-                    SignUpEmail(
-                        email = email,
-                        errorMessage = errorMessage,
-                        onValueChange = onChangeEmail,
-                        onBack = navController::popBackStack,
-                        onClear = onClearEmail,
-                        onNext = {
-                            coroutine.launch {
-                                if (registerEmail()) {
-                                    navController.navigate(SignUpConfirmationCode)
-                                }
-                            }
-                        }
-                    )
-                }
-                composable<SignUpConfirmationCode> {
-                    SignUpConfirmation(
-                        email = email,
-                        confirmCode = confirmCode,
-                        errorMessage = confirmCodeErrorMessage,
-                        onValueChange = onChangeConfirmationCode,
-                        onClear = onClearConfirmationCode,
-                        onNext = {
-                            coroutine.launch {
-                                if (onConfirmCode.invoke()) {
-                                    navController.navigate(SuccessSignUp) {
-                                        popUpTo(0)
-                                    }
-                                }
-                            }
-                        })
-                }
-                composable<SignUpPassword> {
-                    SignUpPassword(
-                        password = password,
-                        onValueChange = onChangePassword,
-                        errorMessage = passwordErrorMessage,
-                        onClear = onClearPassword,
-                        onNext = {
-                            if (validPassword())
-                                navController.navigate(JoinEmail)
-                        }
-                    )
-                }
-                composable<SuccessSignUp> {
-                    SignUpSuccess(onNext = signUpSuccess)
-                }
+            composable<JoinName> {
+                SignUpName(
+                    name = uiState.name,
+                    onValueChange = onChangeName,
+                    onClear = onClearName,
+                    onNext = onNextName,
+                    onBack = onBack,
+                )
+            }
+            composable<JoinEmail> {
+                SignUpEmail(
+                    email = uiState.email,
+                    checkedEmail = uiState.checkedEmail,
+                    errorMessage = uiState.emailErrorMessage,
+                    onValueChange = onChangeEmail,
+                    onBack = navController::popBackStack,
+                    onClear = onClearEmail,
+                    onNext = onNextEmail,
+                    moveConfirmCode = moveConfirmCode
+                )
+            }
+            composable<SignUpConfirmationCode> {
+                SignUpConfirmation(
+                    email = uiState.email,
+                    confirmCode = uiState.confirmCode,
+                    errorMessage = uiState.confirmCodeErrorMessage,
+                    onValueChange = onChangeConfirmationCode,
+                    onClear = onClearConfirmationCode,
+                    onNext = onNextConfirmCode,
+                    onBack = onBackConfirm,
+                    alertMessage = uiState.alertMessage,
+                    onAlertDismiss = onAlertDismiss,
+                    onMoveBackEmail = onMoveBackEmail
+                )
+            }
+            composable<SignUpPassword> {
+                SignUpPassword(
+                    password = uiState.password,
+                    onValueChange = onChangePassword,
+                    errorMessage = uiState.passwordErrorMessage,
+                    onClear = onClearPassword,
+                    onNext = onNextPassword,
+                    onBack = onBack
+                )
+            }
+            composable<SuccessSignUp> {
+                SignUpSuccess(
+                    onNext = signUpSuccess,
+                    onBack = onBack
+                )
             }
         }
     }
@@ -203,29 +184,38 @@ private fun SignUpNavHost(
 @Preview
 @Composable
 fun SignUpNavHostPreview() {
-    var name by remember { mutableStateOf("") }
-    SignUpNavHost(
-        name = name,
-        email = "",
-        password = "",
-        confirmCode = "",
-        onBack = {},
+    val navController: NavHostController = rememberNavController()
+    var uiState by remember { mutableStateOf(SignUpUiState()) }
+    SignUpScreen(/*Preview*/
+        uiState = SignUpUiState(),
+        onBack = {
+            navController.popBackStack()
+        },
         signUpSuccess = {},
-        isProgress = false,
-        onChangeName = { name = it },
-        onClearName = { name = "" },
-        onClearPassword = {},
-        onChangeEmail = {},
-        onChangePassword = {},
-        onConfirmCode = { true },
-        registerEmail = { true },
-        validPassword = { true },
+        onChangeName = { uiState = uiState.copy(name = it) },
+        onClearName = { uiState = uiState.copy(name = "") },
+        onClearPassword = { },
+        onChangeEmail = { uiState = uiState.copy(email = it) },
+        onChangePassword = { uiState = uiState.copy(password = it) },
         onChangeConfirmationCode = {},
         onClearEmail = {},
         onClearConfirmationCode = {},
-        errorMessage = null,
-        confirmCodeErrorMessage = null,
-        passwordErrorMessage = null
+        onNextName = { navController.navigate(SignUpPassword) },
+        onNextEmail = {
+//            uiState = uiState.copy(checkedEmail = true)
+            navController.navigate(SignUpConfirmationCode)
+        },
+        onNextConfirmCode = {
+            navController.navigate(SuccessSignUp) { popUpTo(0) }
+        },
+        onNextPassword = { navController.navigate(JoinEmail) },
+        onAlertDismiss = {},
+        navController = navController,
+        onBackConfirm = {},
+        moveConfirmCode = {
+            navController.navigate(SignUpConfirmationCode)
+        },
+        onMoveBackEmail = {}
     )
 }
 

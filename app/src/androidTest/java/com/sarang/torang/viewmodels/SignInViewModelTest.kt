@@ -38,7 +38,7 @@ class SignInViewModelTest {
         hiltRule.inject()
         viewModel = SignInViewModel(
             emailUseCase = emailUseCase,
-            emailLoginService = emailLoginService,
+            emailLoginUseCase = emailLoginService,
             passwordUseCase = passwordUseCase
         )
     }
@@ -46,7 +46,7 @@ class SignInViewModelTest {
     @Test
     fun invalidEmail() {
         runBlocking {
-            viewModel.login(onLogin = {})
+            viewModel.signIn(onSignIn = {})
             //do business logic
             Assert.assertEquals("Error", viewModel.uiState.emailErrorMessage)
         }
@@ -55,7 +55,7 @@ class SignInViewModelTest {
     @Test
     fun invalidPassword() {
         runBlocking {
-            viewModel.login(onLogin = {})
+            viewModel.signIn(onSignIn = {})
             //do business logic
             Assert.assertEquals("Error", viewModel.uiState.passwordErrorMessage)
         }
@@ -66,7 +66,7 @@ class SignInViewModelTest {
         runBlocking {
             viewModel.onChangeEmail("sarang628@naver.com")
             viewModel.onChangePassword("bbbbb")
-            viewModel.login(onLogin = {
+            viewModel.signIn(onSignIn = {
 
             })
             //do business logic by api call
@@ -80,7 +80,7 @@ class SignInViewModelTest {
         runBlocking {
             viewModel.onChangeEmail("sarang628@naver.com")
             viewModel.onChangePassword("aaaaa")
-            viewModel.login(onLogin = {
+            viewModel.signIn(onSignIn = {
 
             })
             //do business logic by api call

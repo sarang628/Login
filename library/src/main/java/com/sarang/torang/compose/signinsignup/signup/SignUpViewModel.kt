@@ -5,7 +5,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sarang.torang.compose.signinsignup.signup.SignUpUiState
+import com.sarang.torang.screen.login.SignUpConfirmationCode
 import com.sarang.torang.usecase.SignUpUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
@@ -13,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SignUpUiState(
@@ -24,6 +27,8 @@ data class SignUpUiState(
     val emailErrorMessage: String? = null,
     val passwordErrorMessage: String? = null,
     val confirmCodeErrorMessage: String? = null,
+    val alertMessage: String? = null,
+    val checkedEmail: Boolean = false,
 )
 
 @HiltViewModel
@@ -38,25 +43,25 @@ class SignUpViewModel @Inject constructor(
 
     private var token = "";
 
-    suspend fun registerEmail(): Boolean {
+    fun registerEmail() {
         if (!validEmailUseCase.invoke(uiState.email)) {
             uiState = uiState.copy(emailErrorMessage = "이메일 형식이 아닙니다.")
-            return false
         } else {
             uiState = uiState.copy(emailErrorMessage = null, isProgress = true)
-            try {
-                token = signUpUseCase.checkEmail(
-                    uiState.email,
-                    uiState.password
-                )
-                return true
-            } catch (e: Exception) {
-                Log.e("__SignUpViewModel", "registerEmail: ${e.message}")
-                uiState = uiState.copy(emailErrorMessage = e.message)
-            } finally {
-                uiState = uiState.copy(isProgress = false)
+            viewModelScope.launch {
+                try {
+                    token = signUpUseCase.checkEmail(
+                        uiState.email,
+                        uiState.password
+                    )
+                    uiState = uiState.copy(checkedEmail = true)
+                } catch (e: Exception) {
+                    Log.e("__SignUpViewModel", "registerEmail: ${e.message}")
+                    uiState = uiState.copy(emailErrorMessage = e.message)
+                } finally {
+                    uiState = uiState.copy(isProgress = false)
+                }
             }
-            return false
         }
     }
 
@@ -70,22 +75,23 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    suspend fun confirmCode(): Boolean {
-        try {
-            uiState = uiState.copy(confirmCodeErrorMessage = null, isProgress = true)
-            return signUpUseCase.confirmCode(
-                token = token,
-                confirmCode = uiState.confirmCode,
-                name = uiState.name,
-                email = uiState.email,
-                password = uiState.password
-            )
-        } catch (e: Exception) {
-            uiState = uiState.copy(confirmCodeErrorMessage = e.toString())
-        } finally {
-            uiState = uiState.copy(isProgress = false)
+    fun confirmCode() {
+        uiState = uiState.copy(confirmCodeErrorMessage = null, isProgress = true)
+        viewModelScope.launch {
+            try {
+                signUpUseCase.confirmCode(
+                    token = token,
+                    confirmCode = uiState.confirmCode,
+                    name = uiState.name,
+                    email = uiState.email,
+                    password = uiState.password
+                )
+            } catch (e: Exception) {
+                uiState = uiState.copy(confirmCodeErrorMessage = e.toString())
+            } finally {
+                uiState = uiState.copy(isProgress = false)
+            }
         }
-        return false
     }
 
     fun onChangeName(name: String) {
@@ -118,5 +124,25 @@ class SignUpViewModel @Inject constructor(
 
     fun onChangeConfirmationCode(code: String) {
         uiState = uiState.copy(confirmCode = code)
+    }
+
+    fun onAlertConfirm() {
+        uiState = uiState.copy(alertMessage = null)
+    }
+
+    fun onAlertDismiss() {
+        uiState = uiState.copy(alertMessage = null)
+    }
+
+    fun onBackConfirm() {
+        uiState = uiState.copy(alertMessage = "이메일을 다시 등록 하시겠습니까?")
+    }
+
+    fun clearAlertMessage() {
+        uiState = uiState.copy(alertMessage = null)
+    }
+
+    fun onMoveBackEmail() {
+        uiState = uiState.copy(checkedEmail = false)
     }
 }

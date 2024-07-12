@@ -39,10 +39,10 @@ fun SignInScreen(
 ) {
     val uiState = viewModel.uiState
     SignInScreen(
-        uiState = uiState,
-        onLogin = { viewModel.login(onLogin) },
-        onChangeEmail = { viewModel.onChangeEmail(it) },
-        onChangePassword = { viewModel.onChangePassword(it) },
+        uiState = uiState, // UI에 display 할 데이터, viewModel에서 이벤트에 따라 지속적으로 갱신한다.
+        onLogin = { viewModel.signIn(onLogin) }, // 로그인 버튼 클릭 시 viewModel로 전달
+        onChangeEmail = { viewModel.onChangeEmail(it) }, // 이메일 입력 시 viewModel로 전달
+        onChangePassword = { viewModel.onChangePassword(it) }, // 비밀번호 입력 시 viewModel로 전달
         onClearEmail = { viewModel.clearEmail() },
         onClearErrorMsg = { viewModel.clearErrorMsg() }
     )
@@ -63,13 +63,13 @@ internal fun SignInScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SignInForm(
+                email = uiState.email,
+                password = uiState.password,
                 onLogin = onLogin,
                 onChangeEmail = onChangeEmail,
                 onChangePassword = onChangePassword,
                 onClearEmail = onClearEmail,
                 progress = uiState.isProgress,
-                email = uiState.email,
-                password = uiState.password,
                 emailErrorMessage = if (uiState.emailErrorMessage != null) stringResource(id = uiState.emailErrorMessage.resId) else null,
                 passwordErrorMessage = if (uiState.passwordErrorMessage != null) stringResource(id = uiState.passwordErrorMessage.resId) else null
             )
@@ -156,7 +156,7 @@ private fun SignInForm(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
     SignInScreen(
@@ -165,8 +165,8 @@ fun PreviewSignInScreen() {
             //error = "로그인에 실패하였습니다.",
             email = "torang@torang.com",
             password = "password",
-            emailErrorMessage = LoginErrorMessage.InvalidEmail,
-            passwordErrorMessage = LoginErrorMessage.InvalidPassword,
+//            emailErrorMessage = LoginErrorMessage.InvalidEmail,
+//            passwordErrorMessage = LoginErrorMessage.InvalidPassword,
             isProgress = false
         ),
         onLogin = { },

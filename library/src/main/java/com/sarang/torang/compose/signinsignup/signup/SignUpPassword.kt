@@ -2,11 +2,19 @@ package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,40 +29,56 @@ import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.common.SignInTextField
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignUpPassword(
     password: String,
     errorMessage: String? = null,
     onValueChange: (String) -> Unit,
     onClear: () -> Unit,
-    onNext: () -> Unit
+    onNext: () -> Unit,
+    onBack: () -> Unit,
 ) {
     var visiblePassword by remember { mutableStateOf(false) }
-    Column(
-        Modifier
-            .padding(start = 16.dp, end = 16.dp)
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        contentDescription = stringResource(id = R.string.a11y_back)
+                    )
+                }
+            })
+        },
+        contentWindowInsets = WindowInsets(left = 16.dp, right = 16.dp)
     ) {
-        Text(
-            text = stringResource(id = R.string.create_a_password),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(text = stringResource(id = R.string.describe_input_password))
-        Spacer(modifier = Modifier.height(12.dp))
-        SignInTextField(
-            label = stringResource(id = R.string.label_password),
-            value = password,
-            onValueChange = onValueChange,
-            placeHolder = stringResource(id = R.string.password_place_holder),
-            onClear = { visiblePassword = !visiblePassword },
-            errorMessage = errorMessage,
-            isPassword = true,
-            isPasswordVisual = visiblePassword
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Button(modifier = Modifier.fillMaxWidth(), onClick = { onNext.invoke() }) {
-            Text(text = stringResource(id = R.string.label_next))
+        Column(
+            Modifier
+                .padding(it)
+        ) {
+            Text(
+                text = stringResource(id = R.string.create_a_password),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(text = stringResource(id = R.string.describe_input_password))
+            Spacer(modifier = Modifier.height(12.dp))
+            SignInTextField(
+                label = stringResource(id = R.string.label_password),
+                value = password,
+                onValueChange = onValueChange,
+                placeHolder = stringResource(id = R.string.password_place_holder),
+                onClear = { visiblePassword = !visiblePassword },
+                errorMessage = errorMessage,
+                isPassword = true,
+                isPasswordVisual = visiblePassword
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Button(modifier = Modifier.fillMaxWidth(), onClick = { onNext.invoke() }) {
+                Text(text = stringResource(id = R.string.label_next))
+            }
         }
     }
 }
@@ -67,6 +91,7 @@ fun PreviewSignUpPassword() {
         password = "password",
         onClear = {},
         onValueChange = {},
-        onNext = {}
+        onNext = {},
+        onBack = {}
     )
 }

@@ -23,7 +23,6 @@ class SignUpPasswordTest {
             SignUpPassword(
                 password = "abcde",
                 onValueChange = {},
-                onBack = { /*TODO*/ },
                 onClear = { /*TODO*/ },
                 onNext = {})
         }

@@ -1,10 +1,8 @@
 package com.sarang.torang.compose.signinsignup
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -32,40 +30,50 @@ import com.sarang.torang.screen.login.SignUp
  */
 @Composable
 fun LoginNavHost(
-    viewModel: LoginViewModel = hiltViewModel(),
     onSuccessLogin: () -> Unit,
     onLookAround: () -> Unit,
     showTopBar: Boolean = false,
     onBack: (() -> Unit)? = null,
     showLookAround: Boolean = true,
+    startDestination: Any = SignInSignUp,
     navController: NavHostController = rememberNavController(),
+    signInSignUpScreen: @Composable () -> Unit = {
+        SignInSignUpScreen(
+            showTopBar = showTopBar,
+            onBack = {
+                onBack?.invoke()
+            },
+            onSuccessLogin = onSuccessLogin,
+            onLookAround = onLookAround,
+            showLookAround = showLookAround,
+            onSignUp = { navController.navigate(SignUp) }
+        )
+    },
+    signUpNavHost: @Composable () -> Unit = {
+        SignUpScreen(
+            onBack = navController::popBackStack,
+            signUpSuccess = navController::popBackStack
+        )
+    },
 ) {
-    val isLogin by viewModel.isLogin.collectAsState(false)
-
     val graph: NavGraph = remember(navController) {
-        navController.createGraph(SignInSignUp, null, emptyMap()) {
-            composable<SignInSignUp> {
-                SignInSignUpScreen(
-                    isLogin = isLogin,
-                    showTopBar = showTopBar,
-                    onBack = {
-                        onBack?.invoke()
-                    },
-                    onSuccessLogin = onSuccessLogin,
-                    onLookAround = onLookAround,
-                    showLookAround = showLookAround,
-                    onSignUp = { navController.navigate(SignUp) }
-                )
-            }
-
-            composable<SignUp> {
-                SignUpNavHost(
-                    onBack = navController::popBackStack,
-                    signUpSuccess = navController::popBackStack
-                )
-            }
+        navController.createGraph(startDestination, null, emptyMap()) {
+            composable<SignInSignUp> { signInSignUpScreen.invoke() }
+            composable<SignUp> { signUpNavHost.invoke() }
         }
     }
 
     NavHost(navController = navController, graph = graph)
+}
+
+@Preview
+@Composable
+fun LoginNavHostPreview() {
+    LoginNavHost(
+        onSuccessLogin = { /*TODO*/ },
+        onLookAround = { /*TODO*/ },
+        signInSignUpScreen = { SignInSignUpScreenPreview() },
+        signUpNavHost = { SignUpNavHostPreview() },
+        startDestination = SignInSignUp //SignUp/SignInSignUp
+    )
 }

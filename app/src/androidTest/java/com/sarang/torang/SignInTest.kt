@@ -46,7 +46,7 @@ class SignInTest {
         hiltRule.inject()
         viewModel = SignInViewModel(
             emailUseCase = emailUseCase,
-            emailLoginService = emailLoginService,
+            emailLoginUseCase = emailLoginService,
             passwordUseCase = passwordUseCase
         )
 
