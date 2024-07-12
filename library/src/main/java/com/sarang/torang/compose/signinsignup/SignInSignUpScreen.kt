@@ -104,7 +104,6 @@ internal fun SignInSignUpScreen(
     }
 
     TorangLogoScaffold(
-        //Custom Scaffold
         isLogin = isLogin,
         showTopBar = showTopBar || currentScreen?.isEmailLoginScreen() == true,
         onBack = {
@@ -113,7 +112,7 @@ internal fun SignInSignUpScreen(
         },
         torangLogo = torangLogo,
     ) {
-        NavHost( //Navigation
+        NavHost( //navigation
             navController = navController,
             startDestination = startDestination
         ) {
@@ -133,6 +132,13 @@ internal fun SignInSignUpScreen(
     }
 }
 
+/**
+ * @param isLogin 로그인 여부
+ * @param showTopBar 상단바를 보여줄지 여부
+ * @param onBack 뒤로가기 버튼을 눌렀을 때 호출되는 콜백
+ * @param torangLogo Torang 로고
+ * @param contents 화면 내용
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TorangLogoScaffold(
@@ -142,15 +148,11 @@ internal fun TorangLogoScaffold(
     torangLogo: @Composable (() -> Unit) = { TorangLogo() },
     contents: @Composable (() -> Unit),
 ) {
+    // @formatter:off
     Scaffold(
         topBar = {
-            if (showTopBar)
-                SignInSignUpTopAppBar(
-                    onBack = { onBack?.invoke() }
-                )
-            else {
-                TopAppBar(title = {})
-            }
+            if (showTopBar) SignInSignUpTopAppBar(onBack = { onBack?.invoke() })
+            else TopAppBar(title = {})
         },
         contentWindowInsets = WindowInsets(left = 12.dp, right = 12.dp)
     ) {
@@ -161,12 +163,11 @@ internal fun TorangLogoScaffold(
                 .padding(it)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            torangLogo.invoke()
-            if (!isLogin) {
-                contents.invoke()
-            }
+            torangLogo.invoke() // 로고 표시
+            if (!isLogin) contents.invoke() // 로그인이 아닐 경우 화면 표시
         }
     }
+    // @formatter:on
 }
 
 private fun String.isEmailLoginScreen(): Boolean {
@@ -287,7 +288,8 @@ fun TorangLogo(previewTitle: String = "", previewSubtitle: String = "") {
 @Preview
 @Composable
 fun SignInSignUpScreenPreview() {
-    SignInSignUpScreen(/*Preview*/
+    SignInSignUpScreen(
+        /*Preview*/
         isLogin = false,
         showTopBar = false,
         onBack = { /*TODO*/ },
@@ -297,8 +299,9 @@ fun SignInSignUpScreenPreview() {
         torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
         signInScreen = {
             PreviewSignInScreen()
-        }, onSignUp = {}
-
+        },
+        onSignUp = {
+        },
     )
 }
 
