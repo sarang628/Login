@@ -6,16 +6,14 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,11 +23,21 @@ import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * 회원가입 이름 입력
+ * @param name 이름
+ * @param errorMessage 에러 메시지
+ * @param limit 이름 길이 제한
+ * @param onValueChange 이름 변경 콜백
+ * @param onClear 이름 삭제 콜백
+ * @param onBack 이전 버튼 콜백
+ * @param onNext 다음 버튼 콜백
+ */
 @Composable
-internal fun SignUpName(
+fun SignUpName(
     name: String,
     errorMessage: String? = null,
+    limit: Int = 20,
     onValueChange: (String) -> Unit,
     onClear: () -> Unit,
     onNext: () -> Unit,
@@ -42,21 +50,30 @@ internal fun SignUpName(
         Column(
             Modifier.padding(it)
         ) {
+            // contents
             Text(
                 text = stringResource(id = R.string.what_s_your_name),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
+            //input name
             SignCommonTextField(
+                modifier = Modifier.padding(bottom = 4.dp),
                 label = stringResource(id = R.string.label_full_name),
                 value = name,
                 onValueChange = onValueChange,
                 placeHolder = stringResource(id = R.string.label_full_name),
                 onClear = onClear,
-                errorMessage = errorMessage
+                errorMessage = errorMessage,
+                showInputCount = true,
+                limit = limit
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(modifier = Modifier.fillMaxWidth(), onClick = { onNext.invoke() }) {
+            // next button
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp),
+                onClick = { onNext.invoke() }) {
                 Text(text = stringResource(id = R.string.label_next))
             }
         }
@@ -66,12 +83,14 @@ internal fun SignUpName(
 @Preview
 @Composable
 fun PreviewSignUpName() {
+    var name by remember { mutableStateOf("Ludwig") }
     SignUpName(
-        name = "name",
-        onClear = {},
-        onValueChange = {},
+        name = name,
+        onClear = { name = "" },
+        onValueChange = { name = it },
         onNext = {},
         onBack = {},
-        errorMessage = "error"
+        errorMessage = "error",
+        limit = 25
     )
 }

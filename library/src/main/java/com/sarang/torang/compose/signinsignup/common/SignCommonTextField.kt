@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -17,6 +18,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sarang.torang.R
 
@@ -58,19 +61,37 @@ internal fun SignCommonTextField(
     isPassword: Boolean = false,
     isPasswordVisual: Boolean = false,
     enable: Boolean? = null,
+    showInputCount: Boolean = false,
+    limit: Int = Integer.MAX_VALUE,
 ) {
+
+    val value1 = if (value.length >= limit) value.substring(0, limit) else value
+
     //에러 메시지를 필드 하단에 표시
-    val compose = @Composable {
-        Text(text = errorMessage ?: "", color = Color.Red)
-    }
+    val supportingText: @Composable (() -> Unit)? =
+        if (errorMessage != null || showInputCount) {
+            @Composable {
+                Box(modifier = Modifier.fillMaxWidth())
+                {
+                    if (errorMessage != null)
+                        Text(text = errorMessage, color = Color.Red)
+
+                    if (showInputCount)
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterEnd),
+                            text = "(${value1.length}/${limit})",
+                        )
+                }
+            }
+        } else null
 
     Column {
         OutlinedTextField(
             label = { Text(text = label) },
-            value = value,
+            value = value1,
             onValueChange = onValueChange,
             isError = !errorMessage.isNullOrEmpty(), //빨강 라인
-            supportingText = if (errorMessage != null) compose else null,
+            supportingText = supportingText,
             trailingIcon = { // 오류 아이콘
                 if (errorMessage != null) {
                     Image(
@@ -139,8 +160,24 @@ internal fun SignCommonTextField(
                     }
                 }
                 .fillMaxWidth(),
-            enabled = enable ?: true
-
+            enabled = enable ?: true,
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun test() {
+    SignCommonTextField(
+        modifier = Modifier,
+        label = "Email",
+        value = "email",
+        onValueChange = {},
+        errorMessage = "error",
+        placeHolder = "email",
+        onKeyTabOrDown = {},
+        onNext = {},
+        onClear = {},
+        showInputCount = true
+    )
 }

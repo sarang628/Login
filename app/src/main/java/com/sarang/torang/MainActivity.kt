@@ -14,6 +14,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.signinsignup.LoginNavHost
 import com.sarang.torang.compose.signinsignup.LoginNavHostPreview
+import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
+import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,8 +70,26 @@ class MainActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun LoginNavHostPreview1(){
+fun LoginNavHostPreview1() {
     TorangTheme {
         LoginNavHostPreview()
     }
 }
+
+@Preview
+@Composable
+fun PreviewSignUpName1() {
+    TorangTheme {
+        var name by remember { mutableStateOf("Ludwig") }
+        SignUpName(
+            name = name,
+            onClear = { name = "" },
+            onValueChange = { name = it },
+            onNext = {},
+            onBack = {},
+            errorMessage = "error",
+            limit = 25
+        )
+    }
+}
+
