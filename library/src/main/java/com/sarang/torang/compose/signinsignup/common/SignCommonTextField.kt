@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -75,13 +76,15 @@ internal fun SignCommonTextField(
                     Image(
                         painter = painterResource(id = R.drawable.ic_warning),
                         contentDescription = "",
-                        modifier = Modifier.clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            if (enable != false)
-                                onClear.invoke()
-                        }
+                        modifier = Modifier
+                            .testTag("btnClear")
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                if (enable != false)
+                                    onClear.invoke()
+                            }
                     )
                 } else if (isPassword) {
                     IconButton(
@@ -102,13 +105,15 @@ internal fun SignCommonTextField(
                     Image(
                         painter = painterResource(id = R.drawable.ic_x),
                         contentDescription = "",
-                        modifier = Modifier.clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) {
-                            if (enable != false)
-                                onClear.invoke()
-                        }
+                        modifier = Modifier
+                            .testTag("btnClear")
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                if (enable != false)
+                                    onClear.invoke()
+                            }
                     )
                 }
             },

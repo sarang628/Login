@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -84,6 +85,7 @@ internal fun SignUpEmail(
             Button( // next button
                 modifier = Modifier
                     .fillMaxWidth()
+                    .testTag("btnNext")
                     .padding(top = 6.dp),
                 onClick = onNext::invoke
             ) {
