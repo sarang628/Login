@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signin
+package com.sarang.torang.compose.signinsignup.signin
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.LocalContext

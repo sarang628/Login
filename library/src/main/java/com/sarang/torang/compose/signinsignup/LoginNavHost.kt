@@ -40,9 +40,7 @@ fun LoginNavHost(
     signInSignUpScreen: @Composable () -> Unit = {
         SignInSignUpScreen(
             showTopBar = showTopBar,
-            onBack = {
-                onBack?.invoke()
-            },
+            onBack = { onBack?.invoke() },
             onSuccessLogin = onSuccessLogin,
             onLookAround = onLookAround,
             showLookAround = showLookAround,

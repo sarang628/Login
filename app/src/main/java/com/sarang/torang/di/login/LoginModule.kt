@@ -33,7 +33,7 @@ object LoginServiceModule {
 
     @Singleton
     @Provides
-    fun ProvideIsLoginFlowUseCase(
+    fun provideIsLoginFlowUseCase(
         loginRepository: LoginRepository,
     ): IsLoginFlowUseCase {
         return object : IsLoginFlowUseCase {
@@ -44,7 +44,7 @@ object LoginServiceModule {
 
     @Singleton
     @Provides
-    fun ProvideLogoutUseCase(
+    fun provideLogoutUseCase(
         sessionService: SessionService,
         loggedInUserDao: LoggedInUserDao
     ): LogoutUseCase {

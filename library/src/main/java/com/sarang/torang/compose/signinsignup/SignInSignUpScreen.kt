@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,8 +52,8 @@ import com.sarang.torang.screen.login.SignIn
 import kotlinx.coroutines.delay
 
 @Composable
-internal fun SignInSignUpScreen(
-    viewModel: SignInSignViewModel = hiltViewModel(),
+fun SignInSignUpScreen(
+    viewModel: SignInSignUpViewModel = hiltViewModel(),
     showTopBar: Boolean,
     onBack: (() -> Unit),
     onSuccessLogin: () -> Unit,
@@ -65,7 +66,7 @@ internal fun SignInSignUpScreen(
     navController: NavHostController = rememberNavController(),
 ) {
     val isLogin by viewModel.isLogin.collectAsState(false)
-    SignInSignUpScreen(
+    _SignInSignUpScreen(
         isLogin = isLogin,
         showTopBar = showTopBar,
         onBack = onBack,
@@ -76,7 +77,8 @@ internal fun SignInSignUpScreen(
         startDestination = startDestination,
         signInScreen = signInScreen,
         torangLogo = torangLogo,
-        navController = navController
+        navController = navController,
+        onEmailLogin = { navController.navigate(SignIn) }
     )
 }
 
@@ -95,7 +97,7 @@ internal fun SignInSignUpScreen(
  * @param navController 네비게이션 컨트롤러
  */
 @Composable
-internal fun SignInSignUpScreen(
+ fun _SignInSignUpScreen(
     isLogin: Boolean,
     showTopBar: Boolean,
     onBack: (() -> Unit),
@@ -103,6 +105,7 @@ internal fun SignInSignUpScreen(
     onLookAround: () -> Unit,
     showLookAround: Boolean = true,
     onSignUp: () -> Unit,
+    onEmailLogin: () -> Unit,
     startDestination: Any = ChooseLoginMethod,
     signInScreen: @Composable () -> Unit = { SignInScreen(onLogin = onSuccessLogin) },
     torangLogo: @Composable (() -> Unit) = { TorangLogo() },
@@ -131,9 +134,8 @@ internal fun SignInSignUpScreen(
         ) {
             composable<ChooseLoginMethod> {
                 SignInSignUpComponent(
-                    onEmailLogin = {
-                        navController.navigate(SignIn)
-                    }, onSignUp = onSignUp,
+                    onEmailLogin = onEmailLogin,
+                    onSignUp = onSignUp,
                     onLookAround = onLookAround,
                     showLookAround = showLookAround
                 )
@@ -195,9 +197,11 @@ fun SignInSignUpTopAppBar(
     TopAppBar(
         title = { },
         navigationIcon = {
-            IconButton(onClick = {
-                onBack?.invoke()
-            }) {
+            IconButton(
+                modifier = Modifier.testTag("btnNavUp"),
+                onClick = {
+                    onBack?.invoke()
+                }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
                     stringResource(id = R.string.a11y_back)
@@ -250,6 +254,11 @@ fun SignInSignUpComponent(
     }
 }
 
+/**
+ * Torang 로고
+ * @param previewTitle 미리보기용 제목
+ * @param previewSubtitle 미리보기용 부제
+ */
 @Composable
 fun TorangLogo(previewTitle: String = "", previewSubtitle: String = "") {
     var title by remember { mutableStateOf(previewTitle) }
@@ -301,20 +310,36 @@ fun TorangLogo(previewTitle: String = "", previewSubtitle: String = "") {
 @Preview
 @Composable
 fun SignInSignUpScreenPreview() {
-    SignInSignUpScreen(
+    _SignInSignUpScreen(
         /*Preview*/
         isLogin = false,
         showTopBar = false,
-        onBack = { /*TODO*/ },
-        onSuccessLogin = { /*TODO*/ },
-        onLookAround = { /*TODO*/ },
-        startDestination = ChooseLoginMethod,
+        onBack = { },
+        onSuccessLogin = { },
+        onLookAround = { },
+        startDestination = ChooseLoginMethod, // SignIn/ChooseLoginMethod
         torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
-        signInScreen = {
-            PreviewSignInScreen()
-        },
-        onSignUp = {
-        },
+        signInScreen = { PreviewSignInScreen() },
+        onSignUp = { },
+        onEmailLogin = { },
+    )
+}
+
+@Preview
+@Composable
+fun SignInSignUpScreenIsLoginPreview() {
+    _SignInSignUpScreen(
+        /*Preview*/
+        isLogin = true,
+        showTopBar = false,
+        onBack = { },
+        onSuccessLogin = { },
+        onLookAround = { },
+        startDestination = ChooseLoginMethod, // SignIn/ChooseLoginMethod
+        torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
+        signInScreen = { PreviewSignInScreen() },
+        onSignUp = { },
+        onEmailLogin = { },
     )
 }
 
@@ -365,8 +390,8 @@ fun SignInSignUpTopAppBarPreview() {
 @Preview
 @Composable
 fun SignInSignUpScreen1Preview() {
-    SignInSignUpScreen(/*Preview*/
-        isLogin = false,
+    _SignInSignUpScreen(/*Preview*/
+        isLogin = true,
         showTopBar = false,
         onBack = { /*TODO*/ },
         onSuccessLogin = { /*TODO*/ },
@@ -378,6 +403,7 @@ fun SignInSignUpScreen1Preview() {
         torangLogo = {
             TorangLogo("T O R A N G", "hit the spot")
         },
-        onSignUp = {}
+        onSignUp = {},
+        onEmailLogin = {}
     )
 }

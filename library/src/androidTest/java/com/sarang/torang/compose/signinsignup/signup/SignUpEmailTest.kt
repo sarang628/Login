@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signup
+package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
@@ -25,7 +25,9 @@ class SignUpEmailTest {
                 onValueChange = {},
                 onBack = { /*TODO*/ },
                 onClear = { /*TODO*/ },
-                onNext = {}
+                onNext = {},
+                checkedEmail = false,
+                moveConfirmCode = {}
             )
         }
     }
@@ -33,8 +35,11 @@ class SignUpEmailTest {
     @Test
     fun staticComponentTest() {
         composeTestRule.onNodeWithText("torang@torang.com").assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.resources.getString(R.string.what_s_your_email)).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.resources.getString(R.string.describe_input_email)).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.resources.getString(R.string.label_next)).assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.resources.getString(R.string.what_s_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.resources.getString(R.string.describe_input_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.resources.getString(R.string.label_next))
+            .assertIsDisplayed()
     }
 }

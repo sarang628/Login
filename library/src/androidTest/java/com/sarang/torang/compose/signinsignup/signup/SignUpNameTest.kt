@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signup
+package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
@@ -10,30 +10,35 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.signup.SignUpPassword
+import com.sarang.torang.compose.signinsignup.signup.SignUpName
 
 @RunWith(AndroidJUnit4::class)
-class SignUpPasswordTest {
-    @get:Rule
+class SignUpNameTest {
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Before
-    fun initUI() {
+    fun setUI() {
         composeTestRule.setContent {
-            SignUpPassword(
-                password = "abcde",
+            SignUpName(
+                name = "MyName",
                 onValueChange = {},
+                onBack = { /*TODO*/ },
                 onClear = { /*TODO*/ },
-                onNext = {})
+                onNext = {}
+            )
         }
     }
 
     @Test
-    fun testStaticElement() {
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.create_a_password)).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.describe_input_password)).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_password)).assertIsDisplayed()
+    fun checkStaticElement() {
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_full_name)).assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.what_s_your_name)).assertIsDisplayed()
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_next)).assertIsDisplayed()
     }
 
+    @Test
+    fun checkInputName() {
+        composeTestRule.onNodeWithText("MyName").assertIsDisplayed()
+    }
 }

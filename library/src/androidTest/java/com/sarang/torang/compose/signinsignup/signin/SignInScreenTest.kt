@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signin
+package com.sarang.torang.compose.signinsignup.signin
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.*

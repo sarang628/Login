@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInSignViewModel @Inject constructor(
+class SignInSignUpViewModel @Inject constructor(
     isLoginFlowUseCase: IsLoginFlowUseCase
 ) : ViewModel() {
     val isLogin = isLoginFlowUseCase.isLogin
