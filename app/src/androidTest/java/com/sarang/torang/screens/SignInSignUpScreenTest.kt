@@ -1,4 +1,4 @@
-package com.sarang.torang
+package com.sarang.torang.screens
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
@@ -8,9 +8,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.SignInSignUpScreen
 import com.sarang.torang.compose.signinsignup.SignInSignUpViewModel
-import com.sarang.torang.compose.signinsignup._SignInSignUpScreen
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.usecase.IsLoginFlowUseCase
 import com.sarang.torang.viewmodels.getOrAwaitValue
@@ -75,18 +75,18 @@ class SignInSignUpScreenTest {
 
     @Test
     fun testTextIsDisplayed() = runTest {
-        Assert.assertEquals(false, loginViewModel.isLogin.getOrAwaitValue())
+        Assert.assertFalse(loginViewModel.isLogin.getOrAwaitValue())
         loginRepository.encEmailLogin("sarang628@naver.com", "aaaaa")
-        Assert.assertEquals(true, loginViewModel.isLogin.getOrAwaitValue())
+        Assert.assertTrue(loginViewModel.isLogin.getOrAwaitValue())
         // 문구들이 보이지 않는지 확인
         composeTestRule.onNodeWithText(loginWithEmailText).assertIsNotDisplayed()
         composeTestRule.onNodeWithText(dontHaveAccountText).assertIsNotDisplayed()
         composeTestRule.onNodeWithText(signUpText).assertIsNotDisplayed()
         composeTestRule.onNodeWithText(lookAroundText).assertIsNotDisplayed()
 
-        Assert.assertEquals(true, loginViewModel.isLogin.getOrAwaitValue())
+        Assert.assertTrue(loginViewModel.isLogin.getOrAwaitValue())
         loginRepository.logout()
-        Assert.assertEquals(false, loginViewModel.isLogin.getOrAwaitValue())
+        Assert.assertFalse(loginViewModel.isLogin.getOrAwaitValue())
 
         // 문구들이 보이지 않는지 확인
         composeTestRule.onNodeWithText(loginWithEmailText).assertIsDisplayed()

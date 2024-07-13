@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,7 +59,9 @@ fun SignUpName(
             )
             //input name
             SignCommonTextField(
-                modifier = Modifier.padding(bottom = 4.dp),
+                modifier = Modifier
+                    .padding(bottom = 4.dp)
+                    .testTag("tfName"),
                 label = stringResource(id = R.string.label_full_name),
                 value = name,
                 onValueChange = onValueChange,
@@ -72,6 +75,7 @@ fun SignUpName(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .testTag("btnNext")
                     .padding(top = 4.dp),
                 onClick = { onNext.invoke() }) {
                 Text(text = stringResource(id = R.string.label_next))

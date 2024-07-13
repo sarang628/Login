@@ -11,7 +11,7 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.SignInSignUpComponent
-import com.sarang.torang.screen.login.SignIn
+import com.sarang.torang.screens.login.SignIn
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Rule

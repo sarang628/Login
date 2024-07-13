@@ -30,11 +30,11 @@ import com.sarang.torang.compose.signinsignup.signup.SignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.SignUpSuccess
 import com.sarang.torang.compose.signinsignup.signup.SignUpUiState
 import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
-import com.sarang.torang.screen.login.JoinEmail
-import com.sarang.torang.screen.login.JoinName
-import com.sarang.torang.screen.login.SignUpConfirmationCode
-import com.sarang.torang.screen.login.SignUpPassword
-import com.sarang.torang.screen.login.SuccessSignUp
+import com.sarang.torang.screens.login.JoinEmail
+import com.sarang.torang.screens.login.JoinName
+import com.sarang.torang.screens.login.SignUpConfirmationCode
+import com.sarang.torang.screens.login.SignUpPassword
+import com.sarang.torang.screens.login.SuccessSignUp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -94,7 +94,7 @@ fun SignUpScreen(
 
 
 @Composable
-private fun SignUpScreen(
+internal fun SignUpScreen(
     uiState: SignUpUiState,
     onBack: () -> Unit,
     onBackConfirm: () -> Unit,

@@ -1,4 +1,4 @@
-package com.sarang.torang
+package com.sarang.torang.screens
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -11,9 +11,11 @@ import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
 import com.sarang.torang.compose.signinsignup.signin.SignInViewModel
+import com.sarang.torang.viewmodels.getOrAwaitValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +24,7 @@ import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class SignInTest {
+class SignInScreenTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -39,12 +41,12 @@ class SignInTest {
     @Inject
     lateinit var passwordUseCase: ValidPasswordUseCase
 
-    private lateinit var viewModel: SignInViewModel
+    private lateinit var signInViewModel: SignInViewModel
 
     @Before
     fun init() {
         hiltRule.inject()
-        viewModel = SignInViewModel(
+        signInViewModel = SignInViewModel(
             emailUseCase = emailUseCase,
             emailLoginUseCase = emailLoginService,
             passwordUseCase = passwordUseCase
@@ -52,7 +54,7 @@ class SignInTest {
 
         composeTestRule.setContent {
             SignInScreen(
-                viewModel = viewModel,
+                viewModel = signInViewModel,
                 onLogin = {}
             )
         }

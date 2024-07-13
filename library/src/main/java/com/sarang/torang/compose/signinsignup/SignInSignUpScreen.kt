@@ -47,8 +47,8 @@ import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.signin.PreviewSignInScreen
 import com.sarang.torang.compose.signinsignup.signin.SignInScreen
-import com.sarang.torang.screen.login.ChooseLoginMethod
-import com.sarang.torang.screen.login.SignIn
+import com.sarang.torang.screens.login.ChooseLoginMethod
+import com.sarang.torang.screens.login.SignIn
 import kotlinx.coroutines.delay
 
 @Composable

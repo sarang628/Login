@@ -74,7 +74,8 @@ internal fun SignUpEmail(
                 text = stringResource(id = R.string.describe_input_email)
             )
             SignCommonTextField( // input email
-                modifier = Modifier.padding(vertical = 6.dp),
+                modifier = Modifier.testTag("tfEmail")
+                    .padding(vertical = 6.dp),
                 label = stringResource(id = R.string.label_email),
                 value = email,
                 onValueChange = onValueChange,

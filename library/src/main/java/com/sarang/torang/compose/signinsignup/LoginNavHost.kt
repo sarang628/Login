@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import com.sarang.torang.screen.login.SignInSignUp
-import com.sarang.torang.screen.login.SignUp
+import com.sarang.torang.screens.login.SignInSignUp
+import com.sarang.torang.screens.login.SignUp
 
 /**
  * 로그인 화면 시작점.

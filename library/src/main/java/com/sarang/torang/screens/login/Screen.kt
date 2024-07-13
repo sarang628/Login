@@ -1,4 +1,4 @@
-package com.sarang.torang.screen.login
+package com.sarang.torang.screens.login
 
 import kotlinx.serialization.Serializable
 

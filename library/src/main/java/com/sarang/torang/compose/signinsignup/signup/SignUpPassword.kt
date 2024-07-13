@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,6 +58,7 @@ internal fun SignUpPassword(
             Text(text = stringResource(id = R.string.describe_input_password))
             Spacer(modifier = Modifier.height(12.dp))
             SignCommonTextField(
+                modifier = Modifier.testTag("tfPassword"),
                 label = stringResource(id = R.string.label_password),
                 value = password,
                 onValueChange = onValueChange,
@@ -67,7 +69,11 @@ internal fun SignUpPassword(
                 isPasswordVisual = visiblePassword
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Button(modifier = Modifier.fillMaxWidth(), onClick = { onNext.invoke() }) {
+            Button(
+                modifier = Modifier
+                    .testTag("btnNext")
+                    .fillMaxWidth(),
+                onClick = { onNext.invoke() }) {
                 Text(text = stringResource(id = R.string.label_next))
             }
         }
