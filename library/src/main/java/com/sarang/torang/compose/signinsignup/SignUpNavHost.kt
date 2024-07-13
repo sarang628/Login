@@ -138,13 +138,13 @@ private fun SignUpScreen(
             composable<JoinEmail> {
                 SignUpEmail(
                     email = uiState.email,
-                    checkedEmail = uiState.checkedEmail,
+                    checkedEmailDuplication = uiState.checkedEmail,
                     errorMessage = uiState.emailErrorMessage,
                     onValueChange = onChangeEmail,
                     onBack = navController::popBackStack,
                     onClear = onClearEmail,
                     onNext = onNextEmail,
-                    moveConfirmCode = moveConfirmCode
+                    onVerifiedEmail = moveConfirmCode
                 )
             }
             composable<SignUpConfirmationCode> {

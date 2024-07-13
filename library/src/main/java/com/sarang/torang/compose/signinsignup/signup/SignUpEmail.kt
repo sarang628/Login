@@ -1,20 +1,12 @@
 package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
@@ -27,59 +19,61 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.common.SignInTextField
+import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 import kotlinx.coroutines.flow.filter
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * 회원가입 이메일 입력
+ * @param email 이메일
+ * @param checkedEmailDuplication 이메일 중복 검사
+ * @param errorMessage 에러 메시지
+ * @param onValueChange 이메일 변경 콜백
+ * @param onBack 이전 버튼 콜백
+ * @param onClear 이메일 삭제 콜백
+ * @param onNext 다음 버튼 콜백
+ * @param onVerifiedEmail 유효한 이메일 검사 완료 콜백
+ */
 @Composable
 internal fun SignUpEmail(
     email: String,
-    checkedEmail: Boolean,
+    checkedEmailDuplication: Boolean,
     errorMessage: String? = null,
     onValueChange: (String) -> Unit,
     onBack: () -> Unit,
     onClear: () -> Unit,
     onNext: () -> Unit,
-    moveConfirmCode: () -> Unit,
+    onVerifiedEmail: () -> Unit,
 ) {
 
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
-    LaunchedEffect(key1 = checkedEmail, lifecycle) {
-        snapshotFlow { checkedEmail }
+    LaunchedEffect(key1 = checkedEmailDuplication, lifecycle) {
+        snapshotFlow { checkedEmailDuplication }
             .filter { it }
             .flowWithLifecycle(lifecycle)
             .collect {
-                moveConfirmCode()
+                onVerifiedEmail()
             }
     }
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.a11y_back)
-                    )
-                }
-            })
-        },
+        topBar = { NavBackTopAppBar(onBack = onBack) },
         contentWindowInsets = WindowInsets(left = 16.dp, right = 16.dp)
     ) {
-        Column(
-            Modifier
-                .padding(it)
-        ) {
-            Text(
+        Column(Modifier.padding(it)) {
+
+            Text( // title
+                modifier = Modifier.padding(bottom = 6.dp),
                 text = stringResource(id = R.string.what_s_your_email),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(id = R.string.describe_input_email))
-            Spacer(modifier = Modifier.height(12.dp))
-            SignInTextField(
+            Text( // content
+                modifier = Modifier.padding(vertical = 6.dp),
+                text = stringResource(id = R.string.describe_input_email)
+            )
+            SignCommonTextField( // input email
+                modifier = Modifier.padding(vertical = 6.dp),
                 label = stringResource(id = R.string.label_email),
                 value = email,
                 onValueChange = onValueChange,
@@ -87,8 +81,12 @@ internal fun SignUpEmail(
                 onClear = onClear,
                 errorMessage = errorMessage
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
+            Button( // next button
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp),
+                onClick = onNext::invoke
+            ) {
                 Text(text = stringResource(id = R.string.label_next))
             }
         }
@@ -106,8 +104,8 @@ fun PreviewSignUpEmail() {
         onValueChange = {},
         onBack = {},
         onNext = {},
-        moveConfirmCode = {},
-        checkedEmail = false
+        onVerifiedEmail = {},
+        checkedEmailDuplication = false
 
     )
 }

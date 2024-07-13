@@ -29,8 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.common.SignInTextField
-import com.sarang.torang.data.LoginErrorMessage
+import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 
 @Composable
 fun SignInScreen(
@@ -121,7 +120,7 @@ private fun SignInForm(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            SignInTextField(
+            SignCommonTextField(
                 modifier = Modifier.testTag("EmailTextField"),
                 value = email,
                 onValueChange = onChangeEmail,
@@ -134,7 +133,7 @@ private fun SignInForm(
                 enable = !progress
             )
             Spacer(modifier = Modifier.height(10.dp))
-            SignInTextField(
+            SignCommonTextField(
                 modifier = Modifier.testTag("PasswordTextField"),
                 value = password,
                 onValueChange = onChangePassword,
@@ -202,7 +201,7 @@ private fun SignInButton(onClick: () -> Unit, progress: Boolean, modifier: Modif
 @Preview
 @Composable
 private fun PreviewLoginOutlinedTextField1() {
-    SignInTextField(
+    SignCommonTextField(
         label = "label",
         onKeyTabOrDown = {},
         onValueChange = {},

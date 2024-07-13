@@ -29,8 +29,22 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.sarang.torang.R
 
+/**
+ * @param modifier Modifier
+ * @param label 텍스트 필드 레이블
+ * @param value 텍스트 필드 값
+ * @param onValueChange 텍스트 필드 값 변경 시 호출되는 콜백
+ * @param errorMessage 에러 메시지 (하단에 표시)
+ * @param placeHolder 텍스트 필드 힌트
+ * @param onKeyTabOrDown 키보드 탭 또는 방향키 아래를 눌렀을 때 호출되는 콜백
+ * @param onNext Next를 눌렀을 때 호출되는 콜백
+ * @param onClear 텍스트 필드 값을 지우는 콜백
+ * @param isPassword 비밀번호인지 여부
+ * @param isPasswordVisual 비밀번호 보이기 여부
+ * @param enable 입력 가능 여부
+ */
 @Composable
-internal fun SignInTextField(
+internal fun SignCommonTextField(
     modifier: Modifier = Modifier,
     label: String,
     value: String,

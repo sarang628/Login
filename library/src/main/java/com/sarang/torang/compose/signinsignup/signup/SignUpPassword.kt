@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.common.SignInTextField
+import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,16 +41,7 @@ internal fun SignUpPassword(
 ) {
     var visiblePassword by remember { mutableStateOf(false) }
     Scaffold(
-        topBar = {
-            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.a11y_back)
-                    )
-                }
-            })
-        },
+        topBar = { NavBackTopAppBar(onBack = onBack) },
         contentWindowInsets = WindowInsets(left = 16.dp, right = 16.dp)
     ) {
         Column(
@@ -65,7 +56,7 @@ internal fun SignUpPassword(
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = stringResource(id = R.string.describe_input_password))
             Spacer(modifier = Modifier.height(12.dp))
-            SignInTextField(
+            SignCommonTextField(
                 label = stringResource(id = R.string.label_password),
                 value = password,
                 onValueChange = onValueChange,

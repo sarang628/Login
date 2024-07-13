@@ -31,16 +31,7 @@ internal fun SignUpSuccess(
     onBack: () -> Unit,
 ) {
     Scaffold(
-        topBar = {
-            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.a11y_back)
-                    )
-                }
-            })
-        },
+        topBar = { NavBackTopAppBar(onBack = onBack) },
         contentWindowInsets = WindowInsets(left = 16.dp, right = 16.dp)
     ) {
         Column(

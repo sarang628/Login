@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,28 +23,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.common.SignInTextField
+import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignUpName(
     name: String,
+    errorMessage: String? = null,
     onValueChange: (String) -> Unit,
     onClear: () -> Unit,
     onNext: () -> Unit,
     onBack: () -> Unit,
 ) {
     Scaffold(
-        topBar = {
-            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.a11y_back)
-                    )
-                }
-            })
-        },
+        topBar = { NavBackTopAppBar(onBack = onBack) },
         contentWindowInsets = WindowInsets(left = 16.dp, right = 16.dp)
     ) {
         Column(
@@ -56,12 +47,13 @@ internal fun SignUpName(
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
-            SignInTextField(
+            SignCommonTextField(
                 label = stringResource(id = R.string.label_full_name),
                 value = name,
                 onValueChange = onValueChange,
                 placeHolder = stringResource(id = R.string.label_full_name),
-                onClear = onClear
+                onClear = onClear,
+                errorMessage = errorMessage
             )
             Spacer(modifier = Modifier.height(8.dp))
             Button(modifier = Modifier.fillMaxWidth(), onClick = { onNext.invoke() }) {
@@ -75,10 +67,11 @@ internal fun SignUpName(
 @Composable
 fun PreviewSignUpName() {
     SignUpName(
-        name = "",
+        name = "name",
         onClear = {},
         onValueChange = {},
         onNext = {},
-        onBack = {}
+        onBack = {},
+        errorMessage = "error"
     )
 }

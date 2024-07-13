@@ -10,7 +10,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.signup.SignUpEmail
 
 @RunWith(AndroidJUnit4::class)
 class SignUpEmailTest {
@@ -26,8 +25,8 @@ class SignUpEmailTest {
                 onBack = { /*TODO*/ },
                 onClear = { /*TODO*/ },
                 onNext = {},
-                checkedEmail = false,
-                moveConfirmCode = {}
+                checkedEmailDuplication = false,
+                onVerifiedEmail = {}
             )
         }
     }

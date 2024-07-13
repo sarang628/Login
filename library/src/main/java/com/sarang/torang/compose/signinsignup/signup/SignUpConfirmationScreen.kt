@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.common.SignInTextField
+import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +65,7 @@ internal fun SignUpConfirmation(
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = "To confirm your account, enter the 6-digit code we sent to ${email}.")
             Spacer(modifier = Modifier.height(12.dp))
-            SignInTextField(
+            SignCommonTextField(
                 label = "Confirmation code",
                 value = confirmCode,
                 onValueChange = onValueChange,
