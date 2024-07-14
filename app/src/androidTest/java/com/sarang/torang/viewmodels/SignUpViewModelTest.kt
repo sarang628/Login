@@ -3,7 +3,9 @@ package com.sarang.torang.viewmodels
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
-import com.sarang.torang.usecase.SignUpUseCase
+import com.sarang.torang.usecase.CheckEmailUseCase
+import com.sarang.torang.usecase.ConfirmCodeUseCase
+import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -26,7 +28,10 @@ class SignUpViewModelTest {
     lateinit var signUpViewModel: SignUpViewModel
 
     @Inject
-    lateinit var signUpUseCase: SignUpUseCase
+    lateinit var signUpUseCase: ConfirmCodeUseCase
+
+    @Inject
+    lateinit var emailUseCase: CheckEmailUseCase
 
     @Inject
     lateinit var validEmailUseCase: ValidEmailUseCase
@@ -37,7 +42,8 @@ class SignUpViewModelTest {
     @Before
     fun init() {
         hiltRule.inject()
-        signUpViewModel = SignUpViewModel(signUpUseCase, validEmailUseCase, validPasswordUseCase)
+        signUpViewModel =
+            SignUpViewModel(signUpUseCase, validEmailUseCase, validPasswordUseCase, emailUseCase)
     }
 
     @Test

@@ -1,6 +1,6 @@
 package com.sarang.torang.usecase
 
-interface SignUpUseCase {
+interface ConfirmCodeUseCase {
     suspend fun confirmCode(
         token: String,
         confirmCode: String,
@@ -8,6 +8,4 @@ interface SignUpUseCase {
         email: String,
         password: String
     ): Boolean
-
-    suspend fun checkEmail(email: String, password: String): String
 }

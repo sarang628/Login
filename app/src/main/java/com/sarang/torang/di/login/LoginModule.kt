@@ -4,10 +4,11 @@ import android.content.Context
 import com.sarang.torang.data.dao.LoggedInUserDao
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.session.SessionService
+import com.sarang.torang.usecase.CheckEmailUseCase
 import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.IsLoginFlowUseCase
 import com.sarang.torang.usecase.LogoutUseCase
-import com.sarang.torang.usecase.SignUpUseCase
+import com.sarang.torang.usecase.ConfirmCodeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,7 +47,7 @@ object LoginServiceModule {
     @Provides
     fun provideLogoutUseCase(
         sessionService: SessionService,
-        loggedInUserDao: LoggedInUserDao
+        loggedInUserDao: LoggedInUserDao,
     ): LogoutUseCase {
         return object : LogoutUseCase {
             override suspend fun invoke() {
@@ -65,15 +66,15 @@ object LoginServiceModule {
     @Singleton
     @Provides
     fun provideSignUpUseCase(
-        loginRepository: LoginRepository
-    ): SignUpUseCase {
-        return object : SignUpUseCase {
+        loginRepository: LoginRepository,
+    ): ConfirmCodeUseCase {
+        return object : ConfirmCodeUseCase {
             override suspend fun confirmCode(
                 token: String,
                 confirmCode: String,
                 name: String,
                 email: String,
-                password: String
+                password: String,
             ): Boolean {
                 return loginRepository.encConfirmCode(
                     token = token,
@@ -83,7 +84,15 @@ object LoginServiceModule {
                     password = password
                 )
             }
+        }
+    }
 
+    @Singleton
+    @Provides
+    fun provideCheckEmailUseCase(
+        loginRepository: LoginRepository,
+    ): CheckEmailUseCase {
+        return object : CheckEmailUseCase {
             override suspend fun checkEmail(email: String, password: String): String {
                 return loginRepository.encCheckEmail(email, password)
             }

@@ -18,12 +18,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpConfirmation
+import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpConfirm
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpEmail
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpSuccess
-import com.sarang.torang.compose.signinsignup.signup.SignUpConfirmation
+import com.sarang.torang.compose.signinsignup.signup.SignUpConfirm
 import com.sarang.torang.compose.signinsignup.signup.SignUpEmail
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.compose.signinsignup.signup.SignUpPassword
@@ -148,17 +148,21 @@ internal fun SignUpScreen(
                 )
             }
             composable<SignUpConfirmationCode> {
-                SignUpConfirmation(
+                SignUpConfirm(
                     email = uiState.email,
                     confirmCode = uiState.confirmCode,
                     errorMessage = uiState.confirmCodeErrorMessage,
+                    checkedConfirm = uiState.checkedConfirm,
                     onValueChange = onChangeConfirmationCode,
                     onClear = onClearConfirmationCode,
                     onNext = onNextConfirmCode,
                     onBack = onBackConfirm,
                     alertMessage = uiState.alertMessage,
                     onAlertDismiss = onAlertDismiss,
-                    onMoveBackEmail = onMoveBackEmail
+                    onMoveBackEmail = onMoveBackEmail,
+                    onVerifiedConfirm = {
+                        navController.navigate(SuccessSignUp)
+                    }
                 )
             }
             composable<SignUpPassword> {
@@ -235,7 +239,7 @@ fun SignUpEmailPreview() {
 @Preview
 @Composable
 fun SignUpConfirmationScreenPreview() {
-    PreviewSignUpConfirmation()
+    PreviewSignUpConfirm()
 }
 
 @Preview

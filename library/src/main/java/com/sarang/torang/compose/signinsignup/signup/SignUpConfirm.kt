@@ -17,21 +17,28 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
+import kotlinx.coroutines.flow.filter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SignUpConfirmation(
+internal fun SignUpConfirm(
     email: String,
     confirmCode: String,
     errorMessage: String? = null,
+    checkedConfirm: Boolean,
     onValueChange: (String) -> Unit,
     onClear: () -> Unit,
     onNext: () -> Unit,
@@ -39,7 +46,19 @@ internal fun SignUpConfirmation(
     alertMessage: String? = null,
     onAlertDismiss: () -> Unit,
     onMoveBackEmail: () -> Unit,
+    onVerifiedConfirm: () -> Unit,
 ) {
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    LaunchedEffect(key1 = checkedConfirm, lifecycle) {
+        snapshotFlow { checkedConfirm }
+            .filter { it }
+            .flowWithLifecycle(lifecycle)
+            .collect {
+                onVerifiedConfirm()
+            }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(title = { /*TODO*/ }, navigationIcon = {
@@ -66,6 +85,7 @@ internal fun SignUpConfirmation(
             Text(text = "To confirm your account, enter the 6-digit code we sent to ${email}.")
             Spacer(modifier = Modifier.height(12.dp))
             SignCommonTextField(
+                modifier = Modifier.testTag("tfConfirmCode"),
                 label = "Confirmation code",
                 value = confirmCode,
                 onValueChange = onValueChange,
@@ -74,7 +94,12 @@ internal fun SignUpConfirmation(
                 errorMessage = errorMessage
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Button(modifier = Modifier.fillMaxWidth(), onClick = onNext::invoke) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("btnNext"),
+                onClick = onNext::invoke
+            ) {
                 Text(text = "Next")
             }
         }
@@ -96,8 +121,9 @@ internal fun SignUpConfirmation(
 
 @Preview
 @Composable
-fun PreviewSignUpConfirmation() {
-    SignUpConfirmation(/*Preview*/
+fun PreviewSignUpConfirm() {
+    SignUpConfirm(
+        /*Preview*/
         email = "",
         confirmCode = "",
         onClear = {},
@@ -106,6 +132,8 @@ fun PreviewSignUpConfirmation() {
         onBack = {},
         onAlertDismiss = {},
         onMoveBackEmail = {},
+        onVerifiedConfirm = {},
+        checkedConfirm = false
         //alertMessage = "Are you sure you want to back?"
     )
 }

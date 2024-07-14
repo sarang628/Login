@@ -6,7 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.usecase.SignUpUseCase
+import com.sarang.torang.usecase.CheckEmailUseCase
+import com.sarang.torang.usecase.ConfirmCodeUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
 import com.sarang.torang.usecase.ValidPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,13 +25,15 @@ data class SignUpUiState(
     val confirmCodeErrorMessage: String? = null,
     val alertMessage: String? = null,
     val checkedEmail: Boolean = false,
+    val checkedConfirm: Boolean = false,
 )
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val signUpUseCase: SignUpUseCase,
+    private val confirmCodeUseCase: ConfirmCodeUseCase,
     private val validEmailUseCase: ValidEmailUseCase,
     private val validPasswordUseCase: ValidPasswordUseCase,
+    private val checkEmailUseCase: CheckEmailUseCase,
 ) : ViewModel() {
 
     var uiState by mutableStateOf(SignUpUiState())
@@ -45,7 +48,7 @@ class SignUpViewModel @Inject constructor(
             uiState = uiState.copy(emailErrorMessage = null, isProgress = true)
             viewModelScope.launch {
                 try {
-                    token = signUpUseCase.checkEmail(
+                    token = checkEmailUseCase.checkEmail(
                         uiState.email,
                         uiState.password
                     )
@@ -74,12 +77,14 @@ class SignUpViewModel @Inject constructor(
         uiState = uiState.copy(confirmCodeErrorMessage = null, isProgress = true)
         viewModelScope.launch {
             try {
-                signUpUseCase.confirmCode(
-                    token = token,
-                    confirmCode = uiState.confirmCode,
-                    name = uiState.name,
-                    email = uiState.email,
-                    password = uiState.password
+                uiState = uiState.copy(
+                    checkedConfirm = confirmCodeUseCase.confirmCode(
+                        token = token,
+                        confirmCode = uiState.confirmCode,
+                        name = uiState.name,
+                        email = uiState.email,
+                        password = uiState.password
+                    )
                 )
             } catch (e: Exception) {
                 uiState = uiState.copy(confirmCodeErrorMessage = e.toString())

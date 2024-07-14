@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +47,11 @@ internal fun SignUpSuccess(
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = stringResource(id = R.string.go_sign_in))
             Spacer(modifier = Modifier.height(12.dp))
-            Button(modifier = Modifier.fillMaxWidth(), onClick = { onNext.invoke() }) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("btnNext"),
+                onClick = { onNext.invoke() }) {
                 Text(text = stringResource(id = R.string.label_next))
             }
         }
