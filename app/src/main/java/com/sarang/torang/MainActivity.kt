@@ -81,13 +81,13 @@ fun LoginNavHostPreview1() {
 fun PreviewSignUpName1() {
     TorangTheme {
         var name by remember { mutableStateOf("Ludwig") }
-        SignUpName(
+        SignUpName(/*Preview*/
             name = name,
             onClear = { name = "" },
             onValueChange = { name = it },
             onNext = {},
             onBack = {},
-            errorMessage = "error",
+            errorMessage = null,
             limit = 25
         )
     }

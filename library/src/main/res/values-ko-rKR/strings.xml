@@ -32,4 +32,6 @@
 
     <string name="success_sign_up">회원가입 성공!</string>
     <string name="go_sign_in">로그인 하러 가기!</string>
+
+    <string name="name_input_error_short">이름을 2자 이상 입력해 주세요.</string>
 </resources>

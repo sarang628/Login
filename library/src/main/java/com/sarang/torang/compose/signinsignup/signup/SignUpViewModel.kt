@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sarang.torang.R
 import com.sarang.torang.usecase.CheckEmailUseCase
 import com.sarang.torang.usecase.ConfirmCodeUseCase
 import com.sarang.torang.usecase.ValidEmailUseCase
@@ -21,6 +22,7 @@ data class SignUpUiState(
     val password: String = "",
     val isProgress: Boolean = false,
     val emailErrorMessage: String? = null,
+    val nameErrorMessage: Int? = null,
     val passwordErrorMessage: String? = null,
     val confirmCodeErrorMessage: String? = null,
     val alertMessage: String? = null,
@@ -144,5 +146,14 @@ class SignUpViewModel @Inject constructor(
 
     fun onMoveBackEmail() {
         uiState = uiState.copy(checkedEmail = false)
+    }
+
+    fun checkName(): Boolean {
+        if (uiState.name.length <= 2) {
+            uiState = uiState.copy(nameErrorMessage = R.string.name_input_error_short)
+            return false
+        }
+        uiState = uiState.copy(nameErrorMessage = null)
+        return true
     }
 }

@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.filter
  * @param onVerifiedEmail 유효한 이메일 검사 완료 콜백
  */
 @Composable
-internal fun SignUpEmail(
+fun SignUpEmail(
     email: String,
     checkedEmailDuplication: Boolean,
     errorMessage: String? = null,
@@ -74,7 +74,8 @@ internal fun SignUpEmail(
                 text = stringResource(id = R.string.describe_input_email)
             )
             SignCommonTextField( // input email
-                modifier = Modifier.testTag("tfEmail")
+                modifier = Modifier
+                    .testTag("tfEmail")
                     .padding(vertical = 6.dp),
                 label = stringResource(id = R.string.label_email),
                 value = email,

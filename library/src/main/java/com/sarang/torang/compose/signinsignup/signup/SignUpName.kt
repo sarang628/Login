@@ -37,7 +37,7 @@ import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 @Composable
 fun SignUpName(
     name: String,
-    errorMessage: String? = null,
+    errorMessage: Int? = null,
     limit: Int = 20,
     onValueChange: (String) -> Unit,
     onClear: () -> Unit,
@@ -67,7 +67,7 @@ fun SignUpName(
                 onValueChange = onValueChange,
                 placeHolder = stringResource(id = R.string.label_full_name),
                 onClear = onClear,
-                errorMessage = errorMessage,
+                errorMessage = if (errorMessage != null) stringResource(id = errorMessage) else null,
                 showInputCount = true,
                 limit = limit
             )
@@ -88,13 +88,13 @@ fun SignUpName(
 @Composable
 fun PreviewSignUpName() {
     var name by remember { mutableStateOf("Ludwig") }
-    SignUpName(
+    SignUpName(/*Preview*/
         name = name,
         onClear = { name = "" },
         onValueChange = { name = it },
         onNext = {},
         onBack = {},
-        errorMessage = "error",
+        errorMessage = null,
         limit = 25
     )
 }

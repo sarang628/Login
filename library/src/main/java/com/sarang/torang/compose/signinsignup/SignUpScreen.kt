@@ -66,7 +66,7 @@ fun SignUpScreen(
         onClearConfirmationCode = signUpViewModel::clearConfirmationCode,
         onChangePassword = signUpViewModel::onChangePassword,
         onClearPassword = signUpViewModel::clearPassword,
-        onNextName = { navController.navigate(SignUpPassword) },
+        onNextName = { if (signUpViewModel.checkName()) navController.navigate(SignUpPassword) },
         onNextEmail = { signUpViewModel.registerEmail() },
         onNextConfirmCode = { signUpViewModel.confirmCode() },
         onNextPassword = {
@@ -129,6 +129,7 @@ internal fun SignUpScreen(
             composable<JoinName> {
                 SignUpName(
                     name = uiState.name,
+                    errorMessage = uiState.nameErrorMessage,
                     onValueChange = onChangeName,
                     onClear = onClearName,
                     onNext = onNextName,
