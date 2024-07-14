@@ -77,7 +77,8 @@ fun SignUpName(
                     .fillMaxWidth()
                     .testTag("btnNext")
                     .padding(top = 4.dp),
-                onClick = { onNext.invoke() }) {
+                onClick = onNext
+            ) {
                 Text(text = stringResource(id = R.string.label_next))
             }
         }

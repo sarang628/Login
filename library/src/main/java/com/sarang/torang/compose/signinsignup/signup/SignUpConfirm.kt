@@ -79,24 +79,30 @@ internal fun SignUpConfirm(
             Text(
                 text = "Enter the confirmation code",
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 6.dp)
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = "To confirm your account, enter the 6-digit code we sent to ${email}.")
-            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "To confirm your account, enter the 6-digit code we sent to ${email}.",
+                modifier = Modifier.padding(vertical = 6.dp)
+            )
             SignCommonTextField(
-                modifier = Modifier.testTag("tfConfirmCode"),
+                modifier = Modifier
+                    .testTag("tfConfirmCode")
+                    .padding(vertical = 6.dp),
                 label = "Confirmation code",
                 value = confirmCode,
                 onValueChange = onValueChange,
                 placeHolder = "Confirmation code",
                 onClear = onClear,
-                errorMessage = errorMessage
+                errorMessage = errorMessage,
+                showInputCount = true,
+                limit = 6
             )
-            Spacer(modifier = Modifier.height(12.dp))
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(top = 6.dp)
                     .testTag("btnNext"),
                 onClick = onNext::invoke
             ) {
@@ -124,8 +130,8 @@ internal fun SignUpConfirm(
 fun PreviewSignUpConfirm() {
     SignUpConfirm(
         /*Preview*/
-        email = "",
-        confirmCode = "",
+        email = "torang@torang.com",
+        confirmCode = "123456",
         onClear = {},
         onValueChange = {},
         onNext = {},
@@ -133,7 +139,8 @@ fun PreviewSignUpConfirm() {
         onAlertDismiss = {},
         onMoveBackEmail = {},
         onVerifiedConfirm = {},
-        checkedConfirm = false
-        //alertMessage = "Are you sure you want to back?"
+        checkedConfirm = false,
+        errorMessage = "errorMessage",
+//        alertMessage = "Are you sure you want to back?"
     )
 }
