@@ -22,6 +22,7 @@ class SignUpNameTest {
         composeTestRule.setContent {
             SignUpName(
                 name = "MyName",
+                errorMessage = R.string.invalid_email_format,
                 onValueChange = {},
                 onBack = { /*TODO*/ },
                 onClear = { /*TODO*/ },
@@ -32,13 +33,22 @@ class SignUpNameTest {
 
     @Test
     fun checkStaticElement() {
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_full_name)).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.what_s_your_name)).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_next)).assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_full_name))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.what_s_your_name))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.label_next))
+            .assertIsDisplayed()
     }
 
     @Test
     fun checkInputName() {
         composeTestRule.onNodeWithText("MyName").assertIsDisplayed()
+    }
+
+    @Test
+    fun displayerrorMessage() {
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.invalid_email_format))
+            .assertIsDisplayed()
     }
 }

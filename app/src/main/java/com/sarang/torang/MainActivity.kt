@@ -26,6 +26,7 @@ import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.signinsignup.LoginNavHost
 import com.sarang.torang.compose.signinsignup.LoginNavHostPreview
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
+import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
@@ -90,6 +91,14 @@ fun PreviewSignUpName1() {
             errorMessage = null,
             limit = 25
         )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewSignUpPassword1() {
+    TorangTheme {
+        PreviewSignUpPassword()
     }
 }
 

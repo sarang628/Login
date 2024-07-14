@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignUpPassword(
     password: String,
@@ -49,16 +48,23 @@ internal fun SignUpPassword(
             Modifier
                 .padding(it)
         ) {
+            //Create a password
             Text(
                 text = stringResource(id = R.string.create_a_password),
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 6.dp)
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(id = R.string.describe_input_password))
-            Spacer(modifier = Modifier.height(12.dp))
+            //Create a password with at least 6 letters...
+            Text(
+                modifier = Modifier.padding(vertical = 6.dp),
+                text = stringResource(id = R.string.describe_input_password)
+            )
+            //Input password
             SignCommonTextField(
-                modifier = Modifier.testTag("tfPassword"),
+                modifier = Modifier
+                    .testTag("tfPassword")
+                    .padding(vertical = 6.dp),
                 label = stringResource(id = R.string.label_password),
                 value = password,
                 onValueChange = onValueChange,
@@ -68,9 +74,10 @@ internal fun SignUpPassword(
                 isPassword = true,
                 isPasswordVisual = visiblePassword
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            //next button
             Button(
                 modifier = Modifier
+                    .padding(top = 6.dp)
                     .testTag("btnNext")
                     .fillMaxWidth(),
                 onClick = { onNext.invoke() }) {
@@ -89,6 +96,7 @@ fun PreviewSignUpPassword() {
         onClear = {},
         onValueChange = {},
         onNext = {},
-        onBack = {}
+        onBack = {},
+        errorMessage = "errorMessage"
     )
 }

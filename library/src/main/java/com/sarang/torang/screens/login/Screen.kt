@@ -12,10 +12,10 @@ object ChooseLoginMethod
 object SignUp
 
 @Serializable
-object JoinName
+object SignUpName
 
 @Serializable
-object JoinEmail
+object SignEmail
 
 @Serializable
 object SignUpConfirmationCode
@@ -24,7 +24,7 @@ object SignUpConfirmationCode
 object SignUpPassword
 
 @Serializable
-object SuccessSignUp
+object SignUpSuccess
 
 @Serializable
 object SignIn
