@@ -63,7 +63,6 @@ fun SignUpScreen(
         onChangeConfirmationCode = signUpViewModel::onChangeConfirmationCode,
         onClearConfirmationCode = signUpViewModel::clearConfirmationCode,
         onChangePassword = signUpViewModel::onChangePassword,
-        onClearPassword = signUpViewModel::clearPassword,
         onNextEmail =  signUpViewModel::registerEmail ,
         onNextConfirmCode =  signUpViewModel::confirmCode,
         onAlertDismiss =  signUpViewModel::onAlertDismiss ,
@@ -92,7 +91,6 @@ internal fun SignUpScreen(
     signUpSuccess: () -> Unit,
     onChangeName: (String) -> Unit,
     onClearName: () -> Unit,
-    onClearPassword: () -> Unit,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
     onChangeConfirmationCode: (String) -> Unit,
@@ -161,7 +159,6 @@ internal fun SignUpScreen(
                     password = uiState.password,
                     onValueChange = onChangePassword,
                     errorMessage = uiState.passwordErrorMessage,
-                    onClear = onClearPassword,
                     onNext = onNextPassword,
                     onBack = onBack
                 )
@@ -189,7 +186,6 @@ fun SignUpNavHostPreview() {
         signUpSuccess = {},
         onChangeName = { uiState = uiState.copy(name = it) },
         onClearName = { uiState = uiState.copy(name = "") },
-        onClearPassword = {},
         onChangeEmail = { uiState = uiState.copy(email = it) },
         onChangePassword = { uiState = uiState.copy(password = it) },
         onChangeConfirmationCode = {},
