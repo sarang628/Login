@@ -1,10 +1,8 @@
 package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -34,7 +32,7 @@ import kotlinx.coroutines.flow.filter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SignUpConfirm(
+internal fun SignUpCodeVerification(
     email: String,
     confirmCode: String,
     errorMessage: String? = null,
@@ -127,8 +125,8 @@ internal fun SignUpConfirm(
 
 @Preview
 @Composable
-fun PreviewSignUpConfirm() {
-    SignUpConfirm(
+fun PreviewSignUpCodeVerification() {
+    SignUpCodeVerification(
         /*Preview*/
         email = "torang@torang.com",
         confirmCode = "123456",

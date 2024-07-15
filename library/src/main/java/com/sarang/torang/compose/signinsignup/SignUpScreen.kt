@@ -1,6 +1,5 @@
 package com.sarang.torang.compose.signinsignup
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -18,12 +17,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpConfirm
+import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpCodeVerification
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpEmail
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpSuccess
-import com.sarang.torang.compose.signinsignup.signup.SignUpConfirm
+import com.sarang.torang.compose.signinsignup.signup.SignUpCodeVerification
 import com.sarang.torang.compose.signinsignup.signup.SignUpEmail
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.compose.signinsignup.signup.SignUpPassword
@@ -31,8 +30,8 @@ import com.sarang.torang.compose.signinsignup.signup.SignUpSuccess
 import com.sarang.torang.compose.signinsignup.signup.SignUpUiState
 import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
 import com.sarang.torang.screens.login.SignEmail
-import com.sarang.torang.screens.login.SignUpName
 import com.sarang.torang.screens.login.SignUpConfirmationCode
+import com.sarang.torang.screens.login.SignUpName
 import com.sarang.torang.screens.login.SignUpPassword
 import com.sarang.torang.screens.login.SignUpSuccess
 import kotlinx.coroutines.delay
@@ -139,7 +138,7 @@ internal fun SignUpScreen(
                 )
             }
             composable<SignUpConfirmationCode> {
-                SignUpConfirm(
+                SignUpCodeVerification(
                     email = uiState.email,
                     confirmCode = uiState.confirmCode,
                     errorMessage = uiState.confirmCodeErrorMessage,
@@ -223,7 +222,7 @@ fun SignUpEmailPreview() {
 @Preview
 @Composable
 fun SignUpConfirmationScreenPreview() {
-    PreviewSignUpConfirm()
+    PreviewSignUpCodeVerification()
 }
 
 @Preview

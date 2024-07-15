@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.signinsignup.LoginNavHost
 import com.sarang.torang.compose.signinsignup.LoginNavHostPreview
+import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpCodeVerification
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
@@ -102,3 +103,10 @@ fun PreviewSignUpPassword1() {
     }
 }
 
+@Preview
+@Composable
+fun PreviewSignUpCodeVerification() {
+    TorangTheme {
+        PreviewSignUpCodeVerification()
+    }
+}

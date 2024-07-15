@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signinsignup.signin
+package com.sarang.torang.compose.signinsignup
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.LocalContext
@@ -10,7 +10,6 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.SignInSignUpComponent
 import com.sarang.torang.screens.login.SignIn
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
