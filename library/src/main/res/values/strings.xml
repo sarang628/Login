@@ -15,6 +15,7 @@
     <string name="label_password">Password</string>
     <string name="label_full_name">FullName</string>
     <string name="label_next">Next</string>
+    <string name="label_confirm" translatable="false">confirm</string>
 
     <string name="invalid_email_format">Email format is incorrect.</string>
     <string name="invalid_password_format">Please enter a password of at least 5 characters.</string>
@@ -35,4 +36,10 @@
 
     <!---->
     <string name="a11y_back" translatable="false">Navigate up</string>
+
+    <string name="enter_the_confirmation_code">Enter the confirmation code</string>
+    <string name="enter_the_confirmation_code_desc">To confirm your account, enter the 6-digit code we sent to %s.</string>
+    <string name="confirmation_code" translatable="false">Confirmation code</string>
+
+
 </resources>

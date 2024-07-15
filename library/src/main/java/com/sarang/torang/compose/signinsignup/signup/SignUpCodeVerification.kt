@@ -58,16 +58,7 @@ internal fun SignUpCodeVerification(
     }
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.a11y_back)
-                    )
-                }
-            })
-        },
+        topBar = { NavBackTopAppBar(onBack = onBack) },
         contentWindowInsets = WindowInsets(left = 16.dp, right = 16.dp)
     ) {
         Column(
@@ -75,23 +66,23 @@ internal fun SignUpCodeVerification(
                 .padding(it)
         ) {
             Text(
-                text = "Enter the confirmation code",
+                text = stringResource(id = R.string.enter_the_confirmation_code),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 6.dp)
             )
             Text(
-                text = "To confirm your account, enter the 6-digit code we sent to ${email}.",
+                text = stringResource(id = R.string.enter_the_confirmation_code_desc, email),
                 modifier = Modifier.padding(vertical = 6.dp)
             )
             SignCommonTextField(
                 modifier = Modifier
                     .testTag("tfConfirmCode")
                     .padding(vertical = 6.dp),
-                label = "Confirmation code",
+                label = stringResource(id = R.string.confirmation_code),
                 value = confirmCode,
                 onValueChange = onValueChange,
-                placeHolder = "Confirmation code",
+                placeHolder = stringResource(id = R.string.confirmation_code),
                 onClear = onClear,
                 errorMessage = errorMessage,
                 showInputCount = true,
@@ -104,7 +95,7 @@ internal fun SignUpCodeVerification(
                     .testTag("btnNext"),
                 onClick = onNext::invoke
             ) {
-                Text(text = "Next")
+                Text(text = stringResource(id = R.string.label_next))
             }
         }
     }
@@ -113,7 +104,7 @@ internal fun SignUpCodeVerification(
             onDismissRequest = { onAlertDismiss() },
             confirmButton = {
                 Button(onClick = { onMoveBackEmail() }) {
-                    Text(text = "confirm")
+                    Text(text = stringResource(id = R.string.confirm))
                 }
             },
             text = {

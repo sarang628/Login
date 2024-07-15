@@ -33,4 +33,7 @@
     <string name="go_sign_in">go sign in!</string>
 
     <string name="name_input_error_short">Please enter at least 2 characters for the name.</string>
+
+    <string name="enter_the_confirmation_code">Enter the confirmation code</string>
+    <string name="enter_the_confirmation_code_desc">To confirm your account, enter the 6-digit code we sent to %s.</string>
 </resources>

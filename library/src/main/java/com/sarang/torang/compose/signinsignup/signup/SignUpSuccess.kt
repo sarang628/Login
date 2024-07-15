@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignUpSuccess(
     onNext: () -> Unit,
