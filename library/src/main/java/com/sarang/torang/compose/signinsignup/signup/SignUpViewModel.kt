@@ -1,6 +1,7 @@
 package com.sarang.torang.compose.signinsignup.signup
 
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,21 +16,41 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * 회원가입 ui state
+ * @param name 이름
+ * @param email 이메일
+ * @param confirmCode 인증번호
+ * @param password 비밀번호
+ * @param emailErrorMessage 이메일 입력 오류 메시지
+ * @param nameErrorMessage 이름 입력 오류 메시지
+ * @param confirmCodeErrorMessage 인증번호 입력 오류 메시지
+ * @param alertMessage 인증번호 화면 alert 다이얼로그 메시지
+ * @param checkedEmail 이메일 중복 검사 여부
+ * @param checkedConfirm 인증번호 검사 여부
+ */
 data class SignUpUiState(
     val name: String = "",
     val email: String = "",
     val confirmCode: String = "",
     val password: String = "",
     val isProgress: Boolean = false,
-    val emailErrorMessage: String? = null,
+    @StringRes val emailErrorMessage: Int? = null,
     val nameErrorMessage: Int? = null,
-    val passwordErrorMessage: String? = null,
+    @StringRes val passwordErrorMessage: Int? = null,
     val confirmCodeErrorMessage: String? = null,
-    val alertMessage: String? = null,
+    @StringRes val alertMessage: Int? = null,
     val checkedEmail: Boolean = false,
     val checkedConfirm: Boolean = false,
 )
 
+/**
+ * 회원가입 view model
+ * @param confirmCodeUseCase 인증번호 검증 usecase
+ * @param validEmailUseCase 이메일 유효성 검증 usecase
+ * @param validPasswordUseCase 비밀번호 유효성 검증 usecase
+ * @param checkEmailUseCase 이메일 중복 검사 usecase
+ */
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val confirmCodeUseCase: ConfirmCodeUseCase,
@@ -45,7 +66,7 @@ class SignUpViewModel @Inject constructor(
 
     fun registerEmail() {
         if (!validEmailUseCase.invoke(uiState.email)) {
-            uiState = uiState.copy(emailErrorMessage = "이메일 형식이 아닙니다.")
+            uiState = uiState.copy(emailErrorMessage = R.string.invalid_email_format)
         } else {
             uiState = uiState.copy(emailErrorMessage = null, isProgress = true)
             viewModelScope.launch {
@@ -57,7 +78,7 @@ class SignUpViewModel @Inject constructor(
                     uiState = uiState.copy(checkedEmail = true)
                 } catch (e: Exception) {
                     Log.e("__SignUpViewModel", "registerEmail: ${e.message}")
-                    uiState = uiState.copy(emailErrorMessage = e.message)
+                    uiState = uiState.copy(emailErrorMessage = R.string.unknown_error)
                 } finally {
                     uiState = uiState.copy(isProgress = false)
                 }
@@ -67,7 +88,7 @@ class SignUpViewModel @Inject constructor(
 
     fun validPassword(): Boolean {
         return if (!validPasswordUseCase.invoke(uiState.password)) {
-            uiState = uiState.copy(passwordErrorMessage = "5자 이상 입력해 주세요")
+            uiState = uiState.copy(passwordErrorMessage = R.string.input_at_least_5_characters)
             false
         } else {
             uiState = uiState.copy(passwordErrorMessage = null)
@@ -137,7 +158,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onBackConfirm() {
-        uiState = uiState.copy(alertMessage = "이메일을 다시 등록 하시겠습니까?")
+        uiState = uiState.copy(alertMessage = R.string.re_register_email)
     }
 
     fun clearAlertMessage() {

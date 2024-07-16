@@ -103,7 +103,7 @@ fun SignUpEmail(
 fun PreviewSignUpEmail() {
     SignUpEmail(/*Preview*/
         email = "",
-        errorMessage = "aa",
+        errorMessage = null,
         onClear = {},
         onValueChange = {},
         onBack = {},

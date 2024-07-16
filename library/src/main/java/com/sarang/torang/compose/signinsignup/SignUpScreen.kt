@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -129,7 +130,7 @@ internal fun SignUpScreen(
                 SignUpEmail(
                     email = uiState.email,
                     checkedEmailDuplication = uiState.checkedEmail,
-                    errorMessage = uiState.emailErrorMessage,
+                    errorMessage = if (uiState.emailErrorMessage != null) stringResource(id = uiState.emailErrorMessage) else null,
                     onValueChange = onChangeEmail,
                     onBack = navController::popBackStack,
                     onClear = onClearEmail,
@@ -147,7 +148,7 @@ internal fun SignUpScreen(
                     onClear = onClearConfirmationCode,
                     onNext = onNextConfirmCode,
                     onBack = onBackConfirm,
-                    alertMessage = uiState.alertMessage,
+                    alertMessage = if (uiState.alertMessage != null) stringResource(id = uiState.alertMessage) else null,
                     onAlertDismiss = onAlertDismiss,
                     onMoveBackEmail = onMoveBackEmail,
                     onVerifiedConfirm = onVerifiedConfirm
@@ -157,7 +158,7 @@ internal fun SignUpScreen(
                 SignUpPassword(
                     password = uiState.password,
                     onValueChange = onChangePassword,
-                    errorMessage = uiState.passwordErrorMessage,
+                    errorMessage = if (uiState.passwordErrorMessage != null) stringResource(id = uiState.passwordErrorMessage) else null,
                     onNext = onNextPassword,
                     onBack = onBack
                 )

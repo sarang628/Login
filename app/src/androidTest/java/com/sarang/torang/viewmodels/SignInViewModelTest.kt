@@ -44,7 +44,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun invalidEmail() {
+    fun invalidEmailTest() {
         runBlocking {
             viewModel.signIn(onSignIn = {})
             //do business logic
@@ -53,7 +53,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun invalidPassword() {
+    fun invalidPasswordTest() {
         runBlocking {
             viewModel.signIn(onSignIn = {})
             //do business logic
@@ -62,7 +62,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun wrongLogin() {
+    fun wrongLoginTest() {
         runBlocking {
             viewModel.onChangeEmail("sarang628@naver.com")
             viewModel.onChangePassword("bbbbb")
@@ -76,7 +76,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun collectLogin() {
+    fun collectLoginTest() {
         runBlocking {
             viewModel.onChangeEmail("sarang628@naver.com")
             viewModel.onChangePassword("aaaaa")
@@ -88,4 +88,5 @@ class SignInViewModelTest {
             Assert.assertEquals(null, viewModel.uiState.error)
         }
     }
+
 }
