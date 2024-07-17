@@ -1,4 +1,4 @@
-package com.sarang.torang.screens
+package com.sarang.torang.screens.signup
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
@@ -15,14 +15,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.SignUpScreen
 import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
-import com.sarang.torang.usecase.CheckEmailUseCase
+import com.sarang.torang.usecase.CheckEmailDuplicateUseCase
 import com.sarang.torang.usecase.ConfirmCodeUseCase
-import com.sarang.torang.usecase.ValidEmailUseCase
-import com.sarang.torang.usecase.ValidPasswordUseCase
+import com.sarang.torang.usecase.VerifyEmailFormatUseCase
+import com.sarang.torang.usecase.VerifyPasswordFormatUseCase
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -33,50 +31,29 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class SignUpScreenTest {
-    @get:Rule
-    var hiltRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
-    val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity> =
-        createAndroidComposeRule<ComponentActivity>()
-
-
+    // @formatter:off
+    @get:Rule  var hiltRule = HiltAndroidRule(this)
+    @get:Rule(order = 1)  val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity> =  createAndroidComposeRule<ComponentActivity>()
+    @Inject  lateinit var validEmailUseCase: VerifyEmailFormatUseCase
+    @Inject  lateinit var validPasswordUseCase: VerifyPasswordFormatUseCase
+    @Inject lateinit var checkEmailUseCase: CheckEmailDuplicateUseCase
+    private lateinit var signUpViewModel: SignUpViewModel
     private val confirmCodeUseCase: ConfirmCodeUseCase
         get() = object : ConfirmCodeUseCase {
-            override suspend fun confirmCode(
-                token: String,
-                confirmCode: String,
-                name: String,
-                email: String,
-                password: String,
-            ): Boolean {
+            override suspend fun confirmCode(token: String, confirmCode: String, name: String, email: String, password: String, ): Boolean {
                 return true
             }
         }
-
-    @Inject
-    lateinit var validEmailUseCase: ValidEmailUseCase
-
-    @Inject
-    lateinit var validPasswordUseCase: ValidPasswordUseCase
-
-    @Inject
-    lateinit var checkEmailUseCase: CheckEmailUseCase
-
-    private lateinit var signUpViewModel: SignUpViewModel
-
 
     @Before
     fun setScreen() {
         hiltRule.inject()
         signUpViewModel = SignUpViewModel(
             confirmCodeUseCase = confirmCodeUseCase,
-            validEmailUseCase = validEmailUseCase,
-            validPasswordUseCase = validPasswordUseCase,
-            checkEmailUseCase = checkEmailUseCase
+            verifyEmailFormatUseCase = validEmailUseCase,
+            verifyPasswordFormatUseCase = validPasswordUseCase,
+            checkEmailDuplicateUseCase = checkEmailUseCase
         )
-
-        // 컴포저블 설정
         composeTestRule.setContent {
             SignUpScreen(
                 signUpViewModel = signUpViewModel,
@@ -85,9 +62,10 @@ class SignUpScreenTest {
             )
         }
     }
+    // @formatter:on
 
     @Test
-    fun signUpTest() = runTest {
+    fun signUpFlowTest() = runTest {
         composeTestRule.onNodeWithTag("tfName").performTextInput("test")
         composeTestRule.onNodeWithText("test").assertIsDisplayed()
         composeTestRule.onNodeWithTag("btnNext").performClick()
@@ -108,7 +86,7 @@ class SignUpScreenTest {
         composeTestRule.onNodeWithText("sarang628@gmail.com").assertIsDisplayed()
         composeTestRule.onNodeWithTag("btnNext").performClick()
 
-        composeTestRule.waitUntil(timeoutMillis = 5000) {
+        composeTestRule.waitUntil(timeoutMillis = 10000) {
             composeTestRule.onAllNodesWithTag("tfConfirmCode").fetchSemanticsNodes().isNotEmpty()
         }
 

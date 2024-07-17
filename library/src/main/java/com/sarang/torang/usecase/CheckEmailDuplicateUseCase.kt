@@ -1,5 +1,5 @@
 package com.sarang.torang.usecase
 
-interface CheckEmailUseCase {
+interface CheckEmailDuplicateUseCase {
     suspend fun checkEmail(email: String, password: String): String
 }

@@ -3,8 +3,8 @@ package com.sarang.torang.viewmodels
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.compose.signinsignup.signin.SignInViewModel
 import com.sarang.torang.usecase.EmailLoginUseCase
-import com.sarang.torang.usecase.ValidEmailUseCase
-import com.sarang.torang.usecase.ValidPasswordUseCase
+import com.sarang.torang.usecase.VerifyEmailFormatUseCase
+import com.sarang.torang.usecase.VerifyPasswordFormatUseCase
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.delay
@@ -26,10 +26,10 @@ class SignInViewModelTest {
     lateinit var emailLoginService: EmailLoginUseCase
 
     @Inject
-    lateinit var emailUseCase: ValidEmailUseCase
+    lateinit var emailUseCase: VerifyEmailFormatUseCase
 
     @Inject
-    lateinit var passwordUseCase: ValidPasswordUseCase
+    lateinit var passwordUseCase: VerifyPasswordFormatUseCase
 
     private lateinit var viewModel: SignInViewModel
 

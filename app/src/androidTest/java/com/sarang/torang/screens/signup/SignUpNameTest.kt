@@ -1,4 +1,4 @@
-package com.sarang.torang.screens
+package com.sarang.torang.screens.signup
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
@@ -12,10 +12,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
-import com.sarang.torang.usecase.CheckEmailUseCase
+import com.sarang.torang.usecase.CheckEmailDuplicateUseCase
 import com.sarang.torang.usecase.ConfirmCodeUseCase
-import com.sarang.torang.usecase.ValidEmailUseCase
-import com.sarang.torang.usecase.ValidPasswordUseCase
+import com.sarang.torang.usecase.VerifyEmailFormatUseCase
+import com.sarang.torang.usecase.VerifyPasswordFormatUseCase
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -49,13 +49,13 @@ class SignUpNameTest {
         }
 
     @Inject
-    lateinit var validEmailUseCase: ValidEmailUseCase
+    lateinit var validEmailUseCase: VerifyEmailFormatUseCase
 
     @Inject
-    lateinit var validPasswordUseCase: ValidPasswordUseCase
+    lateinit var validPasswordUseCase: VerifyPasswordFormatUseCase
 
     @Inject
-    lateinit var checkEmailUseCase: CheckEmailUseCase
+    lateinit var checkEmailUseCase: CheckEmailDuplicateUseCase
 
     private lateinit var signUpViewModel: SignUpViewModel
 
@@ -64,9 +64,9 @@ class SignUpNameTest {
         hiltRule.inject()
         signUpViewModel = SignUpViewModel(
             confirmCodeUseCase = confirmCodeUseCase,
-            validEmailUseCase = validEmailUseCase,
-            validPasswordUseCase = validPasswordUseCase,
-            checkEmailUseCase = checkEmailUseCase
+            verifyEmailFormatUseCase = validEmailUseCase,
+            verifyPasswordFormatUseCase = validPasswordUseCase,
+            checkEmailDuplicateUseCase = checkEmailUseCase
         )
 
         // 컴포저블 설정

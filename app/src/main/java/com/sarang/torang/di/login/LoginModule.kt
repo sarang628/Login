@@ -4,7 +4,7 @@ import android.content.Context
 import com.sarang.torang.data.dao.LoggedInUserDao
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.session.SessionService
-import com.sarang.torang.usecase.CheckEmailUseCase
+import com.sarang.torang.usecase.CheckEmailDuplicateUseCase
 import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.IsLoginFlowUseCase
 import com.sarang.torang.usecase.LogoutUseCase
@@ -91,8 +91,8 @@ object LoginServiceModule {
     @Provides
     fun provideCheckEmailUseCase(
         loginRepository: LoginRepository,
-    ): CheckEmailUseCase {
-        return object : CheckEmailUseCase {
+    ): CheckEmailDuplicateUseCase {
+        return object : CheckEmailDuplicateUseCase {
             override suspend fun checkEmail(email: String, password: String): String {
                 return loginRepository.encCheckEmail(email, password)
             }

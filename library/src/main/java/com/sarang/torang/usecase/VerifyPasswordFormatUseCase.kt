@@ -1,5 +1,5 @@
 package com.sarang.torang.usecase
 
-interface ValidPasswordUseCase {
+interface VerifyPasswordFormatUseCase {
     fun invoke(password: String): Boolean
 }

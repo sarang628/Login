@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sarang.torang.data.LoginErrorMessage
 import com.sarang.torang.usecase.EmailLoginUseCase
-import com.sarang.torang.usecase.ValidEmailUseCase
-import com.sarang.torang.usecase.ValidPasswordUseCase
+import com.sarang.torang.usecase.VerifyEmailFormatUseCase
+import com.sarang.torang.usecase.VerifyPasswordFormatUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -29,8 +29,8 @@ data class SignInUiState(
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val emailLoginUseCase: EmailLoginUseCase,
-    private val emailUseCase: ValidEmailUseCase,
-    private val passwordUseCase: ValidPasswordUseCase,
+    private val emailUseCase: VerifyEmailFormatUseCase,
+    private val passwordUseCase: VerifyPasswordFormatUseCase,
 ) : ViewModel() {
     var uiState by mutableStateOf(SignInUiState())
         private set

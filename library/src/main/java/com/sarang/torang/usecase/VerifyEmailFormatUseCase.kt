@@ -1,5 +1,5 @@
 package com.sarang.torang.usecase
 
-interface ValidEmailUseCase {
+interface VerifyEmailFormatUseCase {
     fun invoke(email: String) : Boolean
 }

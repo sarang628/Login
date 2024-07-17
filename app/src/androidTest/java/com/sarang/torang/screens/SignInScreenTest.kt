@@ -8,14 +8,12 @@ import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.compose.signinsignup.signin.SignInScreen
 import com.sarang.torang.usecase.EmailLoginUseCase
-import com.sarang.torang.usecase.ValidEmailUseCase
-import com.sarang.torang.usecase.ValidPasswordUseCase
+import com.sarang.torang.usecase.VerifyEmailFormatUseCase
+import com.sarang.torang.usecase.VerifyPasswordFormatUseCase
 import com.sarang.torang.compose.signinsignup.signin.SignInViewModel
-import com.sarang.torang.viewmodels.getOrAwaitValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,10 +34,10 @@ class SignInScreenTest {
     lateinit var emailLoginService: EmailLoginUseCase
 
     @Inject
-    lateinit var emailUseCase: ValidEmailUseCase
+    lateinit var emailUseCase: VerifyEmailFormatUseCase
 
     @Inject
-    lateinit var passwordUseCase: ValidPasswordUseCase
+    lateinit var passwordUseCase: VerifyPasswordFormatUseCase
 
     private lateinit var signInViewModel: SignInViewModel
 
