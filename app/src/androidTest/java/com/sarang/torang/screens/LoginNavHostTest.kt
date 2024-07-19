@@ -48,14 +48,12 @@ class LoginNavHostTest {
             LoginNavHost(
                 showTopBar = true,
                 onBack = { },
-                onSuccessLogin = { },
                 onLookAround = { },
                 signInSignUpScreen = {
                     SignInSignUpScreen(
                         viewModel = loginViewModel,
                         showTopBar = true,
                         onBack = { },
-                        onSuccessLogin = { },
                         onLookAround = { },
                         onSignUp = { },
                     )

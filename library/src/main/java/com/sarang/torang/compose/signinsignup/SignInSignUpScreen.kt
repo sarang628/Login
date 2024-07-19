@@ -56,12 +56,11 @@ fun SignInSignUpScreen(
     viewModel: SignInSignUpViewModel = hiltViewModel(),
     showTopBar: Boolean,
     onBack: (() -> Unit),
-    onSuccessLogin: () -> Unit,
     onLookAround: () -> Unit,
     showLookAround: Boolean = true,
     onSignUp: () -> Unit,
     startDestination: Any = ChooseLoginMethod,
-    signInScreen: @Composable () -> Unit = { SignInScreen(onLogin = onSuccessLogin) },
+    signInScreen: @Composable () -> Unit = { SignInScreen() },
     torangLogo: @Composable (() -> Unit) = { TorangLogo() },
     navController: NavHostController = rememberNavController(),
 ) {
@@ -70,7 +69,6 @@ fun SignInSignUpScreen(
         isLogin = isLogin,
         showTopBar = showTopBar,
         onBack = onBack,
-        onSuccessLogin = onSuccessLogin,
         onLookAround = onLookAround,
         showLookAround = showLookAround,
         onSignUp = onSignUp,
@@ -101,13 +99,12 @@ fun SignInSignUpScreen(
     isLogin: Boolean,
     showTopBar: Boolean,
     onBack: (() -> Unit),
-    onSuccessLogin: () -> Unit,
     onLookAround: () -> Unit,
     showLookAround: Boolean = true,
     onSignUp: () -> Unit,
     onEmailLogin: () -> Unit,
     startDestination: Any = ChooseLoginMethod,
-    signInScreen: @Composable () -> Unit = { SignInScreen(onLogin = onSuccessLogin) },
+    signInScreen: @Composable () -> Unit = { SignInScreen() },
     torangLogo: @Composable (() -> Unit) = { TorangLogo() },
     navController: NavHostController = rememberNavController(),
 ) {
@@ -315,9 +312,8 @@ fun SignInSignUpScreenPreview() {
         isLogin = false,
         showTopBar = false,
         onBack = { },
-        onSuccessLogin = { },
         onLookAround = { },
-        startDestination = ChooseLoginMethod, // SignIn/ChooseLoginMethod
+        startDestination = SignIn, // SignIn/ChooseLoginMethod
         torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
         signInScreen = { PreviewSignInScreen() },
         onSignUp = { },
@@ -333,7 +329,6 @@ fun SignInSignUpScreenIsLoginPreview() {
         isLogin = true,
         showTopBar = false,
         onBack = { },
-        onSuccessLogin = { },
         onLookAround = { },
         startDestination = ChooseLoginMethod, // SignIn/ChooseLoginMethod
         torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
@@ -394,7 +389,6 @@ fun SignInSignUpScreen1Preview() {
         isLogin = true,
         showTopBar = false,
         onBack = { /*TODO*/ },
-        onSuccessLogin = { /*TODO*/ },
         onLookAround = { /*TODO*/ },
         startDestination = SignIn,
         signInScreen = {

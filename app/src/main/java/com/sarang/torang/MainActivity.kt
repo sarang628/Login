@@ -25,12 +25,19 @@ import androidx.compose.ui.unit.dp
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.signinsignup.LoginNavHost
 import com.sarang.torang.compose.signinsignup.LoginNavHostPreview
+import com.sarang.torang.compose.signinsignup.SignInSignUpScreenPreview
+import com.sarang.torang.compose.signinsignup.SignUpNavHostPreview
+import com.sarang.torang.compose.signinsignup.TorangLogo
+import com.sarang.torang.compose.signinsignup._SignInSignUpScreen
+import com.sarang.torang.compose.signinsignup.signin.PreviewSignInScreen
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpCodeVerification
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
+import com.sarang.torang.screens.login.SignIn
+import com.sarang.torang.screens.login.SignInSignUp
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -54,9 +61,7 @@ class MainActivity : ComponentActivity() {
                     Column(Modifier.verticalScroll(state = rememberScrollState())) {
                         Box(modifier = Modifier.size(LocalConfiguration.current.screenHeightDp.dp))
                         {
-                            LoginNavHost(onSuccessLogin = {
-                                Log.d("MainActivity", "onLogin")
-                            }, onLookAround = {},
+                            LoginNavHost(onLookAround = {},
                                 //showTopBar = false,
                                 //showLookAround = true,
                                 onBack = {}
@@ -74,7 +79,25 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LoginNavHostPreview1() {
     TorangTheme {
-        LoginNavHostPreview()
+        LoginNavHost(
+            onLookAround = { /*TODO*/ },
+            signInSignUpScreen = {
+                _SignInSignUpScreen(
+                    /*Preview*/
+                    isLogin = false,
+                    showTopBar = false,
+                    onBack = { },
+                    onLookAround = { },
+                    startDestination = SignIn, // SignIn/ChooseLoginMethod
+                    torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
+                    signInScreen = { PreviewSignInScreen() },
+                    onSignUp = { },
+                    onEmailLogin = { },
+                )
+            },
+            signUpNavHost = { SignUpNavHostPreview() },
+            startDestination = SignInSignUp //SignUp/SignInSignUp
+        )
     }
 }
 

@@ -52,8 +52,7 @@ class SignInScreenTest {
 
         composeTestRule.setContent {
             SignInScreen(
-                viewModel = signInViewModel,
-                onLogin = {}
+                viewModel = signInViewModel
             )
         }
     }

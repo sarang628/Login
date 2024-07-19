@@ -20,6 +20,7 @@ import javax.inject.Inject
 data class SignInUiState(
     val email: String = "", // 이메일
     val password: String = "", // 비밀번호
+    val isPasswordVisible: Boolean = false,
     val isProgress: Boolean = false, // 로그인 요청 시 프로그레스바 표시
     val error: String? = null, // 에러 팝업 메시지
     val emailErrorMessage: LoginErrorMessage? = null, // 이메일 입력 유효성 오류 메시지
@@ -39,7 +40,7 @@ class SignInViewModel @Inject constructor(
 
 
     /** 로그인 요청 */
-    fun signIn(onSignIn: () -> Unit) {
+    fun signIn() {
         if (!validateIdPw()) return;
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
@@ -47,7 +48,6 @@ class SignInViewModel @Inject constructor(
             uiState = uiState.copy(isProgress = true) // 프로그래스바 표시
             try {
                 emailLoginUseCase.invoke(uiState.email, uiState.password) // 이메일 로그인 API 호출
-                onSignIn.invoke()
             } catch (e: Exception) {
                 uiState = uiState.copy(error = e.message.toString()) // 에러메시지 표시
             } finally {
@@ -63,24 +63,15 @@ class SignInViewModel @Inject constructor(
         clearValidErrorMessage()
         var isValid = true
         if (!emailUseCase.invoke(uiState.email)) {
-            showEmailErrorMessage(LoginErrorMessage.InvalidEmail)
+            uiState = uiState.copy(emailErrorMessage = LoginErrorMessage.InvalidEmail)
             isValid = false
         }
 
         if (!passwordUseCase.invoke(uiState.password)) {
-            showPasswordErrorMessage(LoginErrorMessage.InvalidPassword)
+            uiState = uiState.copy(passwordErrorMessage = LoginErrorMessage.InvalidPassword)
             isValid = false
         }
         return isValid
-    }
-
-
-    private fun showPasswordErrorMessage(message: LoginErrorMessage) {
-        uiState = uiState.copy(passwordErrorMessage = message)
-    }
-
-    private fun showEmailErrorMessage(message: LoginErrorMessage) {
-        uiState = uiState.copy(emailErrorMessage = message)
     }
 
     private fun clearValidErrorMessage() {
@@ -101,5 +92,9 @@ class SignInViewModel @Inject constructor(
 
     fun clearErrorMsg() {
         uiState = uiState.copy(error = null)
+    }
+
+    fun onPasswordVisible() {
+        uiState = uiState.copy(isPasswordVisible = !uiState.isPasswordVisible)
     }
 }

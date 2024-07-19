@@ -66,7 +66,6 @@ class SignInSignUpScreenTest {
                 viewModel = loginViewModel,
                 showTopBar = true,
                 onBack = { },
-                onSuccessLogin = { },
                 onLookAround = { },
                 onSignUp = { },
             )

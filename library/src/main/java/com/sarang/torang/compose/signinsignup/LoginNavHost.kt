@@ -30,7 +30,6 @@ import com.sarang.torang.screens.login.SignUp
  */
 @Composable
 fun LoginNavHost(
-    onSuccessLogin: () -> Unit,
     onLookAround: () -> Unit,
     showTopBar: Boolean = false,
     onBack: (() -> Unit)? = null,
@@ -41,7 +40,6 @@ fun LoginNavHost(
         SignInSignUpScreen(
             showTopBar = showTopBar,
             onBack = { onBack?.invoke() },
-            onSuccessLogin = onSuccessLogin,
             onLookAround = onLookAround,
             showLookAround = showLookAround,
             onSignUp = { navController.navigate(SignUp) }
@@ -68,7 +66,6 @@ fun LoginNavHost(
 @Composable
 fun LoginNavHostPreview() {
     LoginNavHost(
-        onSuccessLogin = { /*TODO*/ },
         onLookAround = { /*TODO*/ },
         signInSignUpScreen = { SignInSignUpScreenPreview() },
         signUpNavHost = { SignUpNavHostPreview() },

@@ -13,10 +13,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -30,31 +26,33 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.common.SignCommonTextField
+import com.sarang.torang.data.LoginErrorMessage
 
 @Composable
 fun SignInScreen(
     viewModel: SignInViewModel = hiltViewModel(),
-    onLogin: () -> Unit,
 ) {
     val uiState = viewModel.uiState
-    SignInScreen(
+    _SignInScreen(
         uiState = uiState, // UI에 display 할 데이터, viewModel에서 이벤트에 따라 지속적으로 갱신한다.
-        onLogin = { viewModel.signIn(onLogin) }, // 로그인 버튼 클릭 시 viewModel로 전달
+        onLogin = { viewModel.signIn() }, // 로그인 버튼 클릭 시 viewModel로 전달
         onChangeEmail = { viewModel.onChangeEmail(it) }, // 이메일 입력 시 viewModel로 전달
         onChangePassword = { viewModel.onChangePassword(it) }, // 비밀번호 입력 시 viewModel로 전달
         onClearEmail = { viewModel.clearEmail() },
-        onClearErrorMsg = { viewModel.clearErrorMsg() }
+        onClearErrorMsg = { viewModel.clearErrorMsg() },
+        onPasswordVisible = { viewModel.onPasswordVisible() }
     )
 }
 
 @Composable
-internal fun SignInScreen(
+internal fun _SignInScreen(
     uiState: SignInUiState,
     onLogin: () -> Unit,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
     onClearEmail: () -> Unit,
     onClearErrorMsg: () -> Unit,
+    onPasswordVisible: () -> Unit,
 ) {
     Box {
         Column(
@@ -70,7 +68,9 @@ internal fun SignInScreen(
                 onClearEmail = onClearEmail,
                 progress = uiState.isProgress,
                 emailErrorMessage = if (uiState.emailErrorMessage != null) stringResource(id = uiState.emailErrorMessage.resId) else null,
-                passwordErrorMessage = if (uiState.passwordErrorMessage != null) stringResource(id = uiState.passwordErrorMessage.resId) else null
+                passwordErrorMessage = if (uiState.passwordErrorMessage != null) stringResource(id = uiState.passwordErrorMessage.resId) else null,
+                isPasswordVisible = uiState.isPasswordVisible,
+                onPasswordVisible = onPasswordVisible
             )
             uiState.error?.let {
                 AlertDialog(onDismissRequest = { onClearErrorMsg.invoke() },
@@ -107,61 +107,77 @@ private fun SignInForm(
     passwordErrorMessage: String? = null,
     email: String,
     password: String,
+    isPasswordVisible: Boolean,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
     onClearEmail: () -> Unit,
+    onPasswordVisible: () -> Unit,
 ) {
-    var isPasswordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    Box {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            SignCommonTextField(
-                modifier = Modifier.testTag("EmailTextField"),
-                value = email,
-                onValueChange = onChangeEmail,
-                label = stringResource(id = R.string.label_email),
-                onNext = { focusManager.moveFocus(FocusDirection.Down) },
-                onKeyTabOrDown = { focusManager.moveFocus(FocusDirection.Down) },
-                placeHolder = stringResource(id = R.string.email_place_holder),
-                errorMessage = emailErrorMessage,
-                onClear = { onClearEmail.invoke() },
-                enable = !progress
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            SignCommonTextField(
-                modifier = Modifier.testTag("PasswordTextField"),
-                value = password,
-                onValueChange = onChangePassword,
-                label = stringResource(id = R.string.label_password),
-                onNext = { focusManager.clearFocus(true) },
-                onKeyTabOrDown = { focusManager.clearFocus(true) },
-                placeHolder = stringResource(id = R.string.password_place_holder),
-                errorMessage = passwordErrorMessage,
-                onClear = { isPasswordVisible = !isPasswordVisible },
-                isPassword = true,
-                isPasswordVisual = isPasswordVisible,
-                enable = !progress
-            )
-            Spacer(modifier = Modifier.height(15.dp))
-            SignInButton(
-                onClick = onLogin::invoke, progress = progress
-            )
-        }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        SignCommonTextField(
+            modifier = Modifier.testTag("tfEmail"),
+            value = email,
+            onValueChange = onChangeEmail,
+            label = stringResource(id = R.string.label_email),
+            onNext = { focusManager.moveFocus(FocusDirection.Down) },
+            onKeyTabOrDown = { focusManager.moveFocus(FocusDirection.Down) },
+            placeHolder = stringResource(id = R.string.email_place_holder),
+            errorMessage = emailErrorMessage,
+            onClear = { onClearEmail.invoke() },
+            enable = !progress
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        SignCommonTextField(
+            modifier = Modifier.testTag("tfPassword"),
+            value = password,
+            onValueChange = onChangePassword,
+            label = stringResource(id = R.string.label_password),
+            onNext = { focusManager.clearFocus(true) },
+            onKeyTabOrDown = { focusManager.clearFocus(true) },
+            placeHolder = stringResource(id = R.string.password_place_holder),
+            errorMessage = passwordErrorMessage,
+            onClear = onPasswordVisible,
+            isPassword = true,
+            isPasswordVisual = isPasswordVisible,
+            enable = !progress
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        SignInButton(onClick = onLogin::invoke, progress = progress)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
-    SignInScreen(
+    _SignInScreen(
         //uiState = EmailLoginUiState(),
         uiState = SignInUiState(
-            //error = "로그인에 실패하였습니다.",
+            email = "sry_ang@naver.com",
+            password = "12345678",
+            emailErrorMessage = LoginErrorMessage.InvalidEmail,
+            passwordErrorMessage = LoginErrorMessage.InvalidPassword
+        ),
+        onLogin = { },
+        onClearEmail = {},
+        onChangePassword = {},
+        onChangeEmail = {},
+        onClearErrorMsg = {},
+        onPasswordVisible = {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewSignInScreen1() {
+    _SignInScreen(
+        //uiState = EmailLoginUiState(),
+        uiState = SignInUiState(
+            error = "로그인에 실패하였습니다.",
             email = "torang@torang.com",
             password = "password",
 //            emailErrorMessage = LoginErrorMessage.InvalidEmail,
@@ -172,7 +188,8 @@ fun PreviewSignInScreen() {
         onClearEmail = {},
         onChangePassword = {},
         onChangeEmail = {},
-        onClearErrorMsg = {}
+        onClearErrorMsg = {},
+        onPasswordVisible = {}
     )
 }
 
@@ -184,7 +201,7 @@ private fun SignInButton(onClick: () -> Unit, progress: Boolean, modifier: Modif
         modifier = modifier
             .fillMaxWidth()
             .height(54.dp)
-            .testTag("LoginBtn"),
+            .testTag("btnSignIn"),
         shape = RoundedCornerShape(15.dp)
     ) {
         if (progress)
