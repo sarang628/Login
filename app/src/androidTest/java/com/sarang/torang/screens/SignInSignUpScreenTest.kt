@@ -68,6 +68,7 @@ class SignInSignUpScreenTest {
                 onBack = { },
                 onLookAround = { },
                 onSignUp = { },
+                onSuccessLogin = {}
             )
         }
     }

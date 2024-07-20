@@ -13,6 +13,8 @@ import com.sarang.torang.usecase.IsLoginFlowUseCase
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,6 +39,8 @@ class LoginNavHostTest {
 
     private lateinit var loginViewModel: SignInSignUpViewModel
 
+    var login: Boolean = false
+
 
     @Before
     fun setScreen() {
@@ -56,14 +60,22 @@ class LoginNavHostTest {
                         onBack = { },
                         onLookAround = { },
                         onSignUp = { },
+                        onSuccessLogin = { login = true }
                     )
                 },
-                signUpNavHost = {}
+                signUpNavHost = {},
+                onSuccessLogin = {}
             )
         }
     }
 
     @Test
     fun testTextIsDisplayed() = runTest {
+        assertFalse(login)
+        loginRepository.encEmailLogin("sarang628@naver.com", "aaaaa")
+        composeTestRule.waitUntil(10000) {
+            login
+        }
+        assertTrue(login)
     }
 }

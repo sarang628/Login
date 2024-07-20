@@ -64,7 +64,8 @@ class MainActivity : ComponentActivity() {
                             LoginNavHost(onLookAround = {},
                                 //showTopBar = false,
                                 //showLookAround = true,
-                                onBack = {}
+                                onBack = {},
+                                onSuccessLogin = {}
                             )
                         }
                         LoginRepositoryTest(loginRepository = loginRepository)
@@ -96,7 +97,8 @@ fun LoginNavHostPreview1() {
                 )
             },
             signUpNavHost = { SignUpNavHostPreview() },
-            startDestination = SignInSignUp //SignUp/SignInSignUp
+            startDestination = SignInSignUp, //SignUp/SignInSignUp
+            onSuccessLogin = {}
         )
     }
 }

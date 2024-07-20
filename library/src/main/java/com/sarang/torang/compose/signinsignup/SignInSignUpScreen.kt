@@ -54,6 +54,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SignInSignUpScreen(
     viewModel: SignInSignUpViewModel = hiltViewModel(),
+    onSuccessLogin: () -> Unit,
     showTopBar: Boolean,
     onBack: (() -> Unit),
     onLookAround: () -> Unit,
@@ -65,6 +66,11 @@ fun SignInSignUpScreen(
     navController: NavHostController = rememberNavController(),
 ) {
     val isLogin by viewModel.isLogin.collectAsState(false)
+
+    LaunchedEffect(key1 = isLogin) {
+        if (isLogin) onSuccessLogin.invoke()
+    }
+
     _SignInSignUpScreen(
         isLogin = isLogin,
         showTopBar = showTopBar,
@@ -95,7 +101,7 @@ fun SignInSignUpScreen(
  * @param navController 네비게이션 컨트롤러
  */
 @Composable
- fun _SignInSignUpScreen(
+fun _SignInSignUpScreen(
     isLogin: Boolean,
     showTopBar: Boolean,
     onBack: (() -> Unit),
