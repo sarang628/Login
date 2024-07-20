@@ -232,13 +232,13 @@ fun SignInSignUpComponent(
         /*email 로그인 버튼*/
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(onClick = { onEmailLogin.invoke() }) {
+        Button(modifier = Modifier.testTag("btnLogin"), onClick = { onEmailLogin.invoke() }) {
             Text(text = stringResource(id = R.string.login_with_email))
         }
         /*sign up*/
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = stringResource(id = R.string.dont_have_an_account))
-            TextButton(onClick = { onSignUp.invoke() }) {
+            TextButton(modifier = Modifier.testTag("btnSignUp"), onClick = { onSignUp.invoke() }) {
                 Text(
                     text = stringResource(id = R.string.sign_up),
                     color = MaterialTheme.colorScheme.primary,
@@ -247,7 +247,9 @@ fun SignInSignUpComponent(
         }
         /*Look Around*/
         if (showLookAround) {
-            TextButton(onClick = { onLookAround.invoke() }) {
+            TextButton(
+                modifier = Modifier.testTag("btnLookAround"),
+                onClick = { onLookAround.invoke() }) {
                 Text(
                     text = stringResource(id = R.string.look_around),
                     color = MaterialTheme.colorScheme.primary
@@ -319,7 +321,7 @@ fun SignInSignUpScreenPreview() {
         showTopBar = false,
         onBack = { },
         onLookAround = { },
-        startDestination = SignIn, // SignIn/ChooseLoginMethod
+        startDestination = ChooseLoginMethod, // SignIn/ChooseLoginMethod
         torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
         signInScreen = { PreviewSignInScreen() },
         onSignUp = { },
