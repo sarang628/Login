@@ -42,6 +42,7 @@
     <string name="confirmation_code" translatable="false">Confirmation code</string>
     <string name="input_at_least_5_characters">Please enter at least 5 characters.</string>
     <string name="re_register_email">Would you like to re-register your email?</string>
+    <string name="password_format_error">The password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character.</string>
 
 
 </resources>

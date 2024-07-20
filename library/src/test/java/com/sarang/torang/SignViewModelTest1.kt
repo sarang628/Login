@@ -46,8 +46,8 @@ class SignInViewModelTest {
         MockitoAnnotations.openMocks(this) // Mock 객체 초기화
         viewModel = SignInViewModel(
             emailLoginUseCase = emailLoginUseCase,
-            emailUseCase = emailUseCase,
-            passwordUseCase = passwordUseCase
+            verifyEmailFormatUseCase = emailUseCase,
+            verifyPasswordFormatUseCase = passwordUseCase
         )
     }
 

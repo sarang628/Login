@@ -39,4 +39,5 @@
     <string name="enter_the_confirmation_code_desc">계정을 확인하려면 %s에 전송된 6자리 코드를 입력하세요.</string>
     <string name="input_at_least_5_characters">5자 이상 입력해 주세요.</string>
     <string name="re_register_email">이메일을 다시 등록 하시겠습니까?</string>
+    <string name="password_format_error">비밀번호는 최소 8자 이상이어야 하며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.</string>
 </resources>

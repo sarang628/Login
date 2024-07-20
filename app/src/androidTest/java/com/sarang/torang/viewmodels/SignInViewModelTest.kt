@@ -48,9 +48,9 @@ class SignInViewModelTest {
         hiltRule.inject()
         // ViewModel 초기화
         viewModel = SignInViewModel(
-            emailUseCase = emailUseCase,
+            verifyEmailFormatUseCase = emailUseCase,
             emailLoginUseCase = emailLoginService,
-            passwordUseCase = passwordUseCase
+            verifyPasswordFormatUseCase = passwordUseCase
         )
     }
 

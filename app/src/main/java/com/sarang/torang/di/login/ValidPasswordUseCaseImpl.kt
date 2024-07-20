@@ -13,7 +13,13 @@ class ValidPasswordUseCaseImpl {
     fun providesValidPasswordUseCase(): VerifyPasswordFormatUseCase {
         return object : VerifyPasswordFormatUseCase {
             override fun invoke(password: String): Boolean {
-                return password.length >= 5
+                if (password.length < 6) return false
+                val hasUpperCase = password.any { it.isUpperCase() }
+                val hasLowerCase = password.any { it.isLowerCase() }
+                val hasDigit = password.any { it.isDigit() }
+                val hasSpecialChar = password.any { "!@#\$%^&*()_+[]{}|;':,.<>?".contains(it) }
+
+                return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar
             }
         }
     }

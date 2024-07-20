@@ -45,9 +45,9 @@ class SignInScreenTest {
     fun init() {
         hiltRule.inject()
         signInViewModel = SignInViewModel(
-            emailUseCase = emailUseCase,
+            verifyEmailFormatUseCase = emailUseCase,
             emailLoginUseCase = emailLoginService,
-            passwordUseCase = passwordUseCase
+            verifyPasswordFormatUseCase = passwordUseCase
         )
 
         composeTestRule.setContent {
