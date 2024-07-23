@@ -1,4 +1,4 @@
-package com.sarang.torang.screens
+package com.sarang.torang.screens.signinsignup
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed

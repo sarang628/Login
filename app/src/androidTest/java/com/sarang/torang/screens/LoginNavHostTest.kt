@@ -64,7 +64,7 @@ class LoginNavHostTest {
                     )
                 },
                 signUpNavHost = {},
-                onSuccessLogin = {}
+                onSuccessLogin = { login = true }
             )
         }
     }
@@ -72,7 +72,7 @@ class LoginNavHostTest {
     @Test
     fun testTextIsDisplayed() = runTest {
         assertFalse(login)
-        loginRepository.encEmailLogin("sarang628@naver.com", "aaaaa")
+        loginRepository.encEmailLogin("sarang628@naver.com", "Torang!234")
         composeTestRule.waitUntil(10000) {
             login
         }

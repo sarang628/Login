@@ -66,38 +66,48 @@ class SignUpScreenTest {
 
     @Test
     fun signUpFlowTest() = runTest {
+        //이름 입력
         composeTestRule.onNodeWithTag("tfName").performTextInput("test")
         composeTestRule.onNodeWithText("test").assertIsDisplayed()
         composeTestRule.onNodeWithTag("btnNext").performClick()
 
+        //비밀번호 입력 화면 나올때 까지 기다림
         composeTestRule.waitUntil {
             composeTestRule.onAllNodesWithTag("tfPassword").fetchSemanticsNodes().isNotEmpty()
         }
 
-        composeTestRule.onNodeWithTag("tfPassword").performTextInput("aaaaa")
-        composeTestRule.onNodeWithText("•••••").assertIsDisplayed()
+        // 비밀번호 입력
+        composeTestRule.onNodeWithTag("tfPassword").performTextInput("Password!23")
+        composeTestRule.onNodeWithText("•••••••••••").assertIsDisplayed()
         composeTestRule.onNodeWithTag("btnNext").performClick()
 
+        // 비밀번호 확인 입력 화면 나올때 까지 기다림
         composeTestRule.waitUntil {
             composeTestRule.onAllNodesWithTag("tfEmail").fetchSemanticsNodes().isNotEmpty()
         }
 
+        // 이메일 입력
         composeTestRule.onNodeWithTag("tfEmail").performTextInput("sarang628@gmail.com")
         composeTestRule.onNodeWithText("sarang628@gmail.com").assertIsDisplayed()
         composeTestRule.onNodeWithTag("btnNext").performClick()
 
+        // 인증번호 입력 화면 나올때 까지 기다림
         composeTestRule.waitUntil(timeoutMillis = 10000) {
             composeTestRule.onAllNodesWithTag("tfConfirmCode").fetchSemanticsNodes().isNotEmpty()
         }
 
+        // 인증번호 입력
         composeTestRule.onNodeWithTag("tfConfirmCode").performTextInput("000011")
         composeTestRule.onNodeWithText("000011").assertIsDisplayed()
         composeTestRule.onNodeWithTag("btnNext").performClick()
 
+        // 회원가입 완료 화면 나올때 까지 기다림
         composeTestRule.waitUntil(timeoutMillis = 1000) {
             composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.success_sign_up))
                 .fetchSemanticsNodes().isNotEmpty()
         }
+
+        // 회원가입 완료 화면
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.success_sign_up))
             .assertIsDisplayed()
         composeTestRule.onNodeWithTag("btnNext").performClick()

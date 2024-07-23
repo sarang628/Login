@@ -1,4 +1,4 @@
-package com.sarang.torang.screens
+package com.sarang.torang.screens.signin
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
