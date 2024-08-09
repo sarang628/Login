@@ -71,7 +71,7 @@ fun SignInSignUpScreen(
         if (isLogin) onSuccessLogin.invoke()
     }
 
-    _SignInSignUpScreen(
+    SignInSignUp(
         isLogin = isLogin,
         showTopBar = showTopBar,
         onBack = onBack,
@@ -100,7 +100,7 @@ fun SignInSignUpScreen(
  * @param navController 네비게이션 컨트롤러
  */
 @Composable
-fun _SignInSignUpScreen(
+fun SignInSignUp(
     isLogin: Boolean,
     showTopBar: Boolean,
     onBack: (() -> Unit),
@@ -192,8 +192,9 @@ private fun String.isEmailLoginScreen(): Boolean {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
-fun SignInSignUpTopAppBar(
+internal fun SignInSignUpTopAppBar(
     onBack: (() -> Unit)? = null,
 ) {
     TopAppBar(
@@ -221,7 +222,7 @@ fun SignInSignUpTopAppBar(
  * @param showLookAround 둘러보기 버튼 표시 여부
  */
 @Composable
-fun SignInSignUpComponent(
+internal fun SignInSignUpComponent(
     onEmailLogin: () -> Unit,
     onSignUp: () -> Unit,               // 회원가입 클릭
     onLookAround: () -> Unit,           // 둘러보기 클릭
@@ -314,7 +315,7 @@ fun TorangLogo(previewTitle: String = "", previewSubtitle: String = "") {
 @Preview
 @Composable
 fun SignInSignUpScreenPreview() {
-    _SignInSignUpScreen(
+    SignInSignUp(
         /*Preview*/
         isLogin = false,
         showTopBar = false,
@@ -330,8 +331,8 @@ fun SignInSignUpScreenPreview() {
 
 @Preview
 @Composable
-fun SignInSignUpScreenIsLoginPreview() {
-    _SignInSignUpScreen(
+private fun SignInSignUpScreenIsLoginPreview() {
+    SignInSignUp(
         /*Preview*/
         isLogin = true,
         showTopBar = false,
@@ -348,13 +349,13 @@ fun SignInSignUpScreenIsLoginPreview() {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun TorangLogoPreview() {
+private fun TorangLogoPreview() {
     TorangLogo("T O R A N G", "hit the spot")
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun SignInSignUpComponentPreview() {
+private fun SignInSignUpComponentPreview() {
     SignInSignUpComponent(/*Preview*/
         onEmailLogin = { /*TODO*/ },
         onSignUp = { /*TODO*/ },
@@ -366,7 +367,7 @@ fun SignInSignUpComponentPreview() {
 
 @Preview
 @Composable
-fun TorangLogoScaffoldPreview() {
+private fun TorangLogoScaffoldPreview() {
     TorangLogoScaffold(/*Preview*/
         isLogin = false,
         showTopBar = true,
@@ -385,14 +386,8 @@ fun TorangLogoScaffoldPreview() {
 
 @Preview
 @Composable
-fun SignInSignUpTopAppBarPreview() {
-    SignInSignUpTopAppBar()
-}
-
-@Preview
-@Composable
-fun SignInSignUpScreen1Preview() {
-    _SignInSignUpScreen(/*Preview*/
+private fun SignInSignUpScreen1Preview() {
+    SignInSignUp(/*Preview*/
         isLogin = true,
         showTopBar = false,
         onBack = { /*TODO*/ },

@@ -72,6 +72,18 @@ class SignInViewModelTest {
         assertEquals(LoginErrorMessage.InvalidPassword, viewModel.uiState.passwordErrorMessage) // 비밀번호 오류 메시지 확인
     }
 
+    // 유효하지 않은 아이디 비밀번호로 로그인 시도 시 이메일/비밀번호 오류 메시지 확인
+    @Test
+    fun `signIn with invalid email and password shows email and password error`() = runTest {
+        `when`(emailUseCase.invoke(anyString())).thenReturn(false) // 이메일 검증 실패
+        `when`(passwordUseCase.invoke(anyString())).thenReturn(false) // 비밀번호 검증 실패
+
+        viewModel.signIn()
+
+        assertEquals(LoginErrorMessage.InvalidPassword, viewModel.uiState.passwordErrorMessage) // 비밀번호 오류 메시지 확인
+        assertEquals(LoginErrorMessage.InvalidEmail, viewModel.uiState.emailErrorMessage) // 비밀번호 오류 메시지 확인
+    }
+
     // 유효한 이메일과 비밀번호로 로그인 시도 시 이메일 로그인 UseCase 호출 확인
     @Test
     fun `signIn with valid email and password calls emailLoginUseCase`() = runTest {

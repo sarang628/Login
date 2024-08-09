@@ -16,15 +16,22 @@ import javax.inject.Inject
 
 /**
  * UiState - what the app says they should see
+ * @param email 이메일
+ * @param password 비밀번호
+ * @param isPasswordVisible 비밀번호 가시성
+ * @param isProgress 로그인 요청 시 프로그레스바 표시
+ * @param error 에러 팝업 메시지
+ * @param emailErrorMessage 이메일 입력 유효성 오류 메시지
+ * @param passwordErrorMessage 비밀번호 입력 유효성 오류 메시지
  */
 data class SignInUiState(
-    val email: String = "", // 이메일
-    val password: String = "", // 비밀번호
+    val email: String = "",
+    val password: String = "",
     val isPasswordVisible: Boolean = false,
-    val isProgress: Boolean = false, // 로그인 요청 시 프로그레스바 표시
-    val error: String? = null, // 에러 팝업 메시지
-    val emailErrorMessage: LoginErrorMessage? = null, // 이메일 입력 유효성 오류 메시지
-    val passwordErrorMessage: LoginErrorMessage? = null, // 비밀번호 입력 유효성 오류 메시지
+    val isProgress: Boolean = false,
+    val error: String? = null,
+    val emailErrorMessage: LoginErrorMessage? = null,
+    val passwordErrorMessage: LoginErrorMessage? = null
 )
 
 /**
@@ -39,7 +46,7 @@ data class SignInUiState(
 class SignInViewModel @Inject constructor(
     private val emailLoginUseCase: EmailLoginUseCase,
     private val verifyEmailFormatUseCase: VerifyEmailFormatUseCase,
-    private val verifyPasswordFormatUseCase: VerifyPasswordFormatUseCase
+    private val verifyPasswordFormatUseCase: VerifyPasswordFormatUseCase,
 ) : ViewModel() {
     var uiState by mutableStateOf(SignInUiState())
         private set
@@ -52,15 +59,19 @@ class SignInViewModel @Inject constructor(
      * 유효성 검사를 통과하면 로그인 시도를 비동기로 실행
      */
     fun signIn() {
+        var valid = true
         if (!verifyEmailFormatUseCase.invoke(uiState.email)) {
             uiState = uiState.copy(emailErrorMessage = LoginErrorMessage.InvalidEmail)
-            return
+            valid = false
         }
 
         if (!verifyPasswordFormatUseCase.invoke(uiState.password)) {
             uiState = uiState.copy(passwordErrorMessage = LoginErrorMessage.InvalidPassword)
-            return
+            valid = false
         }
+
+        if (!valid)
+            return
 
         // 이전 로그인 시도를 취소하고 새로운 로그인 시도 시작
         fetchJob?.cancel()
@@ -80,9 +91,7 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    /**
-     * 유효성 검사 오류 메시지 초기화 함수
-     */
+    /** 유효성 검사 오류 메시지 초기화 함수 */
     private fun clearValidErrorMessage() {
         uiState = uiState.copy(passwordErrorMessage = null, emailErrorMessage = null)
     }
@@ -103,23 +112,17 @@ class SignInViewModel @Inject constructor(
         uiState = uiState.copy(password = password)
     }
 
-    /**
-     * 이메일 초기화 함수
-     */
+    /** 이메일 초기화 함수 */
     fun clearEmail() {
         uiState = uiState.copy(email = "")
     }
 
-    /**
-     * 에러 메시지 초기화 함수
-     */
+    /** 에러 메시지 초기화 함수 */
     fun clearErrorMsg() {
         uiState = uiState.copy(error = null)
     }
 
-    /**
-     * 비밀번호 가시성 토글 함수
-     */
+    /** 비밀번호 가시성 토글 함수 */
     fun onPasswordVisible() {
         uiState = uiState.copy(isPasswordVisible = !uiState.isPasswordVisible)
     }

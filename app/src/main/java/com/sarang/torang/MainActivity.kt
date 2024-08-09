@@ -1,7 +1,6 @@
 package com.sarang.torang
 
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,14 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.signinsignup.LoginNavHost
-import com.sarang.torang.compose.signinsignup.LoginNavHostPreview
-import com.sarang.torang.compose.signinsignup.SignInSignUpScreenPreview
 import com.sarang.torang.compose.signinsignup.SignUpNavHostPreview
 import com.sarang.torang.compose.signinsignup.TorangLogo
-import com.sarang.torang.compose.signinsignup._SignInSignUpScreen
+import com.sarang.torang.compose.signinsignup.SignInSignUp
 import com.sarang.torang.compose.signinsignup.signin.PreviewSignInScreen
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpCodeVerification
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
 import com.sarang.torang.repository.LoginRepository
@@ -83,7 +79,7 @@ fun LoginNavHostPreview1() {
         LoginNavHost(
             onLookAround = { /*TODO*/ },
             signInSignUpScreen = {
-                _SignInSignUpScreen(
+                SignInSignUp(
                     /*Preview*/
                     isLogin = false,
                     showTopBar = false,

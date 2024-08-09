@@ -52,10 +52,9 @@ class SignInSignUpScreenTest {
 
         // 컴포저블 설정
         composeTestRule.setContent {
-            _SignInSignUpScreen(
+            SignInSignUp(
                 showTopBar = true,
                 onBack = { onBack = true },
-                onSuccessLogin = { },
                 onLookAround = { onLookAround = true },
                 onSignUp = { onSignUp = true },
                 isLogin = false,

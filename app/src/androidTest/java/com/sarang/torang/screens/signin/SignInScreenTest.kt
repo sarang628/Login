@@ -1,11 +1,17 @@
 package com.sarang.torang.screens.signin
 
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sarang.torang.R
 import com.sarang.torang.compose.signinsignup.signin.SignInScreen
 import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.VerifyEmailFormatUseCase
@@ -41,6 +47,9 @@ class SignInScreenTest {
 
     private lateinit var signInViewModel: SignInViewModel
 
+    private lateinit var ilCorrectEmailFormat: String
+    private lateinit var ilCorrectPasswordFormat: String
+
     @Before
     fun init() {
         hiltRule.inject()
@@ -55,6 +64,9 @@ class SignInScreenTest {
                 viewModel = signInViewModel
             )
         }
+
+        ilCorrectEmailFormat = composeTestRule.activity.getString(R.string.invalid_email_format)
+        ilCorrectPasswordFormat = composeTestRule.activity.getString(R.string.invalid_password_format)
     }
 
     @Test
@@ -67,5 +79,13 @@ class SignInScreenTest {
             .performTextInput("aaaaa")
 
         composeTestRule.onNodeWithText("Log in").performClick()
+    }
+
+    @Test
+    fun loginWrongFormatTest() {
+        composeTestRule.onNodeWithText("Log in").performClick()
+
+        composeTestRule.onNodeWithText(ilCorrectEmailFormat).assertIsDisplayed()
+        composeTestRule.onNodeWithText(ilCorrectPasswordFormat).assertIsDisplayed()
     }
 }
