@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.hilt) apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10" apply false
     id("org.jetbrains.kotlin.jvm") version "1.8.20"
+    `maven-publish`
 }
 
 extra.apply {
@@ -24,9 +25,9 @@ extra.apply {
     set("themeVersion", "28a1702347")
 }
 
-//repositories {
-//    mavenCentral()
-//}
+/*repositories {
+    mavenCentral()
+}*/
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
