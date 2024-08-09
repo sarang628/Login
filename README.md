@@ -25,10 +25,10 @@ Compose - ViewModel - Repository 각 unit test부터 이를 결합한 integratio
 
 ```
 [navigation]
-LoginNavHost --- SignInSignUpExploreNavHost  --- EmailLoginScreen
-                 (로그인 회원가입 선택화면)        |   (이메일 로그인 화면)
-                                             --- SignInSignUpExplore
-                                                 (회원가입 화면)
+LoginNavHost --- SignInSignUpScreen    --- SignInScreen
+                 (로그인 회원가입 선택화면)  |   (이메일 로그인 화면)
+                                       --- SignInSignUpExplore
+                                           (회원가입 화면)
 ```
 
 # 코드 설명

@@ -89,9 +89,8 @@ fun SignInSignUpScreen(
 
 /**
  * @param isLogin 로그인 여부
- * @param showTopBar 상단바를 보여줄지 여부
+ * @param showTopBar 상단 바를 보여줄지 여부
  * @param onBack 뒤로가기 버튼을 눌렀을 때 호출되는 콜백
- * @param onSuccessLogin 로그인 성공시 호출되는 콜백
  * @param onLookAround 둘러보기 버튼을 눌렀을 때 호출되는 콜백
  * @param showLookAround 둘러보기 버튼을 보여줄지 여부
  * @param onSignUp 회원가입 버튼을 눌렀을 때 호출되는 콜백
@@ -152,7 +151,7 @@ fun _SignInSignUpScreen(
 
 /**
  * @param isLogin 로그인 여부
- * @param showTopBar 상단바를 보여줄지 여부
+ * @param showTopBar 상단 바를 보여줄지 여부
  * @param onBack 뒤로가기 버튼을 눌렀을 때 호출되는 콜백
  * @param torangLogo Torang 로고
  * @param contents 화면 내용
@@ -261,8 +260,8 @@ fun SignInSignUpComponent(
 
 /**
  * Torang 로고
- * @param previewTitle 미리보기용 제목
- * @param previewSubtitle 미리보기용 부제
+ * @param previewTitle 미리 보기용 제목
+ * @param previewSubtitle 미리 보기용 부제
  */
 @Composable
 fun TorangLogo(previewTitle: String = "", previewSubtitle: String = "") {
