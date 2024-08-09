@@ -24,15 +24,3 @@ extra.apply {
     set("designVersion", "a7236c358c")
     set("themeVersion", "28a1702347")
 }
-
-/*repositories {
-    mavenCentral()
-}*/
-
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-}
-
-kotlin {
-    jvmToolchain(8)
-}
