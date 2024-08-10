@@ -19,6 +19,9 @@ Jetpack compose는 기존 XML을 사용한 view-based 기반의 화면 구현방
 앱의 안정적인 개발과 운영을 위해 테스트 코드의 작성이 점점 중요해지고 있습니다.<br>
 Compose - ViewModel - Repository 각 unit test부터 이를 결합한 integration test까지 구현하였습니다.
 
+# Update
+build.gradle -> build.gradle.kts 변환
+
 ### [블로그 정리](https://srandroid.tistory.com/category/%ED%86%A0%EB%9E%91/%E3%84%B4%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85)
 
 # Screen Navigation
