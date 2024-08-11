@@ -34,9 +34,9 @@ android {
 
 dependencies {
     /** HILT */
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose) // hiltViewModel
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.nav.compose) // hiltViewModel
 
     /** Retrofit */
     implementation(libs.retrofit)
@@ -44,57 +44,57 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     /** Room */
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.paging)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    implementation(libs.room.paging)
 
     /** TEST Start */
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.x.junit.ext)
+    androidTestImplementation(libs.x.espresso.core)
     testImplementation(libs.kotlinx.coroutines.test) // coroutines unit test
-    androidTestImplementation(libs.androidx.ui.test.junit4) // Test rules and transitive dependencies
-    debugImplementation(libs.androidx.ui.test.manifest) // Needed for createAndroidComposeRule, but not createComposeRule
+    androidTestImplementation(libs.x.ui.test.junit4) // Test rules and transitive dependencies
+    debugImplementation(libs.x.ui.test.manifest) // Needed for createAndroidComposeRule, but not createComposeRule
 
     // Hilt Start
     // For Robolectric tests.
-    testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.android.compiler)
-    testAnnotationProcessor(libs.hilt.android.compiler)
+    testImplementation(libs.hilt.testing)
+    kaptTest(libs.hilt.compiler)
+    testAnnotationProcessor(libs.hilt.compiler)
 
     // For instrumented tests.
-    androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
-    androidTestAnnotationProcessor(libs.hilt.android.compiler)
+    androidTestImplementation(libs.hilt.testing)
+    kaptAndroidTest(libs.hilt.compiler)
+    androidTestAnnotationProcessor(libs.hilt.compiler)
     // Hilt End
     /** TEST End */
 
     /** Compose */
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui) //없으면 @Composable import 안됨
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview) // Android Studio Preview support
-    debugImplementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.material3) //JetNews Main 따라하기
-    implementation(libs.androidx.material3.windows.size)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.navigation.compose)
-    androidTestImplementation(libs.ui.test.junit4) //runTest
-    debugImplementation(libs.ui.test.manifest) // Needed for createAndroidComposeRule, but not createComposeRule:
+    androidTestImplementation(platform(libs.x.compose.bom))
+    implementation(libs.x.ui) //없으면 @Composable import 안됨
+    implementation(libs.x.ui.graphics)
+    implementation(libs.x.ui.tooling.preview) // Android Studio Preview support
+    debugImplementation(libs.x.ui.tooling)
+    implementation(libs.material3) //JetNews Main 따라하기
+    implementation(libs.material3.windows.size)
+    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.nav.compose)
+    androidTestImplementation(libs.x.ui.test.junit4) //runTest
+    debugImplementation(libs.x.ui.test.manifest) // Needed for createAndroidComposeRule, but not createComposeRule:
 
     /** Navigation start */
     // Kotlin
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.nav.fragment.ktx)
+    implementation(libs.nav.ui.ktx)
 
     // Feature module Support
-    implementation(libs.androidx.navigation.dynamic.features.fragment)
+    implementation(libs.nav.dynamic.features.fragment)
 
     // Testing Navigation
-    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.nav.testing)
 
     // Jetpack Compose Integration
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.nav.compose)
     /** Navigation end */
 
     implementation(project(":library"))
