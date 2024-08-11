@@ -93,7 +93,7 @@ class SignUpViewModel @Inject constructor(
 
     fun validPassword(): Boolean {
         return if (!verifyPasswordFormatUseCase.invoke(uiState.password)) {
-            uiState = uiState.copy(passwordErrorMessage = R.string.input_at_least_5_characters)
+            uiState = uiState.copy(passwordErrorMessage = R.string.password_format_error)
             false
         } else {
             uiState = uiState.copy(passwordErrorMessage = null)

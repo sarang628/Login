@@ -19,7 +19,7 @@
     <string name="label_password">Password</string>
 
     <string name="invalid_email_format">Email format is incorrect.</string>
-    <string name="invalid_password_format">Please enter a password of at least 5 characters.</string>
+    <string name="invalid_password_format">Password format is incorrect.</string>
 
     <string name="what_s_your_email">What\'s your email?</string>
     <string name="describe_input_email">Enter the email where you can be contacted. No one will see this on your profile</string>
@@ -36,7 +36,6 @@
 
     <string name="enter_the_confirmation_code">Enter the confirmation code</string>
     <string name="enter_the_confirmation_code_desc">To confirm your account, enter the 6-digit code we sent to %s.</string>
-    <string name="input_at_least_5_characters">Please enter at least 5 characters.</string>
     <string name="re_register_email">Would you like to re-register your email?</string>
     <string name="password_format_error">The password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character.</string>
 </resources>

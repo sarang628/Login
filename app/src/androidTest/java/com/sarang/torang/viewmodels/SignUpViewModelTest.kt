@@ -45,7 +45,7 @@ class SignUpViewModelTest {
 
     // 에러 메시지 문자열 변수
     private lateinit var errorEmailValid: String
-    private lateinit var inputAtLeast5Characters: String
+    private lateinit var passwordFormatError: String
 
     // ViewModel 초기화 변수
     private lateinit var viewModel: SignUpViewModel
@@ -75,7 +75,7 @@ class SignUpViewModelTest {
 
         // 에러 메시지 문자열 초기화
         errorEmailValid = composeTestRule.activity.getString(R.string.error_email_valid)
-        inputAtLeast5Characters = composeTestRule.activity.getString(R.string.input_at_least_5_characters)
+        passwordFormatError = composeTestRule.activity.getString(R.string.password_format_error)
     }
 
     // @formatter:on
@@ -151,7 +151,7 @@ class SignUpViewModelTest {
             Log.d("_SignUpViewModelTest", viewModel.uiState.toString())
             // 비밀번호 유효성 검증 에러 메시지가 올바르게 설정되었는지 확인
             assertEquals(
-                inputAtLeast5Characters,
+                passwordFormatError,
                 viewModel.uiState.passwordErrorMessage
             )
         }
