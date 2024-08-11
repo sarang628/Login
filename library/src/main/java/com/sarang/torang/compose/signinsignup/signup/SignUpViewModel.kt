@@ -66,7 +66,7 @@ class SignUpViewModel @Inject constructor(
 
     fun registerEmail() {
         // 이메일 포멧 유효성 체크 로직 실행
-        if (!verifyEmailFormatUseCase.invoke(uiState.email)) {
+        if (verifyEmailFormatUseCase.invoke(uiState.email) != null) {
             // 오류 메시지 표시
             uiState = uiState.copy(emailErrorMessage = R.string.invalid_email_format)
         } else {
@@ -92,7 +92,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun validPassword(): Boolean {
-        return if (!verifyPasswordFormatUseCase.invoke(uiState.password)) {
+        return if (verifyPasswordFormatUseCase.invoke(uiState.password) != null) {
             uiState = uiState.copy(passwordErrorMessage = R.string.password_format_error)
             false
         } else {

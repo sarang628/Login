@@ -31,7 +31,7 @@ data class SignInUiState(
     val isProgress: Boolean = false,
     val error: String? = null,
     val emailErrorMessage: LoginErrorMessage? = null,
-    val passwordErrorMessage: LoginErrorMessage? = null
+    val passwordErrorMessage: LoginErrorMessage? = null,
 )
 
 /**
@@ -59,18 +59,12 @@ class SignInViewModel @Inject constructor(
      * 유효성 검사를 통과하면 로그인 시도를 비동기로 실행
      */
     fun signIn() {
-        var valid = true
-        if (!verifyEmailFormatUseCase.invoke(uiState.email)) {
-            uiState = uiState.copy(emailErrorMessage = LoginErrorMessage.InvalidEmail)
-            valid = false
-        }
+        uiState = uiState.copy(
+            emailErrorMessage = verifyEmailFormatUseCase.invoke(uiState.email),
+            passwordErrorMessage = verifyPasswordFormatUseCase.invoke(uiState.password)
+        )
 
-        if (!verifyPasswordFormatUseCase.invoke(uiState.password)) {
-            uiState = uiState.copy(passwordErrorMessage = LoginErrorMessage.InvalidPassword)
-            valid = false
-        }
-
-        if (!valid)
+        if (uiState.emailErrorMessage != null || uiState.passwordErrorMessage != null)
             return
 
         // 이전 로그인 시도를 취소하고 새로운 로그인 시도 시작
