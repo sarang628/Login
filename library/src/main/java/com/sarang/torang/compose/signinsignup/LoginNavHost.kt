@@ -9,6 +9,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpScreen
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpScreenPreview
+import com.sarang.torang.compose.signinsignup.signup.SignUpNavHostPreview
+import com.sarang.torang.compose.signinsignup.signup.SignUpScreen
 import com.sarang.torang.screens.login.SignInSignUp
 import com.sarang.torang.screens.login.SignUp
 
@@ -67,11 +71,17 @@ fun LoginNavHost(
 @Preview
 @Composable
 fun LoginNavHostPreview() {
+    val navController = rememberNavController()
     LoginNavHost(
         onLookAround = { /*TODO*/ },
-        signInSignUpScreen = { SignInSignUpScreenPreview() },
+        signInSignUpScreen = {
+            SignInSignUpScreenPreview{
+                navController.navigate(SignUp)
+            }
+        },
         signUpNavHost = { SignUpNavHostPreview() },
         startDestination = SignInSignUp, //SignUp/SignInSignUp
-        onSuccessLogin = {}
+        onSuccessLogin = {},
+        navController = navController
     )
 }

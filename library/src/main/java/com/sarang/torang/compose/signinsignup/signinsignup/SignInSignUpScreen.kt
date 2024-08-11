@@ -1,5 +1,6 @@
-package com.sarang.torang.compose.signinsignup
+package com.sarang.torang.compose.signinsignup.signinsignup
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -314,18 +315,23 @@ fun TorangLogo(previewTitle: String = "", previewSubtitle: String = "") {
 
 @Preview
 @Composable
-fun SignInSignUpScreenPreview() {
+fun SignInSignUpScreenPreview(onSignUp: (() -> Unit)? = null) {
+    val navController: NavHostController = rememberNavController()
     SignInSignUp(
         /*Preview*/
         isLogin = false,
         showTopBar = false,
-        onBack = { },
+        onBack = { navController.popBackStack() },
         onLookAround = { },
         startDestination = ChooseLoginMethod, // SignIn/ChooseLoginMethod
         torangLogo = { TorangLogo("T O R A N G", "hit the spot") },
         signInScreen = { PreviewSignInScreen() },
-        onSignUp = { },
-        onEmailLogin = { },
+        onSignUp = { onSignUp?.invoke() },
+        onEmailLogin = {
+            Log.d("__SignInSignUpScreenPreview", "onEmailLogin")
+            navController.navigate(SignIn)
+                       },
+        navController = navController
     )
 }
 

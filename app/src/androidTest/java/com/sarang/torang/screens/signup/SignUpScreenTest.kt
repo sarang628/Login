@@ -13,7 +13,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.SignUpScreen
+import com.sarang.torang.compose.signinsignup.signup.SignUpScreen
 import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
 import com.sarang.torang.usecase.CheckEmailDuplicateUseCase
 import com.sarang.torang.usecase.ConfirmCodeUseCase

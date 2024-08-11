@@ -9,8 +9,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.R
-import com.sarang.torang.compose.signinsignup.SignInSignUpScreen
-import com.sarang.torang.compose.signinsignup.SignInSignUpViewModel
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpScreen
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUpViewModel
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.usecase.IsLoginFlowUseCase
 import com.sarang.torang.viewmodels.getOrAwaitValue

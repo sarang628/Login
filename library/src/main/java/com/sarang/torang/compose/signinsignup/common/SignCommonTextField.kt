@@ -146,7 +146,7 @@ internal fun SignCommonTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun test() {
+fun SignCommonTextFieldPreview() {
     SignCommonTextField(
         modifier = Modifier,
         label = "Email",

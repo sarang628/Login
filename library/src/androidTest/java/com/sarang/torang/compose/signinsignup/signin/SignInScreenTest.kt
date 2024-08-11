@@ -24,7 +24,7 @@ class SignInScreenTest {
 
     private fun testSignInScreen() {
         composeTestRule.setContent {
-            _SignInScreen(
+            SignIn(
                 uiState = SignInUiState(
                     email = "sry_ang@naver.com",
                     password = "12345678",
@@ -85,7 +85,7 @@ class SignInScreenTest {
     @Test
     fun testSignInScreen_initialState() {
         composeTestRule.setContent {
-            _SignInScreen(
+            SignIn(
                 uiState = SignInUiState(),
                 onLogin = {},
                 onChangeEmail = {},
@@ -104,7 +104,7 @@ class SignInScreenTest {
     @Test
     fun testSignInScreen_showErrorMessage() {
         composeTestRule.setContent {
-            _SignInScreen(
+            SignIn(
                 uiState = SignInUiState(error = "Login failed"),
                 onLogin = {},
                 onChangeEmail = {},
@@ -124,7 +124,7 @@ class SignInScreenTest {
         var loginClicked = false
 
         composeTestRule.setContent {
-            _SignInScreen(
+            SignIn(
                 uiState = SignInUiState(),
                 onLogin = { loginClicked = true },
                 onChangeEmail = {},

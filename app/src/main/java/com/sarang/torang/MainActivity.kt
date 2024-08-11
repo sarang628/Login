@@ -23,9 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.signinsignup.LoginNavHost
-import com.sarang.torang.compose.signinsignup.SignUpNavHostPreview
-import com.sarang.torang.compose.signinsignup.TorangLogo
-import com.sarang.torang.compose.signinsignup.SignInSignUp
+import com.sarang.torang.compose.signinsignup.signup.SignUpNavHostPreview
+import com.sarang.torang.compose.signinsignup.signinsignup.TorangLogo
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUp
 import com.sarang.torang.compose.signinsignup.signin.PreviewSignInScreen
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpCodeVerification
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword

@@ -33,7 +33,7 @@ fun SignInScreen(
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.uiState
-    _SignInScreen(
+    SignIn(
         uiState = uiState, // UI에 display 할 데이터, viewModel에서 이벤트에 따라 지속적으로 갱신한다.
         onLogin = { viewModel.signIn() }, // 로그인 버튼 클릭 시 viewModel로 전달
         onChangeEmail = { viewModel.onChangeEmail(it) }, // 이메일 입력 시 viewModel로 전달
@@ -45,7 +45,7 @@ fun SignInScreen(
 }
 
 @Composable
-internal fun _SignInScreen(
+internal fun SignIn(
     uiState: SignInUiState,
     onLogin: () -> Unit,
     onChangeEmail: (String) -> Unit,
@@ -154,7 +154,7 @@ private fun SignInForm(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
-    _SignInScreen(
+    SignIn(
         //uiState = EmailLoginUiState(),
         uiState = SignInUiState(
             email = "sry_ang@naver.com",
@@ -174,7 +174,7 @@ fun PreviewSignInScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen1() {
-    _SignInScreen(
+    SignIn(
         //uiState = EmailLoginUiState(),
         uiState = SignInUiState(
             error = "로그인에 실패하였습니다.",

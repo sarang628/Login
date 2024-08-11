@@ -33,7 +33,7 @@ class EmailLoginUseCaseTest {
         hiltRule.inject()
     }
 
-    // 로그인 실패 테스트
+    // 로그인 성공 테스트
     @Test
     fun successLoginTest() {
         runBlocking {

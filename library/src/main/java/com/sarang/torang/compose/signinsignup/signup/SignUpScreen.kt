@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signinsignup
+package com.sarang.torang.compose.signinsignup.signup
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,18 +18,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpCodeVerification
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpEmail
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpName
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
-import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpSuccess
-import com.sarang.torang.compose.signinsignup.signup.SignUpCodeVerification
-import com.sarang.torang.compose.signinsignup.signup.SignUpEmail
-import com.sarang.torang.compose.signinsignup.signup.SignUpName
-import com.sarang.torang.compose.signinsignup.signup.SignUpPassword
-import com.sarang.torang.compose.signinsignup.signup.SignUpSuccess
-import com.sarang.torang.compose.signinsignup.signup.SignUpUiState
-import com.sarang.torang.compose.signinsignup.signup.SignUpViewModel
 import com.sarang.torang.screens.login.SignEmail
 import com.sarang.torang.screens.login.SignUpConfirmationCode
 import com.sarang.torang.screens.login.SignUpName

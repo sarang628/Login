@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.signinsignup
+package com.sarang.torang.compose.signinsignup.signinsignup
 
 import androidx.lifecycle.ViewModel
 import com.sarang.torang.usecase.IsLoginFlowUseCase

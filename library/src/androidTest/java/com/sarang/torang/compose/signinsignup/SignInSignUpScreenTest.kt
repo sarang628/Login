@@ -11,6 +11,7 @@ import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.R
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUp
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
