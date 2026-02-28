@@ -1,14 +1,14 @@
-package com.sarang.torang.di.login
+package com.sarang.torang.di.login1
 
 import android.content.Context
-import com.sarang.torang.data.dao.LoggedInUserDao
+import com.sarang.torang.core.database.dao.LoggedInUserDao
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.session.SessionService
 import com.sarang.torang.usecase.CheckEmailDuplicateUseCase
+import com.sarang.torang.usecase.ConfirmCodeUseCase
 import com.sarang.torang.usecase.EmailLoginUseCase
 import com.sarang.torang.usecase.IsLoginFlowUseCase
 import com.sarang.torang.usecase.LogoutUseCase
-import com.sarang.torang.usecase.ConfirmCodeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +27,7 @@ object LoginServiceModule {
     ): EmailLoginUseCase {
         return object : EmailLoginUseCase {
             override suspend fun invoke(id: String, email: String) {
-                loginRepository.encEmailLogin(id, email)
+                loginRepository.emailLogin(id, email)
             }
         }
     }
@@ -76,7 +76,7 @@ object LoginServiceModule {
                 email: String,
                 password: String,
             ): Boolean {
-                return loginRepository.encConfirmCode(
+                return loginRepository.confirmCode(
                     token = token,
                     confirmCode = confirmCode,
                     name = name,
@@ -94,7 +94,7 @@ object LoginServiceModule {
     ): CheckEmailDuplicateUseCase {
         return object : CheckEmailDuplicateUseCase {
             override suspend fun checkEmail(email: String, password: String): String {
-                return loginRepository.encCheckEmail(email, password)
+                return loginRepository.checkEmail(email, password)
             }
         }
     }

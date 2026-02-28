@@ -72,7 +72,7 @@ class LoginNavHostTest {
     @Test
     fun testTextIsDisplayed() = runTest {
         assertFalse(login)
-        loginRepository.encEmailLogin("sarang628@naver.com", "Torang!234")
+        loginRepository.emailLogin("sarang628@naver.com", "Torang!234")
         composeTestRule.waitUntil(10000) {
             login
         }

@@ -1,4 +1,4 @@
-package com.sarang.torang.di.login
+package com.sarang.torang.di.login1
 
 import com.sarang.torang.data.LoginErrorMessage
 import com.sarang.torang.usecase.VerifyPasswordFormatUseCase

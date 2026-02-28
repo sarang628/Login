@@ -21,19 +21,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.signinsignup.LoginNavHost
-import com.sarang.torang.compose.signinsignup.signup.SignUpNavHostPreview
-import com.sarang.torang.compose.signinsignup.signinsignup.TorangLogo
-import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUp
 import com.sarang.torang.compose.signinsignup.signin.PreviewSignInScreen
+import com.sarang.torang.compose.signinsignup.signinsignup.SignInSignUp
+import com.sarang.torang.compose.signinsignup.signinsignup.TorangLogo
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpCodeVerification
 import com.sarang.torang.compose.signinsignup.signup.PreviewSignUpPassword
 import com.sarang.torang.compose.signinsignup.signup.SignUpName
+import com.sarang.torang.compose.signinsignup.signup.SignUpNavHostPreview
 import com.sarang.torang.repository.LoginRepository
-import com.sarang.torang.repository.LoginRepositoryTest
+import com.sarang.torang.repository.test.LoginRepositoryTest
 import com.sarang.torang.screens.login.SignIn
 import com.sarang.torang.screens.login.SignInSignUp
+import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -54,18 +54,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column(Modifier.verticalScroll(state = rememberScrollState())) {
-                        Box(modifier = Modifier.size(LocalConfiguration.current.screenHeightDp.dp))
-                        {
-                            LoginNavHost(onLookAround = {},
-                                //showTopBar = false,
-                                //showLookAround = true,
-                                onBack = {},
-                                onSuccessLogin = {}
-                            )
-                        }
-                        LoginRepositoryTest(loginRepository = loginRepository)
-                    }
+                    LoginNavHost(onLookAround = {},
+                        //showTopBar = false,
+                        //showLookAround = true,
+                        onBack = {},
+                        onSuccessLogin = {}
+                    )
+                    //LoginRepositoryTest(loginRepository = loginRepository)
                 }
             }
         }

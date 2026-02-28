@@ -76,7 +76,7 @@ class SignInSignUpScreenTest {
     @Test
     fun testTextIsDisplayed() = runTest {
         Assert.assertFalse(loginViewModel.isLogin.getOrAwaitValue())
-        loginRepository.encEmailLogin("sarang628@naver.com", "aaaaa")
+        loginRepository.emailLogin("sarang628@naver.com", "aaaaa")
         Assert.assertTrue(loginViewModel.isLogin.getOrAwaitValue())
         // 문구들이 보이지 않는지 확인
         composeTestRule.onNodeWithText(loginWithEmailText).assertIsNotDisplayed()

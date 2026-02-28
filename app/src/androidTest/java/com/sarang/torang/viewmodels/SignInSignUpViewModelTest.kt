@@ -40,7 +40,7 @@ class SignInSignUpViewModelTest {
         Assert.assertEquals(false, loginViewModel.isLogin.getOrAwaitValue())
 
         // emailLogin 함수 호출
-        loginRepository.encEmailLogin("sry_ang@naver.com", "didtkfkd")
+        loginRepository.emailLogin("sry_ang@naver.com", "didtkfkd")
 
         // ViewModel의 isLogin 프로퍼티가 expectedIsLogin와 동일한지 확인
         Assert.assertEquals(true, loginViewModel.isLogin.getOrAwaitValue())
