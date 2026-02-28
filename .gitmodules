@@ -16,3 +16,6 @@
 [submodule "app/src/main/java/com/sarang/torang/di/torang_security_di"]
 	path = app/src/main/java/com/sarang/torang/di/torang_security_di
 	url = https://github.com/sarang628/torang_security_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/login_di"]
+	path = app/src/main/java/com/sarang/torang/di/login_di
+	url = https://github.com/sarang628/login_di.git
